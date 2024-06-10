@@ -1,0 +1,14 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Standardize repository to use the Unix LF line ending format.
+# Mitigates whitespace updates every time files are updated from
+# different operation systems.
+* eol=lf
+
+*.gif binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.tgz binary
+*.tar.gz binary
