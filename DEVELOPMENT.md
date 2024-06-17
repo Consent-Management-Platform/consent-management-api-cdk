@@ -1,5 +1,7 @@
 ## Developer set-up
 
+### Install dev tools
+
 Set up Node and npm:
 * [Install Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/)
 * Run `node --version` and verify you are running Node 20 or later
@@ -14,11 +16,43 @@ Set up AWS CLI:
 * Follow [the AWS CLI installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) to install the AWS CLI
 * Run `aws --version` and verify you are running a version 2 release of the CLI
 
+### Set up environment variables
+
+Set up the following environment variables:
+* `CONSENT_DEV_ACCOUNT_ID` - set to your developer AWS account ID, eg. `"123456789012"`
+* `CONSENT_DEV_REGION` - set to the AWS region you want to deploy stacks to in your dev account
+
+Run `aws configure` and configure the AWS CLI with your dev account user's access key and secret access key to enable CDK deployments.
+
+### First-time npm project set-up and deployment
+
+* Run `npm install` to install project dependencies.
+* Run `npm run test` and validate all tests pass.
+* Run `npx cdk synth` to synthesize CloudFormation templates from your local CDK code and validates succeeds.
+* Run `ls cdk.out` and validate that the project's stacks have assets and template JSON files generated in this folder, eg. `ConsentDataStack.template.json`.
+* Run `npx cdk bootstrap` to deploy a CDKToolkit CloudFormation stack to your account with prerequisites to deploying CDK applications, validate succeeds.
+* Run `npx cdk deploy <ENTER_STACK_NAME_HERE>` to deploy a given stack to your dev account, eg. `npx cdk deploy ConsentDataStack`, accept the `Do you wish to deploy these changes?` prompt, and validate deployment succeeds.
+
 ## Useful commands
 
+* `npm install`     install local package dependencies
 * `npm run build`   compile typescript to js
+* `npm run clean`   clear generated build artifacts such as cdk.out and node_modules
 * `npm run watch`   watch for changes and compile
 * `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
+* `npx cdk bootstrap` deploy bootstrap stack to set up your AWS account with prerequisites for deploying your CDK stacks
+* `npx cdk deploy <STACK_NAME_HERE>`  deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state
 * `npx cdk synth`   emits the synthesized CloudFormation template
+
+## Troubleshooting
+
+### Running `npm run build` fails with `Cannot find module` errors
+
+You may need to run `npm install` to install this package's dependencies.
+
+### Running `npx cdk synth` fails with `Error: accountId should be of type string` errors
+
+You may need to:
+1. Follow the "Set up environment variables" instructions earlier in this file's set-up steps
+2. Ensure your new environment variables have been loaded into your terminal/IDE
