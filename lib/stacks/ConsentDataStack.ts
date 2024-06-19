@@ -1,14 +1,22 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
 import { AttributeType, BillingMode, ProjectionType, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
+import { AccountPrincipal } from 'aws-cdk-lib/aws-iam';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Construct } from 'constructs';
+
 import { StageConfig } from '../interfaces/stage-config';
-import { AccountPrincipal } from 'aws-cdk-lib/aws-iam';
 
 export interface ConsentDataStackProps extends StackProps {
   stageConfig: StageConfig;
 }
 
+/**
+ * Defines the consent data storage layer.
+ *
+ * This stack is separated from higher-level components such as API compute services
+ * to minimize the risk of other layer changes impacting the consent database,
+ * which should be extremely stable and never deleted after prod launch.
+ */
 export class ConsentDataStack extends Stack {
   private readonly consentEncryptionKey: Key;
   private readonly consentTable: Table;

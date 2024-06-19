@@ -1,0 +1,852 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConsentManagementApiStack creates the expected CloudFormation template from CDK 1`] = `
+{
+  "Outputs": {
+    "ConsentManagementAPIGatewayEndpoint54E719D3": {
+      "Export": {
+        "Name": "ConsentManagementApiEndpoint",
+      },
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "ConsentManagementAPIGateway2FBFF2A2",
+            },
+            ".execute-api.us-east-2.",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            {
+              "Ref": "ConsentManagementAPIGatewayDeploymentStagedev03496B65",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ConsentManagementAPIGateway2FBFF2A2": {
+      "Properties": {
+        "Body": {
+          "components": {
+            "schemas": {
+              "BadRequestExceptionResponseContent": {
+                "description": "This exception is thrown when the request is invalid.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "ConflictingResourceExceptionResponseContent": {
+                "description": "This exception is thrown when a write request conflicts with stored state.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "Consent": {
+                "description": "Record of user consent.",
+                "properties": {
+                  "consentData": {
+                    "$ref": "#/components/schemas/ConsentData",
+                  },
+                  "consentId": {
+                    "description": "Unique identifier for a Consent.",
+                    "type": "string",
+                  },
+                  "consentVersion": {
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                  "expiryTime": {
+                    "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "serviceId": {
+                    "description": "Unique identifier for a service.",
+                    "type": "string",
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/ConsentStatus",
+                  },
+                  "userId": {
+                    "description": "Unique identifier for a user.",
+                    "type": "string",
+                  },
+                },
+                "required": [
+                  "consentId",
+                  "consentVersion",
+                  "serviceId",
+                  "status",
+                  "userId",
+                ],
+                "type": "object",
+              },
+              "ConsentData": {
+                "additionalProperties": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "description": "Consent data represented by string key-value pairs. Keys must be between 1-64 characters long, values must be between 1-256 characters long, and up to 32 key-value pairs may be provided.",
+                "maxProperties": 32,
+                "type": "object",
+              },
+              "ConsentStatus": {
+                "description": "Current status of a Consent.",
+                "enum": [
+                  "ACTIVE",
+                  "EXPIRED",
+                  "REVOKED",
+                ],
+                "type": "string",
+              },
+              "CreateServiceUserConsentRequestContent": {
+                "properties": {
+                  "consentData": {
+                    "$ref": "#/components/schemas/ConsentData",
+                  },
+                  "expiryTime": {
+                    "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/ConsentStatus",
+                  },
+                },
+                "required": [
+                  "status",
+                ],
+                "type": "object",
+              },
+              "CreateServiceUserConsentResponseContent": {
+                "properties": {
+                  "consentId": {
+                    "description": "Unique identifier for a Consent.",
+                    "type": "string",
+                  },
+                },
+                "required": [
+                  "consentId",
+                ],
+                "type": "object",
+              },
+              "GetServiceUserConsentResponseContent": {
+                "properties": {
+                  "data": {
+                    "$ref": "#/components/schemas/Consent",
+                  },
+                },
+                "type": "object",
+              },
+              "InternalServiceExceptionResponseContent": {
+                "description": "This exception is thrown on an unhandled service error.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "ListServiceUserConsentResponseContent": {
+                "properties": {
+                  "data": {
+                    "description": "Page of Consents",
+                    "items": {
+                      "$ref": "#/components/schemas/Consent",
+                    },
+                    "type": "array",
+                  },
+                  "nextPageToken": {
+                    "description": "Pagination token to retrieve the next page of results.",
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "NotFoundExceptionResponseContent": {
+                "description": "This exception is thrown when the requested entity is not found.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "UpdateServiceUserConsentRequestContent": {
+                "properties": {
+                  "consentData": {
+                    "$ref": "#/components/schemas/ConsentData",
+                  },
+                  "consentVersion": {
+                    "description": "Updated consent version, used to conditionally write only if the stored data has the prior version, to protect against race conditions or writing stale data.",
+                    "format": "int32",
+                    "type": "integer",
+                  },
+                  "expiryTime": {
+                    "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/ConsentStatus",
+                  },
+                },
+                "required": [
+                  "consentVersion",
+                ],
+                "type": "object",
+              },
+            },
+          },
+          "info": {
+            "title": "Consent Management API",
+            "version": "2024-06-10",
+          },
+          "openapi": "3.0.2",
+          "paths": {
+            "/v1/consent-management/services/{serviceId}/users/{userId}/consents": {
+              "get": {
+                "description": "List consents a user has granted to a given service.",
+                "operationId": "ListServiceUserConsent",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Optional. Maximum number of Consents to return in a single response.",
+                    "in": "query",
+                    "name": "limit",
+                    "schema": {
+                      "description": "Optional. Maximum number of Consents to return in a single response.",
+                      "format": "int32",
+                      "type": "integer",
+                    },
+                  },
+                  {
+                    "description": "Optional. The nextPageToken returned from the previous list request.",
+                    "in": "query",
+                    "name": "pageToken",
+                    "schema": {
+                      "description": "Optional. The nextPageToken returned from the previous list request.",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "responses": {
+                  "200": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/ListServiceUserConsentResponseContent",
+                        },
+                      },
+                    },
+                    "description": "ListServiceUserConsent 200 response",
+                  },
+                  "400": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/BadRequestExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "BadRequestException 400 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "passthroughBehavior": "when_no_match",
+                  "responses": {
+                    "default": {
+                      "statusCode": "200",
+                    },
+                  },
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentManagementAPILambda33B42EFA",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+              "post": {
+                "description": "Create a user Consent for a given service.",
+                "operationId": "CreateServiceUserConsent",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/CreateServiceUserConsentRequestContent",
+                      },
+                    },
+                  },
+                  "required": true,
+                },
+                "responses": {
+                  "200": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/CreateServiceUserConsentResponseContent",
+                        },
+                      },
+                    },
+                    "description": "CreateServiceUserConsent 200 response",
+                  },
+                  "400": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/BadRequestExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "BadRequestException 400 response",
+                  },
+                  "409": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/ConflictingResourceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "ConflictingResourceException 409 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "passthroughBehavior": "when_no_match",
+                  "responses": {
+                    "default": {
+                      "statusCode": "200",
+                    },
+                  },
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentManagementAPILambda33B42EFA",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+            },
+            "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}": {
+              "get": {
+                "description": "Retrieve a user Consent for a given service.",
+                "operationId": "GetServiceUserConsent",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a Consent.",
+                    "in": "path",
+                    "name": "consentId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a Consent.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "responses": {
+                  "200": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/GetServiceUserConsentResponseContent",
+                        },
+                      },
+                    },
+                    "description": "GetServiceUserConsent 200 response",
+                  },
+                  "404": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/NotFoundExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "NotFoundException 404 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "passthroughBehavior": "when_no_match",
+                  "responses": {
+                    "default": {
+                      "statusCode": "200",
+                    },
+                  },
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentManagementAPILambda33B42EFA",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+              "post": {
+                "description": "Update a user Consent for a given service.",
+                "operationId": "UpdateServiceUserConsent",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a Consent.",
+                    "in": "path",
+                    "name": "consentId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a Consent.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/UpdateServiceUserConsentRequestContent",
+                      },
+                    },
+                  },
+                  "required": true,
+                },
+                "responses": {
+                  "200": {
+                    "description": "UpdateServiceUserConsent 200 response",
+                  },
+                  "400": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/BadRequestExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "BadRequestException 400 response",
+                  },
+                  "404": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/NotFoundExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "NotFoundException 404 response",
+                  },
+                  "409": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/ConflictingResourceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "ConflictingResourceException 409 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "passthroughBehavior": "when_no_match",
+                  "responses": {
+                    "default": {
+                      "statusCode": "200",
+                    },
+                  },
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentManagementAPILambda33B42EFA",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+        "EndpointConfiguration": {
+          "Types": [
+            "EDGE",
+          ],
+        },
+        "Name": "ConsentManagementApi",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "ConsentManagementAPIGatewayAccount906949A1": {
+      "DeletionPolicy": "Retain",
+      "DependsOn": [
+        "ConsentManagementAPIGateway2FBFF2A2",
+      ],
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "ConsentManagementAPIGatewayCloudWatchRole0750B034",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentManagementAPIGatewayCloudWatchRole0750B034": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentManagementAPIGatewayDeployment0745D2C27ee1fb7d18c9c9d48d5c2d1226562932": {
+      "Properties": {
+        "Description": "Consent Management API, see documentation at https://consent-management-platform.github.io/consent-management-api-models/v1/docs.html",
+        "RestApiId": {
+          "Ref": "ConsentManagementAPIGateway2FBFF2A2",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "ConsentManagementAPIGatewayDeploymentStagedev03496B65": {
+      "DependsOn": [
+        "ConsentManagementAPIGatewayAccount906949A1",
+      ],
+      "Properties": {
+        "DeploymentId": {
+          "Ref": "ConsentManagementAPIGatewayDeployment0745D2C27ee1fb7d18c9c9d48d5c2d1226562932",
+        },
+        "MethodSettings": [
+          {
+            "DataTraceEnabled": false,
+            "HttpMethod": "*",
+            "LoggingLevel": "INFO",
+            "MetricsEnabled": true,
+            "ResourcePath": "/*",
+            "ThrottlingBurstLimit": 5,
+            "ThrottlingRateLimit": 3,
+          },
+        ],
+        "RestApiId": {
+          "Ref": "ConsentManagementAPIGateway2FBFF2A2",
+        },
+        "StageName": "dev",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "ConsentManagementAPILambda33B42EFA": {
+      "DependsOn": [
+        "ConsentManagementAPILambdaServiceRoleFA4B1113",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-2",
+          "S3Key": "dd13c9bf7355bfce5055aa14fd6ae2e053d8baf8fa08ce9ab717c5ea5eb0610c.zip",
+        },
+        "Description": "Consent Management API Lambda",
+        "Handler": "com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest",
+        "MemorySize": 512,
+        "Role": {
+          "Fn::GetAtt": [
+            "ConsentManagementAPILambdaServiceRoleFA4B1113",
+            "Arn",
+          ],
+        },
+        "Runtime": "java21",
+        "Timeout": 60,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ConsentManagementAPILambdaInvokeCTTNfoZaEcX0vyIZsGLg4TrL9TLUQuy3xejzx29T31ADE23DEB4": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ConsentManagementAPILambda33B42EFA",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:us-east-2:123456789012:",
+              {
+                "Ref": "ConsentManagementAPIGateway2FBFF2A2",
+              },
+              "/*/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ConsentManagementAPILambdaServiceRoleFA4B1113": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
