@@ -26,12 +26,30 @@ Run `aws configure` and configure the AWS CLI with your dev account user's acces
 
 ### First-time npm project set-up and deployment
 
+Prerequisite set-up of API service package:
+* In the parent directory that contains the consent-management-api-cdk, check out https://github.com/Consent-Management-Platform/consent-management-api
+* From within the consent-management-api directory, run `./gradlew build` to build the API project.
+* Validate that build/distributions/consent-management-api.zip has been created.
+* Note: This is in order for the ConsentManagementApiStack to locate the API service code to upload to S3.  Pending investigation into long-term way to automatically build and consume API service code to remove this manual workaround.
+
+Steps to build and deploy CDK stacks:
+
 * Run `npm install` to install project dependencies.
 * Run `npm run test` and validate all tests pass.
 * Run `npx cdk synth` to synthesize CloudFormation templates from your local CDK code and validates succeeds.
 * Run `ls cdk.out` and validate that the project's stacks have assets and template JSON files generated in this folder, eg. `ConsentDataStack.template.json`.
 * Run `npx cdk bootstrap` to deploy a CDKToolkit CloudFormation stack to your account with prerequisites to deploying CDK applications, validate succeeds.
-* Run `npx cdk deploy <ENTER_STACK_NAME_HERE>` to deploy a given stack to your dev account, eg. `npx cdk deploy ConsentDataStack`, accept the `Do you wish to deploy these changes?` prompt, and validate deployment succeeds.
+* Run `npx cdk deploy <ENTER_STACK_NAME_HERE>` to deploy a given stack to your dev account.  Examples below:
+  * `npx cdk deploy ConsentDataStack`
+  * `npx cdk deploy ConsentManagementApiStack`
+
+### Updating stack snapshots
+
+This package uses test snapshots to validate in local builds and code reviews that CDK code updates apply the expected changes to CloudFormation templates.
+
+If you make functional changes to CDK code, builds will fail with an `N snapshot(s) failed.` message along with a diff of what the snapshot changes were.
+
+If the changes are as you expect, run `npm test -- -u` to update the snapshots.
 
 ## Useful commands
 
