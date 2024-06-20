@@ -36,8 +36,7 @@
                         "description": "Optional. Maximum number of Consents to return in a single response.",
                         "schema": {
                             "type": "integer",
-                            "description": "Optional. Maximum number of Consents to return in a single response.",
-                            "format": "int32"
+                            "description": "Optional. Maximum number of Consents to return in a single response."
                         }
                     },
                     {
@@ -353,8 +352,7 @@
                         "description": "Unique identifier for a Consent."
                     },
                     "consentVersion": {
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "integer"
                     },
                     "userId": {
                         "type": "string",
@@ -481,8 +479,7 @@
                 "properties": {
                     "consentVersion": {
                         "type": "integer",
-                        "description": "Updated consent version, used to conditionally write only if the stored data has the prior version, to protect against race conditions or writing stale data.",
-                        "format": "int32"
+                        "description": "Updated consent version, used to conditionally write only if the stored data has the prior version, to protect against race conditions or writing stale data."
                     },
                     "status": {
                         "$ref": "#/components/schemas/ConsentStatus"
@@ -500,6 +497,13 @@
                     "consentVersion"
                 ]
             }
+        }
+    },
+    "x-amazon-apigateway-request-validator": "full",
+    "x-amazon-apigateway-request-validators": {
+        "full": {
+            "validateRequestParameters": true,
+            "validateRequestBody": true
         }
     }
 }

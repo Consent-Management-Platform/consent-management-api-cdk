@@ -7,16 +7,28 @@ import { MOCK_STAGE_CONFIG } from '../../fixtures/mock-stage-config';
 import { ConsentManagementApiStack } from '../../lib/stacks/ConsentManagementApiStack';
 
 describe('ConsentManagementApiStack', () => {
-  // Strip or replace template sections that change on every upstream API service code update
+  // Normalize template IDs and attributes that change based on upstream package updates
   function cleanApiResources(templateJson: any) {
-    // Clear API service code S3 references which change every time there are upstream code updates
-    delete templateJson['Resources']['ConsentManagementAPILambda33B42EFA']['Properties']['Code'];
+    const RESOURCES_KEY = 'Resources';
+    const API_LAMBDA_INVOKE_KEY_PREFIX = 'ConsentManagementAPILambdaInvoke';
+    const API_GATEWAY_DEPLOYMENT_KEY_PREFIX = 'ConsentManagementAPIGatewayDeployment';
+    const API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX = 'ConsentManagementAPIGatewayDeploymentStagedev';
 
-    // Replace resource keys which change every time there are upstream service code updates
-    for (const resourceKey in templateJson['Resources']) {
-      if (resourceKey.startsWith('ConsentManagementAPILambdaInvoke')) {
-        templateJson['Resources']['ConsentManagementAPILambdaInvoke'] = templateJson['Resources'][resourceKey];
-        delete templateJson['Resources'][resourceKey];
+    // Remove API service code S3 path references which change on every API service package update
+    delete templateJson[RESOURCES_KEY]['ConsentManagementAPILambda33B42EFA']['Properties']['Code'];
+
+    // Normalize resource keys which change on upstream package updates
+    for (const resourceKey in templateJson[RESOURCES_KEY]) {
+      if (resourceKey.startsWith(API_LAMBDA_INVOKE_KEY_PREFIX)) {
+        templateJson[RESOURCES_KEY][API_LAMBDA_INVOKE_KEY_PREFIX] = templateJson[RESOURCES_KEY][resourceKey];
+        delete templateJson[RESOURCES_KEY][resourceKey];
+      } else if (resourceKey.startsWith(API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX)) {
+        templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX] = templateJson[RESOURCES_KEY][resourceKey];
+        delete templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX]['Properties']['DeploymentId'];
+        delete templateJson[RESOURCES_KEY][resourceKey];
+      } else if (resourceKey.startsWith(API_GATEWAY_DEPLOYMENT_KEY_PREFIX)) {
+        templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_KEY_PREFIX] = templateJson[RESOURCES_KEY][resourceKey];
+        delete templateJson[RESOURCES_KEY][resourceKey];
       }
     }
   }
