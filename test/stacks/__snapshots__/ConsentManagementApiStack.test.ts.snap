@@ -71,7 +71,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "type": "string",
                   },
                   "consentVersion": {
-                    "format": "int32",
                     "type": "integer",
                   },
                   "expiryTime": {
@@ -199,7 +198,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                   },
                   "consentVersion": {
                     "description": "Updated consent version, used to conditionally write only if the stored data has the prior version, to protect against race conditions or writing stale data.",
-                    "format": "int32",
                     "type": "integer",
                   },
                   "expiryTime": {
@@ -255,7 +253,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "name": "limit",
                     "schema": {
                       "description": "Optional. Maximum number of Consents to return in a single response.",
-                      "format": "int32",
                       "type": "integer",
                     },
                   },
@@ -643,6 +640,13 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
               },
             },
           },
+          "x-amazon-apigateway-request-validator": "full",
+          "x-amazon-apigateway-request-validators": {
+            "full": {
+              "validateRequestBody": true,
+              "validateRequestParameters": true,
+            },
+          },
         },
         "EndpointConfiguration": {
           "Types": [
@@ -702,7 +706,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       "Type": "AWS::IAM::Role",
       "UpdateReplacePolicy": "Retain",
     },
-    "ConsentManagementAPIGatewayDeployment0745D2C27ee1fb7d18c9c9d48d5c2d1226562932": {
+    "ConsentManagementAPIGatewayDeployment": {
       "Properties": {
         "Description": "Consent Management API, see documentation at https://consent-management-platform.github.io/consent-management-api-models/v1/docs.html",
         "RestApiId": {
@@ -711,14 +715,11 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::ApiGateway::Deployment",
     },
-    "ConsentManagementAPIGatewayDeploymentStagedev03496B65": {
+    "ConsentManagementAPIGatewayDeploymentStagedev": {
       "DependsOn": [
         "ConsentManagementAPIGatewayAccount906949A1",
       ],
       "Properties": {
-        "DeploymentId": {
-          "Ref": "ConsentManagementAPIGatewayDeployment0745D2C27ee1fb7d18c9c9d48d5c2d1226562932",
-        },
         "MethodSettings": [
           {
             "DataTraceEnabled": false,
