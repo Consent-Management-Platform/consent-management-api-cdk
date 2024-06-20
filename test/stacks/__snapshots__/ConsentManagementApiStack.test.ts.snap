@@ -742,10 +742,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "ConsentManagementAPILambdaServiceRoleFA4B1113",
       ],
       "Properties": {
-        "Code": {
-          "S3Bucket": "cdk-hnb659fds-assets-123456789012-us-east-2",
-          "S3Key": "dd13c9bf7355bfce5055aa14fd6ae2e053d8baf8fa08ce9ab717c5ea5eb0610c.zip",
-        },
         "Description": "Consent Management API Lambda",
         "Handler": "com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest",
         "MemorySize": 512,
@@ -760,7 +756,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::Lambda::Function",
     },
-    "ConsentManagementAPILambdaInvokeCTTNfoZaEcX0vyIZsGLg4TrL9TLUQuy3xejzx29T31ADE23DEB4": {
+    "ConsentManagementAPILambdaInvoke": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
