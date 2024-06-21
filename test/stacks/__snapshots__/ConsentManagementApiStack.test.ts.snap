@@ -654,6 +654,31 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           ],
         },
         "Name": "ConsentManagementApi",
+        "Policy": {
+          "Statement": [
+            {
+              "Action": "execute-api:Invoke",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":iam::123456789012:root",
+                    ],
+                  ],
+                },
+              },
+              "Resource": "execute-api/*",
+              "Sid": "ConsentManagementApiGatewaySameAccountFullInvokeAccess",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
       },
       "Type": "AWS::ApiGateway::RestApi",
     },
