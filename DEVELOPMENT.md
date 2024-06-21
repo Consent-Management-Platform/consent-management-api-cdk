@@ -35,7 +35,7 @@ Prerequisite set-up of API service package:
 Steps to build and deploy CDK stacks:
 
 * Run `npm install` to install project dependencies.
-* Run `npm run test` and validate all tests pass.
+* Run `npm test` and validate all tests pass.
 * Run `npx cdk synth` to synthesize CloudFormation templates from your local CDK code and validates succeeds.
 * Run `ls cdk.out` and validate that the project's stacks have assets and template JSON files generated in this folder, eg. `ConsentDataStack.template.json`.
 * Run `npx cdk bootstrap` to deploy a CDKToolkit CloudFormation stack to your account with prerequisites to deploying CDK applications, validate succeeds.
@@ -57,7 +57,7 @@ If the changes are as you expect, run `npm test -- -u` to update the snapshots.
 * `npm run build`   compile typescript to js
 * `npm run clean`   clear generated build artifacts such as cdk.out and node_modules
 * `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
+* `npm test`    perform the jest unit tests
 * `npx cdk bootstrap` deploy bootstrap stack to set up your AWS account with prerequisites for deploying your CDK stacks
 * `npx cdk deploy <STACK_NAME_HERE>`  deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state

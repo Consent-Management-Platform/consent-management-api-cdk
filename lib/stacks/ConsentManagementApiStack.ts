@@ -1,6 +1,6 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
-import { ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { readFileSync } from 'fs';
@@ -46,6 +46,7 @@ export class ConsentManagementApiStack extends Stack {
 
   private createRestApiGateway(apiLambda: Function): SpecRestApi {
     const apiDefinition = this.constructApiDefinition(apiLambda);
+    const apiAccessPolicy = this.createApiGatewayAccessPolicy();
 
     const api: SpecRestApi = new SpecRestApi(this, 'Consent Management API Gateway', {
       apiDefinition: ApiDefinition.fromInline(apiDefinition),
@@ -60,6 +61,7 @@ export class ConsentManagementApiStack extends Stack {
       description: `Consent Management API, see documentation at ${CONSENT_MANAGEMENT_API_DOCS_URL}`,
       endpointExportName: CONSENT_MANAGEMENT_API_ENDPOINT_EXPORT_NAME,
       endpointTypes: [EndpointType.EDGE],
+      policy: apiAccessPolicy,
       restApiName: 'ConsentManagementApi'
     });
 
@@ -92,5 +94,25 @@ export class ConsentManagementApiStack extends Stack {
     }
 
     return apiDefinition;
+  }
+
+  /**
+   * Explicitly set which principals are allowed to access which API methods.
+   * Anyone not explicitly granted permissions will be denied API access.
+   *
+   * Ref: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html
+   */
+  private createApiGatewayAccessPolicy(): PolicyDocument {
+    return new PolicyDocument({
+      statements: [new PolicyStatement({
+        sid: 'ConsentManagementApiGatewaySameAccountFullInvokeAccess',
+        actions: ['execute-api:Invoke'],
+        effect: Effect.ALLOW,
+        // Grant services within the same account API access
+        principals: [new AccountRootPrincipal()],
+        // Grants invoke permissions to all APIs within this API Gateway
+        resources: ['execute-api/*']
+      })]
+    });
   }
 }
