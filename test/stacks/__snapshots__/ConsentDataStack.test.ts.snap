@@ -10,74 +10,6 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
     },
   },
   "Resources": {
-    "ConsentEncryptionKey8F4953BE": {
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "EnableKeyRotation": true,
-        "KeyPolicy": {
-          "Statement": [
-            {
-              "Action": "kms:*",
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::123456789012:root",
-                    ],
-                  ],
-                },
-              },
-              "Resource": "*",
-            },
-            {
-              "Action": [
-                "kms:Decrypt",
-                "kms:Encrypt",
-                "kms:ReEncrypt*",
-                "kms:GenerateDataKey*",
-              ],
-              "Effect": "Allow",
-              "Principal": {
-                "AWS": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition",
-                      },
-                      ":iam::123456789012:root",
-                    ],
-                  ],
-                },
-              },
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::KMS::Key",
-      "UpdateReplacePolicy": "Retain",
-    },
-    "ConsentEncryptionKeyAlias978EDAEB": {
-      "Properties": {
-        "AliasName": "alias/ConsentTableEncryptionKey",
-        "TargetKeyId": {
-          "Fn::GetAtt": [
-            "ConsentEncryptionKey8F4953BE",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::KMS::Alias",
-    },
     "ServiceUserConsentDynamoDBTable7EDF0878": {
       "DeletionPolicy": "Retain",
       "Properties": {
@@ -125,14 +57,7 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
           "PointInTimeRecoveryEnabled": true,
         },
         "SSESpecification": {
-          "KMSMasterKeyId": {
-            "Fn::GetAtt": [
-              "ConsentEncryptionKey8F4953BE",
-              "Arn",
-            ],
-          },
           "SSEEnabled": true,
-          "SSEType": "KMS",
         },
         "TableName": "ServiceUserConsent",
       },
