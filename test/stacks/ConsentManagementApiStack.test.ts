@@ -35,13 +35,13 @@ describe('ConsentManagementApiStack', () => {
 
   it('creates the expected CloudFormation template from CDK', () => {
     const app = new App();
-    const consentDataStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
+    const apiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       apiCodePackageFilePath: join(__dirname, '../../../consent-management-api')
     });
 
-    const templateJson = Template.fromStack(consentDataStack).toJSON();
+    const templateJson = Template.fromStack(apiStack).toJSON();
     cleanApiResources(templateJson);
 
     expect(templateJson).toMatchSnapshot();
