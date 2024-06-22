@@ -2,33 +2,7 @@
 
 exports[`ConsentManagementApiStack creates the expected CloudFormation template from CDK 1`] = `
 {
-  "Outputs": {
-    "ConsentManagementAPIGatewayEndpoint54E719D3": {
-      "Export": {
-        "Name": "ConsentManagementApiEndpoint",
-      },
-      "Value": {
-        "Fn::Join": [
-          "",
-          [
-            "https://",
-            {
-              "Ref": "ConsentManagementAPIGateway2FBFF2A2",
-            },
-            ".execute-api.us-east-2.",
-            {
-              "Ref": "AWS::URLSuffix",
-            },
-            "/",
-            {
-              "Ref": "ConsentManagementAPIGatewayDeploymentStagedev03496B65",
-            },
-            "/",
-          ],
-        ],
-      },
-    },
-  },
+  "Outputs": {},
   "Parameters": {
     "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
@@ -730,7 +704,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::ApiGateway::Deployment",
     },
-    "ConsentManagementAPIGatewayDeploymentStagedev": {
+    "ConsentManagementAPIGatewayDeploymentStageprod": {
       "DependsOn": [
         "ConsentManagementAPIGatewayAccount906949A1",
       ],
@@ -749,7 +723,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "RestApiId": {
           "Ref": "ConsentManagementAPIGateway2FBFF2A2",
         },
-        "StageName": "dev",
+        "StageName": "prod",
       },
       "Type": "AWS::ApiGateway::Stage",
     },
