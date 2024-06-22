@@ -1,0 +1,900 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConsentManagementMonitoringStack creates the expected CloudFormation template from CDK 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ConsentManagementDashboardFactoryAlarmDashboard83B9B826": {
+      "Properties": {
+        "DashboardBody": {
+          "Fn::Join": [
+            "",
+            [
+              "{"start":"-PT8H","periodOverride":"inherit","widgets":[{"type":"metric","width":6,"height":4,"x":0,"y":0,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents Latency-P95 Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsLatencyP95Warning14FF2639",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":0,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents Fault-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsFaultCountWarningE049F2CD",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":0,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents MaxTPS Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsMaxTPSWarning66FFADF4",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":4,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents Latency-P95 Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsLatencyP95Warning465DA81B",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":4,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents Fault-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsFaultCountWarning019C3602",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":4,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents MaxTPS Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsMaxTPSWarning0E334E06",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":8,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId Latency-P95 Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdLatencyP95Warning2E8AFEE0",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":8,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId Fault-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdFaultCountWarning96F18CCA",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":8,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId MaxTPS Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdMaxTPSWarningD33A2BD4",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":12,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId Latency-P95 Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdLatencyP95Warning0392C04F",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":12,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId Fault-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdFaultCountWarning8E5B7183",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":12,"properties":{"view":"timeSeries","title":"ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId MaxTPS Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdMaxTPSWarningC40D168E",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}}]}",
+            ],
+          ],
+        },
+        "DashboardName": "ConsentManagement-Alarms",
+      },
+      "Type": "AWS::CloudWatch::Dashboard",
+    },
+    "ConsentManagementDashboardFactoryDashboard1B57A668": {
+      "Properties": {
+        "DashboardBody": {
+          "Fn::Join": [
+            "",
+            [
+              "{"start":"-PT8H","periodOverride":"inherit","widgets":[{"type":"text","width":24,"height":1,"x":0,"y":0,"properties":{"markdown":"# Consent Management API Gateway Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":1,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod GET /v1/consent-management/services/{serviceId}/users/{userId}/consents**"}},{"type":"metric","width":6,"height":5,"x":0,"y":2,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":6,"y":2,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":12,"y":2,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error","stat":"Sum"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"5XX Fault > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":18,"y":2,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":7,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod POST /v1/consent-management/services/{serviceId}/users/{userId}/consents**"}},{"type":"metric","width":6,"height":5,"x":0,"y":8,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":6,"y":8,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":12,"y":8,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error","stat":"Sum"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"5XX Fault > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":18,"y":8,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":13,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod GET /v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}**"}},{"type":"metric","width":6,"height":5,"x":0,"y":14,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":6,"y":14,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":12,"y":14,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error","stat":"Sum"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"5XX Fault > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":18,"y":14,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":19,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod POST /v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}**"}},{"type":"metric","width":6,"height":5,"x":0,"y":20,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":6,"y":20,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":12,"y":20,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error","stat":"Sum"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"5XX Fault > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":18,"y":20,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}}]}",
+            ],
+          ],
+        },
+        "DashboardName": "ConsentManagement",
+      },
+      "Type": "AWS::CloudWatch::Dashboard",
+    },
+    "ConsentManagementDashboardFactorySummaryDashboardED929EAC": {
+      "Properties": {
+        "DashboardBody": {
+          "Fn::Join": [
+            "",
+            [
+              "{"start":"-P14D","periodOverride":"inherit","widgets":[{"type":"text","width":24,"height":1,"x":0,"y":0,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod GET /v1/consent-management/services/{serviceId}/users/{userId}/consents**"}},{"type":"metric","width":8,"height":6,"x":0,"y":1,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":8,"y":1,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":16,"y":1,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":7,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod POST /v1/consent-management/services/{serviceId}/users/{userId}/consents**"}},{"type":"metric","width":8,"height":6,"x":0,"y":8,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":8,"y":8,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":16,"y":8,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":14,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod GET /v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}**"}},{"type":"metric","width":8,"height":6,"x":0,"y":15,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":8,"y":15,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":16,"y":15,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","GET","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":21,"properties":{"markdown":"### API Gateway Endpoint **ConsentManagementApi prod POST /v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}**"}},{"type":"metric","width":8,"height":6,"x":0,"y":22,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Count/s","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/ApiGateway","Count","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"Count","stat":"Sum","visible":false,"id":"requests"}]],"annotations":{"horizontal":[{"label":"Count/s > 100 for 3 datapoints within 15 minutes","value":100,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":8,"y":22,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P95 (avg: \${AVG})","stat":"p95"}],["AWS/ApiGateway","Latency","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P95 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":6,"x":16,"y":22,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}}]}",
+            ],
+          ],
+        },
+        "DashboardName": "ConsentManagement-Summary",
+      },
+      "Type": "AWS::CloudWatch::Dashboard",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsFaultCountWarningE049F2CD": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Fault count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents-Fault-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "5XX Fault",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "5XXError",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsLatencyP95Warning14FF2639": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "P95 latency is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents-Latency-P95-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "P95",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Latency",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "p95",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 50,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsMaxTPSWarning66FFADF4": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "TPS is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsents-MaxTPS-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(requests,0) / PERIOD(requests)",
+            "Id": "expr_1",
+            "Label": "Count/s",
+          },
+          {
+            "Id": "requests",
+            "Label": "Count",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Count",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdFaultCountWarning96F18CCA": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Fault count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-Fault-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "5XX Fault",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "5XXError",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdLatencyP95Warning2E8AFEE0": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "P95 latency is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-Latency-P95-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "P95",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Latency",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "p95",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 50,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdMaxTPSWarningD33A2BD4": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "TPS is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-GET-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-MaxTPS-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(requests,0) / PERIOD(requests)",
+            "Id": "expr_1",
+            "Label": "Count/s",
+          },
+          {
+            "Id": "requests",
+            "Label": "Count",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "GET",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Count",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsFaultCountWarning019C3602": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Fault count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents-Fault-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "5XX Fault",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "5XXError",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsLatencyP95Warning465DA81B": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "P95 latency is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents-Latency-P95-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "P95",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Latency",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "p95",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 50,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsMaxTPSWarning0E334E06": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "TPS is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsents-MaxTPS-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(requests,0) / PERIOD(requests)",
+            "Id": "expr_1",
+            "Label": "Count/s",
+          },
+          {
+            "Id": "requests",
+            "Label": "Count",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Count",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdFaultCountWarning8E5B7183": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Fault count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-Fault-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "5XX Fault",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "5XXError",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdLatencyP95Warning0392C04F": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "P95 latency is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-Latency-P95-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "P95",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Latency",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "p95",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 50,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodPOSTv1consentmanagementservicesserviceIdusersuserIdconsentsconsentIdMaxTPSWarningC40D168E": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "TPS is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApi-prod-POST-v1consent-managementservicesserviceIdusersuserIdconsentsconsentId-MaxTPS-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(requests,0) / PERIOD(requests)",
+            "Id": "expr_1",
+            "Label": "Count/s",
+          },
+          {
+            "Id": "requests",
+            "Label": "Count",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "ApiName",
+                    "Value": "ConsentManagementApi",
+                  },
+                  {
+                    "Name": "Method",
+                    "Value": "POST",
+                  },
+                  {
+                    "Name": "Resource",
+                    "Value": "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}",
+                  },
+                  {
+                    "Name": "Stage",
+                    "Value": "prod",
+                  },
+                ],
+                "MetricName": "Count",
+                "Namespace": "AWS/ApiGateway",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 100,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

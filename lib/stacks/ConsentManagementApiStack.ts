@@ -3,8 +3,6 @@ import { ApiDefinition, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aw
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 
 import {
   CONSENT_MANAGEMENT_API_DOCS_URL,
@@ -13,6 +11,7 @@ import {
   CONSENT_MANAGEMENT_API_THROTTLING_LIMIT
 } from '../constants/apis';
 import { StageConfig } from '../interfaces/stage-config';
+import { constructApiDefinition } from '../utils/openapi';
 
 export interface ConsentManagementApiStackProps extends StackProps {
   apiCodePackageFilePath: string;
@@ -45,7 +44,7 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createRestApiGateway(apiLambda: Function): SpecRestApi {
-    const apiDefinition = this.constructApiDefinition(apiLambda);
+    const apiDefinition: object = constructApiDefinition(this.props.env!, apiLambda.functionArn);
     const apiAccessPolicy = this.createApiGatewayAccessPolicy();
 
     const api: SpecRestApi = new SpecRestApi(this, 'Consent Management API Gateway', {
@@ -70,25 +69,6 @@ export class ConsentManagementApiStack extends Stack {
     }));
 
     return api;
-  }
-
-  private constructApiDefinition(apiLambda: Function) {
-    const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
-    const apiDefinition = JSON.parse(readFileSync(openApiSpecFilePath, 'utf8'));
-
-    // Replace placeholders in API Gateway integration settings
-    for (const path in apiDefinition.paths) {
-      for (const operation in apiDefinition.paths[path]) {
-        const integration = apiDefinition.paths[path][operation]['x-amazon-apigateway-integration'];
-        if(!integration) {
-          throw new Error(`Smithy models missing API Gateway integration config for path: '${path}', operation: '${operation}'`);
-        }
-
-        integration.uri = `arn:aws:apigateway:${this.props.env!.region}:lambda:path/2015-03-31/functions/${apiLambda.functionArn}/invocations`;
-      }
-    }
-
-    return apiDefinition;
   }
 
   /**

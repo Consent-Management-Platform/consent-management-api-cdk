@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import { App } from 'aws-cdk-lib';
+import { join } from 'path';
 
 import { StageName } from '../lib/constants/stages';
 import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
-import { join } from 'path';
+import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
 
 const app = new App();
 const commonStackProps = {
@@ -19,7 +20,12 @@ const commonStackProps = {
 };
 
 new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
-new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
+const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
   ...commonStackProps,
   apiCodePackageFilePath: join(__dirname, '../../consent-management-api/build/distributions/consent-management-api.zip')
+});
+new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
+  ...commonStackProps,
+  apiLambda: consentManagementApiStack.apiLambda,
+  restApi: consentManagementApiStack.restApi
 });
