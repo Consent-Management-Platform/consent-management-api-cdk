@@ -68,6 +68,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                   },
                   "consentId": {
                     "description": "Unique identifier for a Consent.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
                     "type": "string",
                   },
                   "consentVersion": {
@@ -80,6 +81,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                   },
                   "serviceId": {
                     "description": "Unique identifier for a service.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
                     "type": "string",
                   },
                   "status": {
@@ -87,6 +89,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                   },
                   "userId": {
                     "description": "Unique identifier for a user.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
                     "type": "string",
                   },
                 },
@@ -141,6 +144,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 "properties": {
                   "consentId": {
                     "description": "Unique identifier for a Consent.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
                     "type": "string",
                   },
                 },
@@ -234,6 +238,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -244,6 +249,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -300,12 +306,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 },
                 "x-amazon-apigateway-integration": {
                   "httpMethod": "POST",
-                  "passthroughBehavior": "when_no_match",
-                  "responses": {
-                    "default": {
-                      "statusCode": "200",
-                    },
-                  },
                   "type": "aws_proxy",
                   "uri": {
                     "Fn::Join": [
@@ -335,6 +335,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -345,6 +346,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -403,12 +405,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 },
                 "x-amazon-apigateway-integration": {
                   "httpMethod": "POST",
-                  "passthroughBehavior": "when_no_match",
-                  "responses": {
-                    "default": {
-                      "statusCode": "200",
-                    },
-                  },
                   "type": "aws_proxy",
                   "uri": {
                     "Fn::Join": [
@@ -440,6 +436,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a Consent.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -450,6 +447,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -460,6 +458,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -498,12 +497,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 },
                 "x-amazon-apigateway-integration": {
                   "httpMethod": "POST",
-                  "passthroughBehavior": "when_no_match",
-                  "responses": {
-                    "default": {
-                      "statusCode": "200",
-                    },
-                  },
                   "type": "aws_proxy",
                   "uri": {
                     "Fn::Join": [
@@ -533,6 +526,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a Consent.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -543,6 +537,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -553,6 +548,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "required": true,
                     "schema": {
                       "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
                       "type": "string",
                     },
                   },
@@ -614,12 +610,6 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 },
                 "x-amazon-apigateway-integration": {
                   "httpMethod": "POST",
-                  "passthroughBehavior": "when_no_match",
-                  "responses": {
-                    "default": {
-                      "statusCode": "200",
-                    },
-                  },
                   "type": "aws_proxy",
                   "uri": {
                     "Fn::Join": [
