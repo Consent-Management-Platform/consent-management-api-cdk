@@ -76,20 +76,15 @@ export class ConsentManagementApiStack extends Stack {
     const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
     const apiDefinition = JSON.parse(readFileSync(openApiSpecFilePath, 'utf8'));
 
-    // Add API Gateway integration to OpenAPI spec
+    // Replace placeholders in API Gateway integration settings
     for (const path in apiDefinition.paths) {
       for (const operation in apiDefinition.paths[path]) {
-        apiDefinition.paths[path][operation]['x-amazon-apigateway-integration'] = {
-          type: 'aws_proxy',
-          httpMethod: 'POST',
-          passthroughBehavior: 'when_no_match',
-          responses: {
-            default: {
-              statusCode: '200',
-            },
-          },
-          uri: `arn:aws:apigateway:${this.props.env!.region}:lambda:path/2015-03-31/functions/${apiLambda.functionArn}/invocations`
+        const integration = apiDefinition.paths[path][operation]['x-amazon-apigateway-integration'];
+        if(!integration) {
+          throw new Error(`Smithy models missing API Gateway integration config for path: '${path}', operation: '${operation}'`);
         }
+
+        integration.uri = `arn:aws:apigateway:${this.props.env!.region}:lambda:path/2015-03-31/functions/${apiLambda.functionArn}/invocations`;
       }
     }
 

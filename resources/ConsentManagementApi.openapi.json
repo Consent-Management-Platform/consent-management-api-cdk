@@ -16,6 +16,7 @@
                         "description": "Unique identifier for a service.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a service."
                         },
                         "required": true
@@ -26,6 +27,7 @@
                         "description": "Unique identifier for a user.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a user."
                         },
                         "required": true
@@ -80,6 +82,13 @@
                             }
                         }
                     }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": {
+                        "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
+                    }
                 }
             },
             "post": {
@@ -102,6 +111,7 @@
                         "description": "Unique identifier for a service.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a service."
                         },
                         "required": true
@@ -112,6 +122,7 @@
                         "description": "Unique identifier for a user.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a user."
                         },
                         "required": true
@@ -158,6 +169,13 @@
                             }
                         }
                     }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": {
+                        "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
+                    }
                 }
             }
         },
@@ -172,6 +190,7 @@
                         "description": "Unique identifier for a Consent.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a Consent."
                         },
                         "required": true
@@ -182,6 +201,7 @@
                         "description": "Unique identifier for a service.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a service."
                         },
                         "required": true
@@ -192,6 +212,7 @@
                         "description": "Unique identifier for a user.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a user."
                         },
                         "required": true
@@ -228,6 +249,13 @@
                             }
                         }
                     }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": {
+                        "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
+                    }
                 }
             },
             "post": {
@@ -250,6 +278,7 @@
                         "description": "Unique identifier for a Consent.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a Consent."
                         },
                         "required": true
@@ -260,6 +289,7 @@
                         "description": "Unique identifier for a service.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a service."
                         },
                         "required": true
@@ -270,6 +300,7 @@
                         "description": "Unique identifier for a user.",
                         "schema": {
                             "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
                             "description": "Unique identifier for a user."
                         },
                         "required": true
@@ -319,6 +350,13 @@
                             }
                         }
                     }
+                },
+                "x-amazon-apigateway-integration": {
+                    "type": "aws_proxy",
+                    "httpMethod": "POST",
+                    "uri": {
+                        "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
+                    }
                 }
             }
         }
@@ -349,6 +387,7 @@
                 "properties": {
                     "consentId": {
                         "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
                         "description": "Unique identifier for a Consent."
                     },
                     "consentVersion": {
@@ -356,10 +395,12 @@
                     },
                     "userId": {
                         "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
                         "description": "Unique identifier for a user."
                     },
                     "serviceId": {
                         "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
                         "description": "Unique identifier for a service."
                     },
                     "status": {
@@ -425,6 +466,7 @@
                 "properties": {
                     "consentId": {
                         "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
                         "description": "Unique identifier for a Consent."
                     }
                 },
