@@ -9,13 +9,16 @@ import { ConsentManagementApiStack } from '../../lib/stacks/ConsentManagementApi
 describe('ConsentManagementApiStack', () => {
   // Normalize template IDs and attributes that change based on upstream package updates
   function cleanApiResources(templateJson: any) {
-    const RESOURCES_KEY = 'Resources';
+    const API_DEPLOYMENT_KEY_PREFIX = 'ConsentManagementApiDeployment';
     const API_LAMBDA_INVOKE_KEY_PREFIX = 'ConsentManagementAPILambdaInvoke';
     const API_GATEWAY_DEPLOYMENT_KEY_PREFIX = 'ConsentManagementAPIGatewayDeployment';
-    const API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX = 'ConsentManagementAPIGatewayDeploymentStagedev';
+    const API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX = 'ConsentManagementAPIGatewayDeploymentStageprod';
+    const OUTPUTS_KEY = 'Outputs';
+    const PROPERTIES_KEY = 'Properties';
+    const RESOURCES_KEY = 'Resources';
 
     // Remove API service code S3 path references which change on every API service package update
-    delete templateJson[RESOURCES_KEY]['ConsentManagementAPILambda33B42EFA']['Properties']['Code'];
+    delete templateJson[RESOURCES_KEY]['ConsentManagementAPILambda33B42EFA'][PROPERTIES_KEY]['Code'];
 
     // Normalize resource keys which change on upstream package updates
     for (const resourceKey in templateJson[RESOURCES_KEY]) {
@@ -24,11 +27,20 @@ describe('ConsentManagementApiStack', () => {
         delete templateJson[RESOURCES_KEY][resourceKey];
       } else if (resourceKey.startsWith(API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX)) {
         templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX] = templateJson[RESOURCES_KEY][resourceKey];
-        delete templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX]['Properties']['DeploymentId'];
+        delete templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX][PROPERTIES_KEY]['DeploymentId'];
         delete templateJson[RESOURCES_KEY][resourceKey];
       } else if (resourceKey.startsWith(API_GATEWAY_DEPLOYMENT_KEY_PREFIX)) {
         templateJson[RESOURCES_KEY][API_GATEWAY_DEPLOYMENT_KEY_PREFIX] = templateJson[RESOURCES_KEY][resourceKey];
         delete templateJson[RESOURCES_KEY][resourceKey];
+      } else if (resourceKey.startsWith(API_DEPLOYMENT_KEY_PREFIX)) {
+        delete templateJson[RESOURCES_KEY][resourceKey];
+      }
+    }
+
+    // Strip outputs that change dependent on upstream package updates
+    for (const outputKey in templateJson[OUTPUTS_KEY]) {
+      if (outputKey.startsWith('ConsentManagementAPIGatewayEndpoint')) {
+        delete templateJson[OUTPUTS_KEY][outputKey];
       }
     }
   }

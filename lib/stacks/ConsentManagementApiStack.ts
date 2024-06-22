@@ -1,5 +1,5 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
-import { ApiDefinition, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
@@ -53,7 +53,7 @@ export class ConsentManagementApiStack extends Stack {
       deployOptions: {
         metricsEnabled: true,
         loggingLevel: MethodLoggingLevel.INFO,
-        stageName: 'dev',
+        stageName: this.props.stageConfig.stage,
         throttlingBurstLimit: CONSENT_MANAGEMENT_API_THROTTLING_BURST_LIMIT,
         throttlingRateLimit: CONSENT_MANAGEMENT_API_THROTTLING_LIMIT
       },
@@ -63,6 +63,10 @@ export class ConsentManagementApiStack extends Stack {
       policy: apiAccessPolicy,
       restApiName: 'ConsentManagementApi'
     });
+
+    // Trigger API Gateway deployment when there are OpenAPI spec updates to apply the changes
+    const apiDeployment = new Deployment(this, 'ConsentManagementApiDeployment', { api });
+    apiDeployment.addToLogicalId(apiDefinition);
 
     apiLambda.grantInvoke(new ServicePrincipal('apigateway.amazonaws.com').withConditions({
       ArnLike: { 'aws:SourceArn': api.arnForExecuteApi() }
