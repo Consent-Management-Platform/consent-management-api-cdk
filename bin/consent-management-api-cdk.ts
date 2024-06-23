@@ -19,7 +19,7 @@ const commonStackProps = {
   }
 };
 
-new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
+const consentDataStack: ConsentDataStack = new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
 const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
   ...commonStackProps,
   apiCodePackageFilePath: join(__dirname, '../../consent-management-api/build/distributions/consent-management-api.zip')
@@ -27,5 +27,6 @@ const consentManagementApiStack: ConsentManagementApiStack = new ConsentManageme
 new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
   apiLambda: consentManagementApiStack.apiLambda,
+  consentTable: consentDataStack.consentTable,
   restApi: consentManagementApiStack.restApi
 });

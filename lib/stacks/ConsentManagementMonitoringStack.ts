@@ -1,5 +1,6 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Function } from 'aws-cdk-lib/aws-lambda';
 import { DefaultDashboardFactory, MonitoringFacade } from 'cdk-monitoring-constructs';
 import { Construct } from 'constructs';
@@ -9,6 +10,7 @@ import { constructApiDefinition } from '../utils/openapi';
 
 export interface ConsentManagementMonitoringStackProps extends StackProps {
   apiLambda: Function;
+  consentTable: Table;
   restApi: SpecRestApi;
   stageConfig: StageConfig;
 }
@@ -16,11 +18,15 @@ export interface ConsentManagementMonitoringStackProps extends StackProps {
 export class ConsentManagementMonitoringStack extends Stack {
   private readonly monitoring: MonitoringFacade;
 
+  private static readonly THIRTY_MILLIS: Duration = Duration.millis(30);
+  private static readonly FIFTY_MILLIS: Duration = Duration.millis(50);
+
   constructor(scope: Construct, id: string, readonly props: ConsentManagementMonitoringStackProps) {
     super(scope, id, props);
 
     this.monitoring = this.createMonitoringFacade();
     this.createRestApiGatewayMonitoring();
+    this.createConsentDynamoDBMonitoring();
   }
 
   private createMonitoringFacade(): MonitoringFacade {
@@ -54,7 +60,7 @@ export class ConsentManagementMonitoringStack extends Stack {
           },
           addLatencyP95Alarm: {
             Warning: {
-              maxLatency: Duration.millis(50)
+              maxLatency: ConsentManagementMonitoringStack.FIFTY_MILLIS
             }
           },
           addHighTpsAlarm: {
@@ -64,6 +70,46 @@ export class ConsentManagementMonitoringStack extends Stack {
           }
         });
       });
+    });
+  }
+
+  private createConsentDynamoDBMonitoring() {
+    this.monitoring.addLargeHeader('Consent Management DynamoDB Metrics');
+    this.monitoring.monitorDynamoTable({
+      table: this.props.consentTable,
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      addToDetailDashboard: true,
+      addToSummaryDashboard: false,
+      addAverageSuccessfulGetItemLatencyAlarm: {
+        Warning: {
+          maxLatency: ConsentManagementMonitoringStack.THIRTY_MILLIS
+        }
+      },
+      addAverageSuccessfulQueryLatencyAlarm: {
+        Warning: {
+          maxLatency: ConsentManagementMonitoringStack.THIRTY_MILLIS
+        }
+      },
+      addAverageSuccessfulPutItemLatencyAlarm: {
+        Warning: {
+          maxLatency: ConsentManagementMonitoringStack.THIRTY_MILLIS
+        }
+      },
+      addAverageSuccessfulScanLatencyAlarm: {
+        Warning: {
+          maxLatency: ConsentManagementMonitoringStack.THIRTY_MILLIS
+        }
+      },
+      addReadThrottledEventsCountAlarm: {
+        Warning: {
+          maxThrottledEventsThreshold: 0
+        }
+      },
+      addWriteThrottledEventsCountAlarm: {
+        Warning: {
+          maxThrottledEventsThreshold: 0
+        }
+      }
     });
   }
 }

@@ -42,6 +42,7 @@ Steps to build and deploy CDK stacks:
 * Run `npx cdk deploy <ENTER_STACK_NAME_HERE>` to deploy a given stack to your dev account.  Examples below:
   * `npx cdk deploy ConsentDataStack`
   * `npx cdk deploy ConsentManagementApiStack`
+  * `npx cdk deploy ConsentManagementMonitoringStack`
 
 ### Updating stack snapshots
 
