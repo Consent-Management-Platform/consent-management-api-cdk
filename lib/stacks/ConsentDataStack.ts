@@ -16,7 +16,7 @@ export interface ConsentDataStackProps extends StackProps {
  * which should be extremely stable and never deleted after prod launch.
  */
 export class ConsentDataStack extends Stack {
-  private readonly consentTable: Table;
+  public readonly consentTable: Table;
 
   constructor(scope: Construct, id: string, readonly props: ConsentDataStackProps) {
     super(scope, id, props);
