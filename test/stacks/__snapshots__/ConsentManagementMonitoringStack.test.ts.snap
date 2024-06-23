@@ -148,7 +148,62 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":16,"properties":{"view":"timeSeries","title":"ServiceUserConsent Read-Throttled-Events Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":16,"properties":{"view":"timeSeries","title":"ConsentManagementApiLambda Average-Memory-Usage Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaAverageMemoryUsageWarning1CC49FFE",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":16,"properties":{"view":"timeSeries","title":"ConsentManagementApiLambda Latency-P90 Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaLatencyP90WarningA3E8707C",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":16,"properties":{"view":"timeSeries","title":"ConsentManagementApiLambda Fault-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaFaultCountWarningC553AF04",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":18,"y":16,"properties":{"view":"timeSeries","title":"ConsentManagementApiLambda Throttled-Count Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaThrottledCountWarningF775B05D",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":20,"properties":{"view":"timeSeries","title":"ConsentManagementApiLambda Running-Tasks-High Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaRunningTasksHighWarningD8C2A6D4",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":24,"properties":{"view":"timeSeries","title":"ServiceUserConsent Read-Throttled-Events Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -159,7 +214,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":16,"properties":{"view":"timeSeries","title":"ServiceUserConsent Write-Throttled-Events Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":24,"properties":{"view":"timeSeries","title":"ServiceUserConsent Write-Throttled-Events Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -170,7 +225,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":16,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-Query Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":12,"y":24,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-Query Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -181,7 +236,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":18,"y":16,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-Scan Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":18,"y":24,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-Scan Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -192,7 +247,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":20,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-PutItem Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":28,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-PutItem Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -203,7 +258,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":20,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-GetItem Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":28,"properties":{"view":"timeSeries","title":"ServiceUserConsent Latency-Average-GetItem Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -292,11 +347,139 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Ref": "AWS::Region",
               },
-              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":25,"properties":{"markdown":"# Consent Management DynamoDB Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":26,"properties":{"markdown":"### Dynamo Table **[ServiceUserConsent](https://us-east-2.console.aws.amazon.com/dynamodb/home?region=us-east-2#tables:selected=",
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentManagementApi","Method","POST","Resource","/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":25,"properties":{"markdown":"# Consent Management API Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":26,"properties":{"markdown":"### Lambda Function **[Consent Management API Lambda](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              ")**"}},{"type":"metric","width":6,"height":5,"x":0,"y":27,"properties":{"view":"timeSeries","title":"TPS","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"TPS","expression":"FILL(requests,0) / PERIOD(requests)"}],["AWS/Lambda","Invocations","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Invocations","stat":"Sum","visible":false,"id":"requests"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":6,"y":27,"properties":{"view":"timeSeries","title":"Latency","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","Duration","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"P50 (avg: \${AVG})","stat":"p50"}],["AWS/Lambda","Duration","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"P90 (avg: \${AVG})","stat":"p90"}],["AWS/Lambda","Duration","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"P99 (avg: \${AVG})","stat":"p99"}]],"annotations":{"horizontal":[{"label":"P90 > 50 for 3 datapoints within 15 minutes","value":50,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":12,"y":27,"properties":{"view":"timeSeries","title":"Errors (rate)","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","Errors","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Faults (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"metric","width":6,"height":5,"x":18,"y":27,"properties":{"view":"timeSeries","title":"Rates","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","Throttles","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Throttles (avg)"}],["AWS/Lambda","ProvisionedConcurrencySpilloverInvocations","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Provisioned Concurrency Spillovers (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":0,"y":32,"properties":{"view":"timeSeries","title":"Invocations","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","Invocations","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Invocations","stat":"Sum"}],["AWS/Lambda","Throttles","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Throttles","stat":"Sum"}],["AWS/Lambda","ConcurrentExecutions","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Concurrent","stat":"Maximum"}],["AWS/Lambda","ProvisionedConcurrencySpilloverInvocations","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Provisioned Concurrency Spillovers","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"Throttles > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Concurrent > 800 for 3 datapoints within 15 minutes","value":800,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":8,"y":32,"properties":{"view":"timeSeries","title":"Iterator","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","IteratorAge","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Iterator Age","stat":"Maximum"}]],"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":16,"y":32,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["AWS/Lambda","Errors","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"Faults","stat":"Sum"}]],"annotations":{"horizontal":[{"label":"Faults > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":0,"y":37,"properties":{"view":"timeSeries","title":"CPU Total Time","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["LambdaInsights","cpu_total_time","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"CPUTotalTime.Max","stat":"Maximum"}],["LambdaInsights","cpu_total_time","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"CPUTotalTime.P90","stat":"p90"}],["LambdaInsights","cpu_total_time","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"CPUTotalTime.Avg"}]],"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":8,"y":37,"properties":{"view":"timeSeries","title":"Memory Utilization","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[["LambdaInsights","memory_utilization","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"MemoryUtilization.Max","stat":"Maximum"}],["LambdaInsights","memory_utilization","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"MemoryUtilization.P90","stat":"p90"}],["LambdaInsights","memory_utilization","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"MemoryUtilization.Avg"}]],"annotations":{"horizontal":[{"label":"MemoryUtilization.Avg > 90 for 3 datapoints within 15 minutes","value":90,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"max":100,"label":"%","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":16,"y":37,"properties":{"view":"timeSeries","title":"Function Cost","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Function Cost (avg: \${AVG}, max: \${MAX})","expression":"memory_utilization * duration"}],["LambdaInsights","memory_utilization","function_name","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"label":"MemoryUtilization.Max","stat":"Maximum","visible":false,"id":"memory_utilization"}],["AWS/Lambda","Duration","FunctionName","",
+              {
+                "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+              },
+              "",{"stat":"Sum","visible":false,"id":"duration"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":42,"properties":{"markdown":"# Consent Management DynamoDB Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":43,"properties":{"markdown":"### Dynamo Table **[ServiceUserConsent](https://us-east-2.console.aws.amazon.com/dynamodb/home?region=us-east-2#tables:selected=",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              ")**"}},{"type":"metric","width":6,"height":3,"x":0,"y":27,"properties":{"view":"timeSeries","title":"Read Usage","region":"",
+              ")**"}},{"type":"metric","width":6,"height":3,"x":0,"y":44,"properties":{"view":"timeSeries","title":"Read Usage","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -304,7 +487,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"consumed_rcu_sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":3,"x":0,"y":30,"properties":{"view":"timeSeries","title":"Write Usage","region":"",
+              "",{"stat":"Sum","visible":false,"id":"consumed_rcu_sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":3,"x":0,"y":47,"properties":{"view":"timeSeries","title":"Write Usage","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -312,7 +495,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"consumed_wcu_sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":9,"height":6,"x":6,"y":27,"properties":{"view":"timeSeries","title":"Latency (Average)","region":"",
+              "",{"stat":"Sum","visible":false,"id":"consumed_wcu_sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":9,"height":6,"x":6,"y":44,"properties":{"view":"timeSeries","title":"Latency (Average)","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -320,7 +503,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "\\" MetricName=\\"SuccessfulRequestLatency\\"', 'Average', 300)"}]],"annotations":{"horizontal":[{"label":"Query > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"},{"label":"Scan > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"},{"label":"PutItem > 15 for 3 datapoints within 15 minutes","value":15,"yAxis":"left"},{"label":"GetItem > 15 for 3 datapoints within 15 minutes","value":15,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}},"legend":{"position":"right"}}},{"type":"metric","width":3,"height":6,"x":15,"y":27,"properties":{"view":"timeSeries","title":"Throttles","region":"",
+              "\\" MetricName=\\"SuccessfulRequestLatency\\"', 'Average', 300)"}]],"annotations":{"horizontal":[{"label":"Query > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"},{"label":"Scan > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"},{"label":"PutItem > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"},{"label":"GetItem > 30 for 3 datapoints within 15 minutes","value":30,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"ms","showUnits":false}},"legend":{"position":"right"}}},{"type":"metric","width":3,"height":6,"x":15,"y":44,"properties":{"view":"timeSeries","title":"Throttles","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -332,7 +515,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"label":"Write","stat":"Sum","visible":false,"id":"writeThrottles"}]],"annotations":{"horizontal":[{"label":"Read > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Write > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":6,"x":18,"y":27,"properties":{"view":"timeSeries","title":"Errors","region":"",
+              "",{"label":"Write","stat":"Sum","visible":false,"id":"writeThrottles"}]],"annotations":{"horizontal":[{"label":"Read > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Write > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":6,"height":6,"x":18,"y":44,"properties":{"view":"timeSeries","title":"Errors","region":"",
               {
                 "Ref": "AWS::Region",
               },
@@ -441,6 +624,186 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
         "DashboardName": "ConsentManagement-Summary",
       },
       "Type": "AWS::CloudWatch::Dashboard",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaAverageMemoryUsageWarning1CC49FFE": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "The memory usage is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApiLambda-Average-Memory-Usage-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "MemoryUtilization.Avg",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "function_name",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+                    },
+                  },
+                ],
+                "MetricName": "memory_utilization",
+                "Namespace": "LambdaInsights",
+              },
+              "Period": 300,
+              "Stat": "Average",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 90,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaFaultCountWarningC553AF04": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Fault count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApiLambda-Fault-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "Faults",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "FunctionName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+                    },
+                  },
+                ],
+                "MetricName": "Errors",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaLatencyP90WarningA3E8707C": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "P90 latency is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApiLambda-Latency-P90-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "P90",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "FunctionName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+                    },
+                  },
+                ],
+                "MetricName": "Duration",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "p90",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 50,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaRunningTasksHighWarningD8C2A6D4": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Number of running tasks are too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApiLambda-Running-Tasks-High-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "Concurrent",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "FunctionName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+                    },
+                  },
+                ],
+                "MetricName": "ConcurrentExecutions",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "Maximum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 800,
+        "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiLambdaThrottledCountWarningF775B05D": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Throttled count is too high.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentManagementApiLambda-Throttled-Count-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Id": "m1",
+            "Label": "Throttles",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "FunctionName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPILambda33B42EFAD86DB295",
+                    },
+                  },
+                ],
+                "MetricName": "Throttles",
+                "Namespace": "AWS/Lambda",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": true,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
     },
     "ConsentManagementMonitoringConsentManagementMonitoringConsentManagementApiprodGETv1consentmanagementservicesserviceIdusersuserIdconsentsFaultCountWarningE049F2CD": {
       "Properties": {
@@ -1049,7 +1412,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
             "ReturnData": true,
           },
         ],
-        "Threshold": 15,
+        "Threshold": 30,
         "TreatMissingData": "notBreaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
@@ -1089,7 +1452,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
             "ReturnData": true,
           },
         ],
-        "Threshold": 15,
+        "Threshold": 30,
         "TreatMissingData": "notBreaching",
       },
       "Type": "AWS::CloudWatch::Alarm",

@@ -15,6 +15,12 @@ export interface ConsentManagementMonitoringStackProps extends StackProps {
   stageConfig: StageConfig;
 }
 
+/**
+ * Set up monitoring alarms and dashboards for the Consent Management API service.
+ *
+ * See https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Best_Practice_Recommended_Alarms_AWS_Services.html
+ * for AWS alarm recommendations.
+ */
 export class ConsentManagementMonitoringStack extends Stack {
   private readonly monitoring: MonitoringFacade;
 
@@ -26,6 +32,7 @@ export class ConsentManagementMonitoringStack extends Stack {
 
     this.monitoring = this.createMonitoringFacade();
     this.createRestApiGatewayMonitoring();
+    this.createApiLambdaMonitoring();
     this.createConsentDynamoDBMonitoring();
   }
 
@@ -70,6 +77,46 @@ export class ConsentManagementMonitoringStack extends Stack {
           }
         });
       });
+    });
+  }
+
+  private createApiLambdaMonitoring() {
+    this.monitoring.addLargeHeader('Consent Management API Lambda Metrics');
+    this.monitoring.monitorLambdaFunction({
+      lambdaFunction: this.props.apiLambda,
+      addToDetailDashboard: true,
+      addToSummaryDashboard: false,
+      alarmFriendlyName: 'ConsentManagementApiLambda',
+      fillTpsWithZeroes: true,
+      lambdaInsightsEnabled: true,
+      addConcurrentExecutionsCountAlarm: {
+        Warning: {
+          // Lambda begins throttling requests at 1k concurrent executions,
+          // so we want to notify ourselves if we start approaching that threshold
+          // so that we can request a quota increase through AWS Support.
+          maxRunningTasks: 800
+        }
+      },
+      addEnhancedMonitoringAvgMemoryUtilizationAlarm: {
+        Warning: {
+          maxUsagePercent: 90
+        }
+      },
+      addFaultCountAlarm: {
+        Warning: {
+          maxErrorCount: 0
+        }
+      },
+      addLatencyP90Alarm: {
+        Warning: {
+          maxLatency: ConsentManagementMonitoringStack.FIFTY_MILLIS
+        }
+      },
+      addThrottlesCountAlarm: {
+        Warning: {
+          maxErrorCount: 0
+        }
+      }
     });
   }
 

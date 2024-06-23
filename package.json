@@ -6,10 +6,11 @@
   },
   "scripts": {
     "build": "tsc",
+    "cdk": "cdk",
     "clean": "rm -rf dist cdk.out node_modules",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+    "test": "npm run build && jest",
+    "update-snapshots": "npm run build && jest -u",
+    "watch": "tsc -w"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

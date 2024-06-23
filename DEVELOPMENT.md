@@ -50,19 +50,20 @@ This package uses test snapshots to validate in local builds and code reviews th
 
 If you make functional changes to CDK code, builds will fail with an `N snapshot(s) failed.` message along with a diff of what the snapshot changes were.
 
-If the changes are as you expect, run `npm test -- -u` to update the snapshots.
+If the changes are as you expect, run `npm run update-snapshots` to update the snapshots.
 
 ## Useful commands
 
 * `npm install`     install local package dependencies
 * `npm run build`   compile typescript to js
 * `npm run clean`   clear generated build artifacts such as cdk.out and node_modules
+* `npm run update-snapshots` compile to js and update template snapshots
 * `npm run watch`   watch for changes and compile
-* `npm test`    perform the jest unit tests
+* `npm test`        compile to js and run jest unit tests
 * `npx cdk bootstrap` deploy bootstrap stack to set up your AWS account with prerequisites for deploying your CDK stacks
-* `npx cdk deploy <STACK_NAME_HERE>`  deploy this stack to your default AWS account/region
+* `npx cdk deploy <STACK_NAME_HERE>` deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+* `npx cdk synth`   writes synthesized CloudFormation templates to cdk.out/
 
 ## Troubleshooting
 
