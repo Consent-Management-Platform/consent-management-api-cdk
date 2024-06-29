@@ -30,7 +30,7 @@ export class ConsentDataStack extends Stack {
       tableName: 'ServiceUserConsent',
       encryption: TableEncryption.AWS_MANAGED,
       partitionKey: {
-        name: 'Id',
+        name: 'id',
         type: AttributeType.STRING
       },
       pointInTimeRecovery: true,
@@ -43,11 +43,11 @@ export class ConsentDataStack extends Stack {
     consentTable.addGlobalSecondaryIndex({
       indexName: 'ConsentsByServiceUser',
       partitionKey: {
-        name: 'UserId',
+        name: 'userId',
         type: AttributeType.STRING
       },
       sortKey: {
-        name: 'ServiceId',
+        name: 'serviceId',
         type: AttributeType.STRING
       },
       projectionType: ProjectionType.ALL

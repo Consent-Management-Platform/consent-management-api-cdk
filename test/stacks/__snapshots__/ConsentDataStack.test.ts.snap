@@ -15,15 +15,15 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "Id",
+            "AttributeName": "id",
             "AttributeType": "S",
           },
           {
-            "AttributeName": "UserId",
+            "AttributeName": "userId",
             "AttributeType": "S",
           },
           {
-            "AttributeName": "ServiceId",
+            "AttributeName": "serviceId",
             "AttributeType": "S",
           },
         ],
@@ -34,11 +34,11 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
             "IndexName": "ConsentsByServiceUser",
             "KeySchema": [
               {
-                "AttributeName": "UserId",
+                "AttributeName": "userId",
                 "KeyType": "HASH",
               },
               {
-                "AttributeName": "ServiceId",
+                "AttributeName": "serviceId",
                 "KeyType": "RANGE",
               },
             ],
@@ -49,7 +49,7 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
         ],
         "KeySchema": [
           {
-            "AttributeName": "Id",
+            "AttributeName": "id",
             "KeyType": "HASH",
           },
         ],
