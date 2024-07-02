@@ -1,5 +1,6 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
@@ -15,6 +16,7 @@ import { constructApiDefinition } from '../utils/openapi';
 
 export interface ConsentManagementApiStackProps extends StackProps {
   apiCodePackageFilePath: string;
+  consentTable: Table;
   stageConfig: StageConfig;
 }
 
@@ -33,7 +35,7 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createApiLambdaFunction(): Function {
-    return new Function(this, 'Consent Management API Lambda', {
+    const lambdaFunction: Function = new Function(this, 'Consent Management API Lambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
       description: 'Consent Management API Lambda',
       handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
@@ -41,6 +43,22 @@ export class ConsentManagementApiStack extends Stack {
       runtime: Runtime.JAVA_21,
       timeout: Duration.minutes(1)
     });
+
+    lambdaFunction.addToRolePolicy(new PolicyStatement({
+      sid: 'ConsentDynamoDBQueryPermissions',
+      actions: [
+        'dynamodb:ConditionCheckItem',
+        'dynamodb:GetItem',
+        'dynamodb:PutItem',
+        'dynamodb:Query'
+      ],
+      resources: [
+        this.props.consentTable.tableArn,
+        `${this.props.consentTable.tableArn}/index/*`
+      ]
+    }));
+
+    return lambdaFunction
   }
 
   private createRestApiGateway(apiLambda: Function): SpecRestApi {

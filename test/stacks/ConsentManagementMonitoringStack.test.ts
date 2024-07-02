@@ -18,7 +18,8 @@ describe('ConsentManagementMonitoringStack', () => {
     const apiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
-      apiCodePackageFilePath: join(__dirname, '../../../consent-management-api')
+      apiCodePackageFilePath: join(__dirname, '../../../consent-management-api'),
+      consentTable: dataStack.consentTable
     });
     const monitoringStack = new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
       env: MOCK_ENV,
