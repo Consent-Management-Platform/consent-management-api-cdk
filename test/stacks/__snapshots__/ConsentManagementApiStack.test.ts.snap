@@ -729,6 +729,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
     },
     "ConsentManagementAPILambda33B42EFA": {
       "DependsOn": [
+        "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D",
         "ConsentManagementAPILambdaServiceRoleFA4B1113",
       ],
       "Properties": {
@@ -774,6 +775,48 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         },
       },
       "Type": "AWS::Lambda::Permission",
+    },
+    "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:Query",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878Arn692CDB71",
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878Arn692CDB71",
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+              "Sid": "ConsentDynamoDBQueryPermissions",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D",
+        "Roles": [
+          {
+            "Ref": "ConsentManagementAPILambdaServiceRoleFA4B1113",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "ConsentManagementAPILambdaServiceRoleFA4B1113": {
       "Properties": {
