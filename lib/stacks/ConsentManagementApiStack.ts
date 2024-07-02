@@ -3,6 +3,7 @@ import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestAp
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
 
 import {
@@ -35,10 +36,15 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createApiLambdaFunction(): Function {
+    const lambdaLogGroup: LogGroup = new LogGroup(this, 'ConsentManagementApiLambdaLogGroup', {
+      logGroupName: 'ConsentManagementApi-Lambda-ApplicationLogs',
+      retention: RetentionDays.EIGHTEEN_MONTHS
+    });
     const lambdaFunction: Function = new Function(this, 'Consent Management API Lambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
       description: 'Consent Management API Lambda',
       handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
+      logGroup: lambdaLogGroup,
       memorySize: 512,
       runtime: Runtime.JAVA_21,
       timeout: Duration.minutes(1)
