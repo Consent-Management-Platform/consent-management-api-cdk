@@ -735,6 +735,11 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       "Properties": {
         "Description": "Consent Management API Lambda",
         "Handler": "com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest",
+        "LoggingConfig": {
+          "LogGroup": {
+            "Ref": "ConsentManagementApiLambdaLogGroupE3E32EB5",
+          },
+        },
         "MemorySize": 512,
         "Role": {
           "Fn::GetAtt": [
@@ -848,6 +853,15 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "ConsentManagementApiLambdaLogGroupE3E32EB5": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "LogGroupName": "ConsentManagementApi-Lambda-ApplicationLogs",
+        "RetentionInDays": 545,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
     },
   },
   "Rules": {
