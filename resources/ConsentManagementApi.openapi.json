@@ -2,7 +2,7 @@
     "openapi": "3.0.2",
     "info": {
         "title": "Consent Management API",
-        "version": "2024-06-10"
+        "version": "2024-07-03"
     },
     "paths": {
         "/v1/consent-management/services/{serviceId}/users/{userId}/consents": {
@@ -84,8 +84,8 @@
                     }
                 },
                 "x-amazon-apigateway-integration": {
-                    "type": "aws_proxy",
                     "httpMethod": "POST",
+                    "type": "aws_proxy",
                     "uri": {
                         "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
                     }
@@ -171,8 +171,8 @@
                     }
                 },
                 "x-amazon-apigateway-integration": {
-                    "type": "aws_proxy",
                     "httpMethod": "POST",
+                    "type": "aws_proxy",
                     "uri": {
                         "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
                     }
@@ -251,8 +251,8 @@
                     }
                 },
                 "x-amazon-apigateway-integration": {
-                    "type": "aws_proxy",
                     "httpMethod": "POST",
+                    "type": "aws_proxy",
                     "uri": {
                         "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
                     }
@@ -352,8 +352,8 @@
                     }
                 },
                 "x-amazon-apigateway-integration": {
-                    "type": "aws_proxy",
                     "httpMethod": "POST",
+                    "type": "aws_proxy",
                     "uri": {
                         "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
                     }
@@ -406,6 +406,11 @@
                     "status": {
                         "$ref": "#/components/schemas/ConsentStatus"
                     },
+                    "consentType": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Consent type."
+                    },
                     "consentData": {
                         "$ref": "#/components/schemas/ConsentData"
                     },
@@ -447,6 +452,11 @@
                 "properties": {
                     "status": {
                         "$ref": "#/components/schemas/ConsentStatus"
+                    },
+                    "consentType": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Consent type."
                     },
                     "consentData": {
                         "$ref": "#/components/schemas/ConsentData"
@@ -525,6 +535,11 @@
                     },
                     "status": {
                         "$ref": "#/components/schemas/ConsentStatus"
+                    },
+                    "consentType": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Consent type."
                     },
                     "consentData": {
                         "$ref": "#/components/schemas/ConsentData"
