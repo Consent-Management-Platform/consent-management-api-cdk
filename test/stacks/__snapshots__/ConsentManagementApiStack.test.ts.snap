@@ -45,6 +45,11 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                     "pattern": "^[\\w\\-\\.]{3,128}$",
                     "type": "string",
                   },
+                  "consentType": {
+                    "description": "Consent type.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
                   "consentVersion": {
                     "type": "integer",
                   },
@@ -99,6 +104,11 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                 "properties": {
                   "consentData": {
                     "$ref": "#/components/schemas/ConsentData",
+                  },
+                  "consentType": {
+                    "description": "Consent type.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
                   },
                   "expiryTime": {
                     "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
@@ -174,6 +184,11 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                   "consentData": {
                     "$ref": "#/components/schemas/ConsentData",
                   },
+                  "consentType": {
+                    "description": "Consent type.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
                   "consentVersion": {
                     "description": "Updated consent version, used to conditionally write only if the stored data has the prior version, to protect against race conditions or writing stale data.",
                     "type": "integer",
@@ -196,7 +211,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           },
           "info": {
             "title": "Consent Management API",
-            "version": "2024-06-10",
+            "version": "2024-07-03",
           },
           "openapi": "3.0.2",
           "paths": {
