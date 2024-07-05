@@ -5,6 +5,7 @@ import { join } from 'path';
 
 import { StageName } from '../lib/constants/stages';
 import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
+import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
 import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
 
@@ -19,12 +20,18 @@ const commonStackProps = {
   }
 };
 
+// Create data stacks
 const consentDataStack: ConsentDataStack = new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
+new ConsentHistoryDataStack(app, 'ConsentHistoryDataStack', commonStackProps);
+
+// Create API stacks
 const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
   ...commonStackProps,
   apiCodePackageFilePath: join(__dirname, '../../consent-management-api/build/distributions/consent-management-api.zip'),
   consentTable: consentDataStack.consentTable
 });
+
+// Create monitoring stacks
 new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
   apiLambda: consentManagementApiStack.apiLambda,

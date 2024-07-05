@@ -41,6 +41,7 @@ Steps to build and deploy CDK stacks:
 * Run `npx cdk bootstrap` to deploy a CDKToolkit CloudFormation stack to your account with prerequisites to deploying CDK applications, validate succeeds.
 * Run `npx cdk deploy <ENTER_STACK_NAME_HERE>` to deploy a given stack to your dev account.  Examples below:
   * `npx cdk deploy ConsentDataStack`
+  * `npx cdk deploy ConsentHistoryDataStack`
   * `npx cdk deploy ConsentManagementApiStack`
   * `npx cdk deploy ConsentManagementMonitoringStack`
 
