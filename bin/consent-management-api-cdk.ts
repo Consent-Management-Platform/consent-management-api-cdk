@@ -22,7 +22,7 @@ const commonStackProps = {
 
 // Create data stacks
 const consentDataStack: ConsentDataStack = new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
-new ConsentHistoryDataStack(app, 'ConsentHistoryDataStack', commonStackProps);
+const consentHistoryDataStack: ConsentHistoryDataStack = new ConsentHistoryDataStack(app, 'ConsentHistoryDataStack', commonStackProps);
 
 // Create API stacks
 const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
@@ -36,5 +36,6 @@ new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
   apiLambda: consentManagementApiStack.apiLambda,
   consentTable: consentDataStack.consentTable,
+  consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
   restApi: consentManagementApiStack.restApi
 });

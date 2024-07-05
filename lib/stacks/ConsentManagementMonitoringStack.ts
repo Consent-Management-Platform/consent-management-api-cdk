@@ -11,6 +11,7 @@ import { constructApiDefinition } from '../utils/openapi';
 export interface ConsentManagementMonitoringStackProps extends StackProps {
   apiLambda: Function;
   consentTable: Table;
+  consentHistoryTable: Table;
   restApi: SpecRestApi;
   stageConfig: StageConfig;
 }
@@ -33,7 +34,8 @@ export class ConsentManagementMonitoringStack extends Stack {
     this.monitoring = this.createMonitoringFacade();
     this.createRestApiGatewayMonitoring();
     this.createApiLambdaMonitoring();
-    this.createConsentDynamoDBMonitoring();
+    this.createDynamoDBMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
+    this.createDynamoDBMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
   }
 
   private createMonitoringFacade(): MonitoringFacade {
@@ -120,10 +122,10 @@ export class ConsentManagementMonitoringStack extends Stack {
     });
   }
 
-  private createConsentDynamoDBMonitoring() {
-    this.monitoring.addLargeHeader('Consent Management DynamoDB Metrics');
+  private createDynamoDBMonitoring(table: Table, headerContent: string) {
+    this.monitoring.addLargeHeader(headerContent);
     this.monitoring.monitorDynamoTable({
-      table: this.props.consentTable,
+      table,
       billingMode: BillingMode.PAY_PER_REQUEST,
       addToDetailDashboard: true,
       addToSummaryDashboard: false,

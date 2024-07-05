@@ -12,12 +12,12 @@ export interface ConsentHistoryDataStackProps extends StackProps {
  * Defines the consent history data storage layer.
  */
 export class ConsentHistoryDataStack extends Stack {
-  public readonly consentTable: Table;
+  public readonly consentHistoryTable: Table;
 
   constructor(scope: Construct, id: string, readonly props: ConsentHistoryDataStackProps) {
     super(scope, id, props);
 
-    this.consentTable = this.createConsentHistoryTable();
+    this.consentHistoryTable = this.createConsentHistoryTable();
   }
 
   private createConsentHistoryTable() {
