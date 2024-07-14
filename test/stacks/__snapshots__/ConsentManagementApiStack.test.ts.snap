@@ -755,7 +755,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
             "Ref": "ConsentManagementApiLambdaLogGroupE3E32EB5",
           },
         },
-        "MemorySize": 512,
+        "MemorySize": 1536,
         "Role": {
           "Fn::GetAtt": [
             "ConsentManagementAPILambdaServiceRoleFA4B1113",

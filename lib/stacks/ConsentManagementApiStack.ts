@@ -45,7 +45,7 @@ export class ConsentManagementApiStack extends Stack {
       description: 'Consent Management API Lambda',
       handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
       logGroup: lambdaLogGroup,
-      memorySize: 512,
+      memorySize: 1536,
       runtime: Runtime.JAVA_21,
       timeout: Duration.minutes(1)
     });
