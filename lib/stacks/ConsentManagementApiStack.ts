@@ -2,7 +2,7 @@ import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
-import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Code, Function, Runtime, SnapStartConf } from 'aws-cdk-lib/aws-lambda';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
 
@@ -47,6 +47,7 @@ export class ConsentManagementApiStack extends Stack {
       logGroup: lambdaLogGroup,
       memorySize: 1536,
       runtime: Runtime.JAVA_21,
+      snapStart: SnapStartConf.ON_PUBLISHED_VERSIONS,
       timeout: Duration.minutes(1)
     });
 

@@ -763,6 +763,9 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           ],
         },
         "Runtime": "java21",
+        "SnapStart": {
+          "ApplyOn": "PublishedVersions",
+        },
         "Timeout": 60,
       },
       "Type": "AWS::Lambda::Function",
