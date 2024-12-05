@@ -804,6 +804,12 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "PolicyDocument": {
           "Statement": [
             {
+              "Action": "cloudwatch:PutMetricData",
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CloudWatchMetricsPermissions",
+            },
+            {
               "Action": [
                 "dynamodb:ConditionCheckItem",
                 "dynamodb:GetItem",

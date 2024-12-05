@@ -51,6 +51,17 @@ export class ConsentManagementApiStack extends Stack {
       timeout: Duration.minutes(1)
     });
 
+    // Grant permissions to emit custom CloudWatch metrics
+    // Already has permissions to write to CloudWatch logs by default
+    lambdaFunction.addToRolePolicy(new PolicyStatement({
+      sid: 'CloudWatchMetricsPermissions',
+      actions: [
+        'cloudwatch:PutMetricData'
+      ],
+      resources: ['*']
+    }));
+
+    // Grant permissions to query DynamoDB consent data
     lambdaFunction.addToRolePolicy(new PolicyStatement({
       sid: 'ConsentDynamoDBQueryPermissions',
       actions: [
@@ -65,7 +76,7 @@ export class ConsentManagementApiStack extends Stack {
       ]
     }));
 
-    return lambdaFunction
+    return lambdaFunction;
   }
 
   private createRestApiGateway(apiLambda: Function): SpecRestApi {

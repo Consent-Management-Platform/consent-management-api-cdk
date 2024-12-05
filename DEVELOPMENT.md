@@ -77,3 +77,14 @@ You may need to run `npm install` to install this package's dependencies.
 You may need to:
 1. Follow the "Set up environment variables" instructions earlier in this file's set-up steps
 2. Ensure your new environment variables have been loaded into your terminal/IDE
+
+### The stack named ConsentManagementApiStack failed to deploy with error `Unable to put integration on ...: Invalid ARN specified in the request`
+
+Open the locally generated cdk.out/ConsentManagementApiStack.template.json file and check the `x-amazon-apigateway-integration` > `uri` values.
+
+If the uri values contain `arn:aws:apigateway:undefined`, then the AWS region is not being correctly loaded from environment variables.
+
+1. Follow the "Set up environment variables" instructions earlier in this file's set-up steps
+2. Ensure your new environment variables have been loaded into your terminal/IDE
+3. Rerun `npx cdk synth` and verify the API Gateway ARNs are updated to include actual AWS regions, eg. us-west-2
+4. Redeploy the CDK stack
