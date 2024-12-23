@@ -19,7 +19,7 @@ describe('ConsentManagementApiStack', () => {
     const RESOURCES_KEY = 'Resources';
 
     // Remove API service code S3 path references which change on every API service package update
-    delete templateJson[RESOURCES_KEY]['ConsentManagementAPILambda33B42EFA'][PROPERTIES_KEY]['Code'];
+    delete templateJson[RESOURCES_KEY]['ConsentManagementApiLambda46174FE9'][PROPERTIES_KEY]['Code'];
 
     // Normalize resource keys which change on upstream package updates
     for (const resourceKey in templateJson[RESOURCES_KEY]) {
