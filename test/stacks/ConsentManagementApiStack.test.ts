@@ -11,7 +11,7 @@ describe('ConsentManagementApiStack', () => {
   // Normalize template IDs and attributes that change based on upstream package updates
   function cleanApiResources(templateJson: any) {
     const API_DEPLOYMENT_KEY_PREFIX = 'ConsentManagementApiDeployment';
-    const API_LAMBDA_INVOKE_KEY_PREFIX = 'ConsentManagementAPILambdaInvoke';
+    const API_LAMBDA_INVOKE_KEY_PREFIX = 'ConsentManagementApiLambdaInvoke';
     const API_GATEWAY_DEPLOYMENT_KEY_PREFIX = 'ConsentManagementAPIGatewayDeployment';
     const API_GATEWAY_DEPLOYMENT_STAGE_KEY_PREFIX = 'ConsentManagementAPIGatewayDeploymentStageprod';
     const OUTPUTS_KEY = 'Outputs';

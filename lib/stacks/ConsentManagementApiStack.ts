@@ -3,7 +3,6 @@ import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestAp
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime, SnapStartConf } from 'aws-cdk-lib/aws-lambda';
-import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Construct } from 'constructs';
 
 import {
