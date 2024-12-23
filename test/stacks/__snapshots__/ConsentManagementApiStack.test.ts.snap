@@ -303,7 +303,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                         "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "ConsentManagementAPILambda33B42EFA",
+                            "ConsentManagementApiLambda46174FE9",
                             "Arn",
                           ],
                         },
@@ -402,7 +402,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                         "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "ConsentManagementAPILambda33B42EFA",
+                            "ConsentManagementApiLambda46174FE9",
                             "Arn",
                           ],
                         },
@@ -494,7 +494,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                         "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "ConsentManagementAPILambda33B42EFA",
+                            "ConsentManagementApiLambda46174FE9",
                             "Arn",
                           ],
                         },
@@ -607,7 +607,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
                         "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
                         {
                           "Fn::GetAtt": [
-                            "ConsentManagementAPILambda33B42EFA",
+                            "ConsentManagementApiLambda46174FE9",
                             "Arn",
                           ],
                         },
@@ -742,10 +742,10 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::ApiGateway::Stage",
     },
-    "ConsentManagementAPILambda33B42EFA": {
+    "ConsentManagementApiLambda46174FE9": {
       "DependsOn": [
-        "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D",
-        "ConsentManagementAPILambdaServiceRoleFA4B1113",
+        "ConsentManagementApiLambdaServiceRoleDefaultPolicy36FC9BEC",
+        "ConsentManagementApiLambdaServiceRoleC8D94606",
       ],
       "Properties": {
         "Description": "Consent Management API Lambda",
@@ -758,7 +758,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "MemorySize": 1536,
         "Role": {
           "Fn::GetAtt": [
-            "ConsentManagementAPILambdaServiceRoleFA4B1113",
+            "ConsentManagementApiLambdaServiceRoleC8D94606",
             "Arn",
           ],
         },
@@ -770,12 +770,12 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::Lambda::Function",
     },
-    "ConsentManagementAPILambdaInvoke": {
+    "ConsentManagementApiLambdaInvokePm9TjWMTKO9qPYCiwxIHADiF9KxsFPtteA4Jqi1pQ392DFB19": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
           "Fn::GetAtt": [
-            "ConsentManagementAPILambda33B42EFA",
+            "ConsentManagementApiLambda46174FE9",
             "Arn",
           ],
         },
@@ -799,7 +799,47 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D": {
+    "ConsentManagementApiLambdaLogGroupE3E32EB5": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "LogGroupName": "ConsentManagementApiLambda-ApplicationLogs",
+        "RetentionInDays": 545,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentManagementApiLambdaServiceRoleC8D94606": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ConsentManagementApiLambdaServiceRoleDefaultPolicy36FC9BEC": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -838,54 +878,14 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "ConsentManagementAPILambdaServiceRoleDefaultPolicy85D8E30D",
+        "PolicyName": "ConsentManagementApiLambdaServiceRoleDefaultPolicy36FC9BEC",
         "Roles": [
           {
-            "Ref": "ConsentManagementAPILambdaServiceRoleFA4B1113",
+            "Ref": "ConsentManagementApiLambdaServiceRoleC8D94606",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
-    },
-    "ConsentManagementAPILambdaServiceRoleFA4B1113": {
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Statement": [
-            {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": [
-          {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "ConsentManagementApiLambdaLogGroupE3E32EB5": {
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "LogGroupName": "ConsentManagementApi-Lambda-ApplicationLogs",
-        "RetentionInDays": 545,
-      },
-      "Type": "AWS::Logs::LogGroup",
-      "UpdateReplacePolicy": "Retain",
     },
   },
   "Rules": {

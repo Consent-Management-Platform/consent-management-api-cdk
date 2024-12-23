@@ -14,6 +14,7 @@ import {
 } from '../constants/apis';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
+import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
 
 export interface ConsentManagementApiStackProps extends StackProps {
   apiCodePackageFilePath: string;
@@ -36,30 +37,15 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createApiLambdaFunction(): Function {
-    const lambdaLogGroup: LogGroup = new LogGroup(this, 'ConsentManagementApiLambdaLogGroup', {
-      logGroupName: 'ConsentManagementApi-Lambda-ApplicationLogs',
-      retention: RetentionDays.EIGHTEEN_MONTHS
-    });
-    const lambdaFunction: Function = new Function(this, 'Consent Management API Lambda', {
+    const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentManagementApiLambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
       description: 'Consent Management API Lambda',
       handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
-      logGroup: lambdaLogGroup,
       memorySize: 1536,
       runtime: Runtime.JAVA_21,
       snapStart: SnapStartConf.ON_PUBLISHED_VERSIONS,
       timeout: Duration.minutes(1)
     });
-
-    // Grant permissions to emit custom CloudWatch metrics
-    // Already has permissions to write to CloudWatch logs by default
-    lambdaFunction.addToRolePolicy(new PolicyStatement({
-      sid: 'CloudWatchMetricsPermissions',
-      actions: [
-        'cloudwatch:PutMetricData'
-      ],
-      resources: ['*']
-    }));
 
     // Grant permissions to query DynamoDB consent data
     lambdaFunction.addToRolePolicy(new PolicyStatement({
