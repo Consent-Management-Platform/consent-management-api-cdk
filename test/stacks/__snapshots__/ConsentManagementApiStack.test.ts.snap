@@ -770,7 +770,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::Lambda::Function",
     },
-    "ConsentManagementApiLambdaInvokePm9TjWMTKO9qPYCiwxIHADiF9KxsFPtteA4Jqi1pQ392DFB19": {
+    "ConsentManagementApiLambdaInvoke": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
