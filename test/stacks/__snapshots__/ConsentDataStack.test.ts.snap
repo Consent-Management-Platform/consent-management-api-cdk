@@ -59,6 +59,9 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
         "SSESpecification": {
           "SSEEnabled": true,
         },
+        "StreamSpecification": {
+          "StreamViewType": "NEW_AND_OLD_IMAGES",
+        },
         "TableName": "ServiceUserConsent",
       },
       "Type": "AWS::DynamoDB::Table",
