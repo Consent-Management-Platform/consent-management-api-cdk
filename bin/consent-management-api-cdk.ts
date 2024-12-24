@@ -36,7 +36,8 @@ const consentManagementApiStack: ConsentManagementApiStack = new ConsentManageme
 new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
   ...commonStackProps,
   codePackageFilePath: join(__dirname, '../../consent-history-ingestor/build/distributions/consent-history-ingestor.zip'),
-  consentTable: consentDataStack.consentTable
+  consentTable: consentDataStack.consentTable,
+  consentHistoryTable: consentHistoryDataStack.consentHistoryTable
 });
 
 // Create monitoring stacks
