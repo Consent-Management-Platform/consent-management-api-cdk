@@ -5,6 +5,7 @@ import { join } from 'path';
 import { MOCK_ENV } from '../../fixtures/mock-env';
 import { MOCK_STAGE_CONFIG } from '../../fixtures/mock-stage-config';
 import { ConsentDataStack } from '../../lib/stacks/ConsentDataStack';
+import { ConsentHistoryDataStack } from '../../lib/stacks/ConsentHistoryDataStack';
 import { ConsentHistoryProcessorStack } from '../../lib/stacks/ConsentHistoryProcessorStack';
 
 describe('ConsentHistoryProcessorStack', () => {
@@ -32,11 +33,16 @@ describe('ConsentHistoryProcessorStack', () => {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG
     });
+    const consentHistoryDataStack = new ConsentHistoryDataStack(app, 'ConsentHistoryDataStack', {
+      env: MOCK_ENV,
+      stageConfig: MOCK_STAGE_CONFIG
+    });
     const consentHistoryProcessorStack = new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       codePackageFilePath: join(__dirname, '../../../consent-history-ingestor'),
-      consentTable: dataStack.consentTable
+      consentTable: dataStack.consentTable,
+      consentHistoryTable: consentHistoryDataStack.consentHistoryTable
     });
 
     const templateJson = Template.fromStack(consentHistoryProcessorStack).toJSON();

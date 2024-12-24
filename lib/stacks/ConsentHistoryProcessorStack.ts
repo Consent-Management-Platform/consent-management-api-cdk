@@ -10,6 +10,7 @@ import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
 export interface ConsentHistoryProcessorStackProps extends StackProps {
   codePackageFilePath: string;
   consentTable: Table;
+  consentHistoryTable: Table;
   stageConfig: StageConfig;
 }
 
@@ -37,11 +38,13 @@ export class ConsentHistoryProcessorStack extends Stack {
       timeout: Duration.minutes(1)
     });
 
+    // Add consent table's DynamoDB Stream as an event source for the Lambda function
     this.props.consentTable.grantStreamRead(lambdaFunction);
-
-    // Add DynamoDB Stream as an event source for the Lambda function
     lambdaFunction.addEventSource(new DynamoEventSource(this.props.consentTable, {
       startingPosition: StartingPosition.TRIM_HORIZON
     }));
+
+    // Grant the Lambda function permissions to write to the consent history table
+    this.props.consentHistoryTable.grantWriteData(lambdaFunction);
   }
 }
