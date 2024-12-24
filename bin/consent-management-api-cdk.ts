@@ -8,6 +8,7 @@ import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
 import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
 import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
+import { ConsentHistoryProcessorStack } from '../lib/stacks/ConsentHistoryProcessorStack';
 
 const app = new App();
 const commonStackProps = {
@@ -28,6 +29,13 @@ const consentHistoryDataStack: ConsentHistoryDataStack = new ConsentHistoryDataS
 const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
   ...commonStackProps,
   apiCodePackageFilePath: join(__dirname, '../../consent-management-api/build/distributions/consent-management-api.zip'),
+  consentTable: consentDataStack.consentTable
+});
+
+// Create consent history processor stack
+new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
+  ...commonStackProps,
+  codePackageFilePath: join(__dirname, '../../consent-history-ingestor/build/distributions/consent-history-ingestor.zip'),
   consentTable: consentDataStack.consentTable
 });
 

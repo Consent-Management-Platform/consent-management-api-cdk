@@ -1,5 +1,5 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { AttributeType, BillingMode, ProjectionType, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
+import { AttributeType, BillingMode, ProjectionType, StreamViewType, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
 import { StageConfig } from '../interfaces/stage-config';
@@ -33,6 +33,7 @@ export class ConsentDataStack extends Stack {
         name: 'id',
         type: AttributeType.STRING
       },
+      stream: StreamViewType.NEW_AND_OLD_IMAGES,
       pointInTimeRecovery: true,
       deletionProtection: true,
       billingMode: BillingMode.PAY_PER_REQUEST
