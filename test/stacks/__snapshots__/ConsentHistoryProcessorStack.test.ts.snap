@@ -19,10 +19,10 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
         "Description": "Consent History Processor Lambda",
         "Environment": {
           "Variables": {
-            "STAGE": "prod",
-            "TABLE_NAME": {
-              "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
+            "CONSENT_HISTORY_TABLE_NAME": {
+              "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
             },
+            "STAGE": "prod",
           },
         },
         "Handler": "com.consentframework.consenthistory.consentingestor.ConsentStreamIngestor::handleRequest",

@@ -28,7 +28,7 @@ export class ConsentHistoryProcessorStack extends Stack {
       code: Code.fromAsset(this.props.codePackageFilePath),
       description: 'Consent History Processor Lambda',
       environment: {
-        TABLE_NAME: this.props.consentTable.tableName,
+        CONSENT_HISTORY_TABLE_NAME: this.props.consentHistoryTable.tableName,
         STAGE: this.props.stageConfig.stage
       },
       handler: 'com.consentframework.consenthistory.consentingestor.ConsentStreamIngestor::handleRequest',
