@@ -46,9 +46,29 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
       },
       "Type": "AWS::Lambda::Function",
     },
+    "ConsentHistoryProcessorLambdaDlqDC3A95FE": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "MessageRetentionPeriod": 1209600,
+        "QueueName": "ConsentHistoryProcessorLambdaDlq",
+        "SqsManagedSseEnabled": true,
+      },
+      "Type": "AWS::SQS::Queue",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ConsentHistoryProcessorLambdaDynamoDBEventSourceConsentDataStackServiceUserConsentDynamoDBTableC8F30629019F7AE6": {
       "Properties": {
         "BatchSize": 100,
+        "DestinationConfig": {
+          "OnFailure": {
+            "Destination": {
+              "Fn::GetAtt": [
+                "ConsentHistoryProcessorLambdaDlqDC3A95FE",
+                "Arn",
+              ],
+            },
+          },
+        },
         "EventSourceArn": {
           "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878StreamArn3303655F",
         },
@@ -92,6 +112,20 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
               "Effect": "Allow",
               "Resource": {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878StreamArn3303655F",
+              },
+            },
+            {
+              "Action": [
+                "sqs:SendMessage",
+                "sqs:GetQueueAttributes",
+                "sqs:GetQueueUrl",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ConsentHistoryProcessorLambdaDlqDC3A95FE",
+                  "Arn",
+                ],
               },
             },
             {

@@ -1,11 +1,12 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Code, Function, Runtime, SnapStartConf, StartingPosition } from 'aws-cdk-lib/aws-lambda';
-import { DynamoEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
+import { DynamoEventSource, SqsDlq } from 'aws-cdk-lib/aws-lambda-event-sources';
+import { Queue, QueueEncryption } from 'aws-cdk-lib/aws-sqs';
 import { Construct } from 'constructs';
 
-import { StageConfig } from '../interfaces/stage-config';
 import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
+import { StageConfig } from '../interfaces/stage-config';
 
 export interface ConsentHistoryProcessorStackProps extends StackProps {
   codePackageFilePath: string;
@@ -38,10 +39,18 @@ export class ConsentHistoryProcessorStack extends Stack {
       timeout: Duration.minutes(1)
     });
 
+    // Create a dead letter queue to collect events that failed processing
+    const deadLetterQueue: Queue = new Queue(this, 'ConsentHistoryProcessorLambdaDlq', {
+      queueName: 'ConsentHistoryProcessorLambdaDlq',
+      encryption: QueueEncryption.SQS_MANAGED,
+      retentionPeriod: Duration.days(14)
+    });
+
     // Add consent table's DynamoDB Stream as an event source for the Lambda function
     this.props.consentTable.grantStreamRead(lambdaFunction);
     lambdaFunction.addEventSource(new DynamoEventSource(this.props.consentTable, {
-      startingPosition: StartingPosition.TRIM_HORIZON
+      startingPosition: StartingPosition.TRIM_HORIZON,
+      onFailure: new SqsDlq(deadLetterQueue)
     }));
 
     // Grant the Lambda function permissions to write to the consent history table
