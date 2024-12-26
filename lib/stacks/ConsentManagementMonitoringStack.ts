@@ -33,7 +33,7 @@ export class ConsentManagementMonitoringStack extends Stack {
 
     this.monitoring = this.createMonitoringFacade();
     this.createRestApiGatewayMonitoring();
-    this.createApiLambdaMonitoring();
+    this.createLambdaFunctionMonitoring(this.props.apiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
     this.createDynamoDBMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
     this.createDynamoDBMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
   }
@@ -82,13 +82,13 @@ export class ConsentManagementMonitoringStack extends Stack {
     });
   }
 
-  private createApiLambdaMonitoring() {
-    this.monitoring.addLargeHeader('Consent Management API Lambda Metrics');
+  private createLambdaFunctionMonitoring(lambdaFunction: Function, headerContent: string, alarmPrefix: string) {
+    this.monitoring.addLargeHeader(headerContent);
     this.monitoring.monitorLambdaFunction({
-      lambdaFunction: this.props.apiLambda,
+      lambdaFunction,
       addToDetailDashboard: true,
       addToSummaryDashboard: false,
-      alarmFriendlyName: 'ConsentManagementApiLambda',
+      alarmFriendlyName: alarmPrefix,
       fillTpsWithZeroes: true,
       lambdaInsightsEnabled: true,
       addConcurrentExecutionsCountAlarm: {
