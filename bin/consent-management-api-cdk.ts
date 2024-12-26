@@ -33,7 +33,7 @@ const consentManagementApiStack: ConsentManagementApiStack = new ConsentManageme
 });
 
 // Create consent history processor stack
-new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
+const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
   ...commonStackProps,
   codePackageFilePath: join(__dirname, '../../consent-history-ingestor/build/distributions/consent-history-ingestor.zip'),
   consentTable: consentDataStack.consentTable,
@@ -43,7 +43,8 @@ new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
 // Create monitoring stacks
 new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
-  apiLambda: consentManagementApiStack.apiLambda,
+  consentManagementApiLambda: consentManagementApiStack.apiLambda,
+  consentHistoryProcessorLambda: consentHistoryProcessorStack.consentHistoryProcessorLambda,
   consentTable: consentDataStack.consentTable,
   consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
   restApi: consentManagementApiStack.restApi

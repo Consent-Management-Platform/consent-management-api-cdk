@@ -19,12 +19,14 @@ export interface ConsentHistoryProcessorStackProps extends StackProps {
  * Defines the infrastructure for syncing consent updates to the consent history table.
  */
 export class ConsentHistoryProcessorStack extends Stack {
+  public readonly consentHistoryProcessorLambda: Function;
+
   constructor(scope: Construct, id: string, readonly props: ConsentHistoryProcessorStackProps) {
     super(scope, id, props);
-    this.createConsentHistoryProcessorLambda();
+    this.consentHistoryProcessorLambda = this.createConsentHistoryProcessorLambda();
   }
 
-  private createConsentHistoryProcessorLambda() {
+  private createConsentHistoryProcessorLambda(): Function {
     const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentHistoryProcessorLambda', {
       code: Code.fromAsset(this.props.codePackageFilePath),
       description: 'Consent History Processor Lambda',
@@ -55,5 +57,7 @@ export class ConsentHistoryProcessorStack extends Stack {
 
     // Grant the Lambda function permissions to write to the consent history table
     this.props.consentHistoryTable.grantWriteData(lambdaFunction);
+
+    return lambdaFunction;
   }
 }
