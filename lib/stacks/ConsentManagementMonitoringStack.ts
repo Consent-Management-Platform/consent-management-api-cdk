@@ -9,7 +9,8 @@ import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
 
 export interface ConsentManagementMonitoringStackProps extends StackProps {
-  apiLambda: Function;
+  consentManagementApiLambda: Function;
+  consentHistoryProcessorLambda: Function;
   consentTable: Table;
   consentHistoryTable: Table;
   restApi: SpecRestApi;
@@ -33,7 +34,8 @@ export class ConsentManagementMonitoringStack extends Stack {
 
     this.monitoring = this.createMonitoringFacade();
     this.createRestApiGatewayMonitoring();
-    this.createLambdaFunctionMonitoring(this.props.apiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
+    this.createLambdaFunctionMonitoring(this.props.consentManagementApiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
+    this.createLambdaFunctionMonitoring(this.props.consentHistoryProcessorLambda, 'Consent History Processor Lambda Metrics', 'ConsentHistoryProcessorLambda');
     this.createDynamoDBMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
     this.createDynamoDBMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
   }
@@ -52,7 +54,7 @@ export class ConsentManagementMonitoringStack extends Stack {
   private createRestApiGatewayMonitoring() {
     this.monitoring.addLargeHeader('Consent Management API Gateway Metrics');
 
-    const apiDefinition = constructApiDefinition(this.props.env!, this.props.apiLambda.functionArn);
+    const apiDefinition = constructApiDefinition(this.props.env!, this.props.consentManagementApiLambda.functionArn);
     const apiPaths = apiDefinition.paths;
     Object.keys(apiPaths).forEach((apiPathKey) => {
       Object.keys(apiPaths[apiPathKey]).forEach((httpMethodKey: string) => {
