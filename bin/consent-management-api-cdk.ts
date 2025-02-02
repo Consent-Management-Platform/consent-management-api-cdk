@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
-import { App } from 'aws-cdk-lib';
+import { App, Tags } from 'aws-cdk-lib';
 import { join } from 'path';
 
 import { StageName } from '../lib/constants/stages';
@@ -9,6 +9,7 @@ import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
 import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
 import { ConsentHistoryProcessorStack } from '../lib/stacks/ConsentHistoryProcessorStack';
+import { CONSENT_MANAGEMENT_BACKEND_SERVICE_TAG_VALUE, SERVICE_TAG_NAME, STACK_TAG_NAME } from '../lib/constants/tags';
 
 const app = new App();
 const commonStackProps = {
@@ -41,11 +42,24 @@ const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHi
 });
 
 // Create monitoring stacks
-new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
+const consentBackendMonitoringStack: ConsentManagementMonitoringStack = new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
   consentManagementApiLambda: consentManagementApiStack.apiLambda,
   consentHistoryProcessorLambda: consentHistoryProcessorStack.consentHistoryProcessorLambda,
   consentTable: consentDataStack.consentTable,
   consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
   restApi: consentManagementApiStack.restApi
+});
+
+// Tag all stack resources
+const stacks = [
+  consentDataStack,
+  consentHistoryDataStack,
+  consentManagementApiStack,
+  consentHistoryProcessorStack,
+  consentBackendMonitoringStack
+];
+stacks.forEach(stack => {
+  Tags.of(stack).add(SERVICE_TAG_NAME, CONSENT_MANAGEMENT_BACKEND_SERVICE_TAG_VALUE);
+  Tags.of(stack).add(STACK_TAG_NAME, stack.stackName);
 });
