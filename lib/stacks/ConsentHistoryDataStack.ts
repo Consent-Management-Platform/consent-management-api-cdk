@@ -2,6 +2,7 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { AttributeType, BillingMode, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
+import { CustomDynamoDbTable } from '../constructs/CustomDynamoDbTable';
 import { StageConfig } from '../interfaces/stage-config';
 
 export interface ConsentHistoryDataStackProps extends StackProps {
@@ -21,9 +22,8 @@ export class ConsentHistoryDataStack extends Stack {
   }
 
   private createConsentHistoryTable() {
-    return new Table(this, 'ServiceUserConsentHistoryDynamoDBTable', {
+    return new CustomDynamoDbTable(this, 'ServiceUserConsentHistoryDynamoDBTable', {
       tableName: 'ConsentHistory',
-      encryption: TableEncryption.AWS_MANAGED,
       partitionKey: {
         name: 'id',
         type: AttributeType.STRING
@@ -32,11 +32,6 @@ export class ConsentHistoryDataStack extends Stack {
         name: 'eventId',
         type: AttributeType.STRING
       },
-      pointInTimeRecoverySpecification: {
-        pointInTimeRecoveryEnabled: true
-      },
-      deletionProtection: true,
-      billingMode: BillingMode.PAY_PER_REQUEST
     });
   }
 }

@@ -1,7 +1,8 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { AttributeType, BillingMode, ProjectionType, StreamViewType, Table, TableEncryption } from 'aws-cdk-lib/aws-dynamodb';
+import { AttributeType, BillingMode, ProjectionType, StreamViewType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
+import { CustomDynamoDbTable } from '../constructs/CustomDynamoDbTable';
 import { StageConfig } from '../interfaces/stage-config';
 
 export interface ConsentDataStackProps extends StackProps {
@@ -26,19 +27,13 @@ export class ConsentDataStack extends Stack {
   }
 
   private createConsentTable() {
-    return new Table(this, 'ServiceUserConsentDynamoDBTable', {
+    return new CustomDynamoDbTable(this, 'ServiceUserConsentDynamoDBTable', {
       tableName: 'ServiceUserConsent',
-      encryption: TableEncryption.AWS_MANAGED,
       partitionKey: {
         name: 'id',
         type: AttributeType.STRING
       },
       stream: StreamViewType.NEW_AND_OLD_IMAGES,
-      pointInTimeRecoverySpecification: {
-        pointInTimeRecoveryEnabled: true
-      },
-      deletionProtection: true,
-      billingMode: BillingMode.PAY_PER_REQUEST
     });
   }
 
