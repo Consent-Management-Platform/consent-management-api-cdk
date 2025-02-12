@@ -34,7 +34,9 @@ export class ConsentDataStack extends Stack {
         type: AttributeType.STRING
       },
       stream: StreamViewType.NEW_AND_OLD_IMAGES,
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: {
+        pointInTimeRecoveryEnabled: true
+      },
       deletionProtection: true,
       billingMode: BillingMode.PAY_PER_REQUEST
     });
