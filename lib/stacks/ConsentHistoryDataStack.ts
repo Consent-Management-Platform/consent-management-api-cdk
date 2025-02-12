@@ -32,7 +32,9 @@ export class ConsentHistoryDataStack extends Stack {
         name: 'eventId',
         type: AttributeType.STRING
       },
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: {
+        pointInTimeRecoveryEnabled: true
+      },
       deletionProtection: true,
       billingMode: BillingMode.PAY_PER_REQUEST
     });
