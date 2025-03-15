@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    defaults:
+      run:
+        working-directory: consent-management-api-cdk
     steps:
       # Set up Consent Management API artifacts
       - name: Checkout Consent Management API repository
