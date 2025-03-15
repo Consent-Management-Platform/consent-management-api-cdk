@@ -68,3 +68,6 @@ jobs:
         run: |
           npm test
           npx cdk synth
+      - name: Validate CDK outputs present
+        run: |
+          ls -l cdk.out/*.json
