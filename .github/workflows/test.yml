@@ -22,7 +22,6 @@ jobs:
           path: 'consent-management-api'
       - name: Run Build Consent API action
         uses: ./consent-management-api/.github/actions/buildConsentApi/
-        working-directory: ./consent-management-api
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
