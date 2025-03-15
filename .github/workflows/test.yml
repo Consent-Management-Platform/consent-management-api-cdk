@@ -61,13 +61,10 @@ jobs:
       - name: Validate dependency artifacts present
         run: |
           ls -l
-          ls -l consent-management-api
-          ls -l consent-management-api/build/distributions/consent-management-api.zip
           ls -l ../consent-management-api
           ls -l ../consent-management-api/build/distributions/consent-management-api.zip
-          ls -l consent-history-ingestor
-          ls -l consent-history-ingestor/build/distributions/consent-history-ingestor.zip
-          ls -l consent-management-api-cdk
+          ls -l ../consent-history-ingestor
+          ls -l ../consent-history-ingestor/build/distributions/consent-history-ingestor.zip
       - name: Build CDK package
         run: |
           npm test
