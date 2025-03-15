@@ -4,6 +4,7 @@ import { App, Tags } from 'aws-cdk-lib';
 import { join } from 'path';
 
 import { StageName } from '../lib/constants/stages';
+import { CodePipelineStack } from '../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
 import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
@@ -21,6 +22,9 @@ const commonStackProps = {
     stage: StageName.DEV
   }
 };
+
+// Create CD/CI infra stacks
+const codePipelineStack: CodePipelineStack = new CodePipelineStack(app, 'CodePipelineStack', commonStackProps);
 
 // Create data stacks
 const consentDataStack: ConsentDataStack = new ConsentDataStack(app, 'ConsentDataStack', commonStackProps);
@@ -53,6 +57,7 @@ const consentBackendMonitoringStack: ConsentManagementMonitoringStack = new Cons
 
 // Tag all stack resources
 const stacks = [
+  codePipelineStack,
   consentDataStack,
   consentHistoryDataStack,
   consentManagementApiStack,
