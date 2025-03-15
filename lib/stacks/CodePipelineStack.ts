@@ -23,12 +23,17 @@ export class CodePipelineStack extends Stack {
     });
 
     // Create GitHub principal which will be used to assume deployment roles.
+    // Ref: https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
     const gitHubPrincipal = new OpenIdConnectPrincipal(oidcProvider).withConditions(
       {
-        StringLike: {
-          'token.actions.githubusercontent.com:sub':
-            `repo:${GITHUB_ORGANIZATION}/*:*`,
+        StringEquals: {
+          // Audience must be AWS STS
+          'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com'
         },
+        StringLike: {
+          // Allow GitHub Actions from any GitHub repository within the organization
+          'token.actions.githubusercontent.com:sub': `repo:${GITHUB_ORGANIZATION}/*`,
+        }
       }
     );
 
