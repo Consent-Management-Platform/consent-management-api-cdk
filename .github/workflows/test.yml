@@ -29,6 +29,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
 
+      # Set up Consent History Ingestor artifacts
+      - name: Checkout Consent History Ingestor repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'Consent-Management-Platform/consent-history-ingestor'
+          path: 'consent-history-ingestor'
+      - name: Run Build Consent History Ingestor action
+        uses: ./consent-history-ingestor/.github/actions/buildIngestor/
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-username: ${{ github.actor }}
+
       # Build CDK package
       - name: Checkout CDK package
         uses: actions/checkout@v4
@@ -45,7 +57,18 @@ jobs:
           npm install -g typescript
           npm install -g aws-cdk
           cdk --version
-      - name: Verify AWS CLI available
-        run: |
           aws --version
-      # TODO: Add CDK build and test steps here
+      - name: Validate dependency artifacts present
+        run: |
+          ls -l
+          ls -l consent-management-api
+          ls -l consent-management-api/build/distributions/consent-management-api.zip
+          ls -l ../consent-management-api
+          ls -l ../consent-management-api/build/distributions/consent-management-api.zip
+          ls -l consent-history-ingestor
+          ls -l consent-history-ingestor/build/distributions/consent-history-ingestor.zip
+          ls -l consent-management-api-cdk
+      - name: Build CDK package
+        run: |
+          npm test
+          npx cdk synth
