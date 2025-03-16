@@ -1,18 +1,15 @@
 # This GitHub Workflow will deploy code and infrastructure changes to the provided AWS account
+#
+# Prerequisites:
+# - Manually deployed CodePipelineStack to AWS at least once
 name: Deploy
 on:
   # Enable running workflow manually from GitHub Actions
   workflow_dispatch:
     # Require AWS credentials and region to be provided
     inputs:
-      AWS_ACCESS_KEY_ID:
-        description: Access Key ID with CDK deploy permissions
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        description: Secret Access Key with CDK deploy permissions
-        required: true
-      AWS_REGION:
-        description: AWS region to deploy to
+      AWS_ACCOUNT_ID:
+        description: AWS account to deploy to
         required: true
 
 jobs:
@@ -20,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     defaults:
       run:
         working-directory: consent-management-api-cdk
@@ -34,9 +32,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
-          aws-access-key-id: ${{ github.event.inputs.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ github.event.inputs.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
+          aws-region: us-west-2
       - name: Deploy CDK bootstrap stack
         run: npx cdk bootstrap --require-approval never
       - name: Deploy CDK stacks
