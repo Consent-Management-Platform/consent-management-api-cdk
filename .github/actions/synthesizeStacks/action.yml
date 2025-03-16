@@ -1,6 +1,12 @@
 name: Synthesize CDK stacks
 
 inputs:
+  aws-account-id:
+    description: 'AWS account to synthesize CloudFormation stack templates for'
+    required: true
+  aws-region:
+    description: 'AWS region to synthesize CloudFormation stack templates for'
+    required: true
   github-token:
     description: 'GitHub token for authentication'
     required: true
@@ -66,10 +72,16 @@ runs:
       run: npm test
       shell: bash
       working-directory: consent-management-api-cdk
+      env:
+        CONSENT_DEV_ACCOUNT_ID: ${{ inputs.aws-account-id }}
+        CONSENT_DEV_REGION: ${{ inputs.aws-region }}
     - name: Synthesize CDK stacks
       run: npx cdk synth
       shell: bash
       working-directory: consent-management-api-cdk
+      env:
+        CONSENT_DEV_ACCOUNT_ID: ${{ inputs.aws-account-id }}
+        CONSENT_DEV_REGION: ${{ inputs.aws-region }}
     - name: Validate CDK outputs present
       run: ls -l cdk.out/*.json
       shell: bash

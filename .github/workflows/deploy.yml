@@ -28,13 +28,15 @@ jobs:
       - name: Build and synthesize stacks
         uses: ./.github/actions/synthesizeStacks
         with:
+          aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
+          aws-region: us-west-2
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
-          role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
           aws-region: us-west-2
+          role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
       - name: Deploy CDK stacks
         run: |
           npx cdk deploy --require-approval never \
