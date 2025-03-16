@@ -59,6 +59,18 @@ If you make functional changes to CDK code, builds will fail with an `N snapshot
 
 If the changes are as you expect, run `npm run update-snapshots` to update the snapshots.
 
+### Building and deploying CDK stacks via GitHub UI
+
+Prerequisite: Follow the earlier set-up steps to CDK bootstrap and deploy the CodePipelineStack stack to your AWS account manually at least once.
+
+Then the following steps can be used to deploy any remote branch's CDK stacks to your AWS account from the GitHub UI:
+
+1. Navigate to https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml
+2. Click the 'Run workflow' dropdown on the right side of the page
+3. Select the code branch to use, and your AWS account ID
+4. Click the 'Run workflow' button
+5. Refresh the page after a few seconds and click into the new workflow run to track its progress
+
 ## Useful commands
 
 * `npm install`     install local package dependencies
