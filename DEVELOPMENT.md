@@ -67,7 +67,7 @@ Then the following steps can be used to deploy any remote branch's CDK stacks to
 
 1. Navigate to https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml
 2. Click the 'Run workflow' dropdown on the right side of the page
-3. Select the code branch to use, and your AWS account ID
+3. Select the code branch to use, and the AWS account ID and AWS region to deploy stacks to
 4. Click the 'Run workflow' button
 5. Refresh the page after a few seconds and click into the new workflow run to track its progress
 
