@@ -1,0 +1,46 @@
+# This GitHub Workflow will deploy code and infrastructure changes to the provided AWS account
+name: Deploy
+on:
+  # Enable running workflow manually from GitHub Actions
+  workflow_dispatch:
+    # Require AWS credentials and region to be provided
+    inputs:
+      AWS_ACCESS_KEY_ID:
+        description: Access Key ID with CDK deploy permissions
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: Secret Access Key with CDK deploy permissions
+        required: true
+      AWS_REGION:
+        description: AWS region to deploy to
+        required: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: consent-management-api-cdk
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build and test
+        uses: ./.github/workflows/test.yml
+      - name: Validate CDK outputs present
+        run: |
+          ls -l cdk.out/*.json
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ github.event.inputs.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ github.event.inputs.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.AWS_REGION }}
+      - name: Deploy CDK bootstrap stack
+        run: npx cdk bootstrap --require-approval never
+      - name: Deploy CDK stacks
+        run: |
+          npx cdk deploy CodePipelineStack --require-approval never && \
+          npx cdk deploy ConsentDataStack --require-approval never && \
+          npx cdk deploy ConsentHistoryDataStack --require-approval never
