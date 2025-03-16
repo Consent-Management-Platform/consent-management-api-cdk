@@ -31,8 +31,6 @@ jobs:
       - name: Build and synthesize stacks
         uses: ./.github/actions/synthesizeStacks
         with:
-          aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
-          aws-region: ${{ github.event.inputs.AWS_REGION }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
       - name: Configure AWS credentials
