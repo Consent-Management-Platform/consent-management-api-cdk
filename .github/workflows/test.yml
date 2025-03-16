@@ -1,8 +1,13 @@
 # This GitHub workflow will automatically build and test code changes
 name: Test
 on:
-  # Run automatically for all pushes to the remote repository
+  # Run automatically when pushing code or config changes
   push:
+    paths:
+      - '**.json'
+      - '**.ts'
+      - '**.ts.snap'
+      - '**.yml'
   # Run automatically for all pull requests
   pull_request:
   # Enable running as a subset of another GitHub Workflow
