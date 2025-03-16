@@ -37,6 +37,10 @@ jobs:
           aws-region: us-west-2
       - name: Deploy CDK stacks
         run: |
-          npx cdk deploy CodePipelineStack --require-approval never && \
-          npx cdk deploy ConsentDataStack --require-approval never && \
-          npx cdk deploy ConsentHistoryDataStack --require-approval never
+          npx cdk deploy --require-approval never \
+            CodePipelineStack \
+            ConsentDataStack \
+            ConsentHistoryDataStack \
+            ConsentHistoryProcessorStack \
+            ConsentManagementApiStack \
+            ConsentManagementMonitoringStack
