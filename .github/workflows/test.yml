@@ -19,57 +19,10 @@ jobs:
       run:
         working-directory: consent-management-api-cdk
     steps:
-      # Set up Consent Management API artifacts
-      - name: Checkout Consent Management API repository
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          repository: 'Consent-Management-Platform/consent-management-api'
-          path: 'consent-management-api'
-      - name: Run Build Consent API action
-        uses: ./consent-management-api/.github/actions/buildConsentApi/
+      - name: Build and synthesize stacks
+        uses: ./.github/actions/synthesizeStacks
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
-
-      # Set up Consent History Ingestor artifacts
-      - name: Checkout Consent History Ingestor repository
-        uses: actions/checkout@v4
-        with:
-          repository: 'Consent-Management-Platform/consent-history-ingestor'
-          path: 'consent-history-ingestor'
-      - name: Run Build Consent History Ingestor action
-        uses: ./consent-history-ingestor/.github/actions/buildIngestor/
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-username: ${{ github.actor }}
-
-      # Build CDK package
-      - name: Checkout CDK package
-        uses: actions/checkout@v4
-        with:
-          repository: 'Consent-Management-Platform/consent-management-api-cdk'
-          path: 'consent-management-api-cdk'
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install -g typescript
-          npm install -g aws-cdk
-          cdk --version
-          aws --version
-      - name: Validate dependency artifacts present
-        run: |
-          ls -l ../consent-management-api/build/distributions
-          ls -l ../consent-management-api/build/distributions/consent-management-api.zip
-          ls -l ../consent-history-ingestor/build/distributions
-          ls -l ../consent-history-ingestor/build/distributions/consent-history-ingestor.zip
-      - name: Build CDK package
-        run: |
-          npm test
-          npx cdk synth
-      - name: Validate CDK outputs present
-        run: |
-          ls -l cdk.out/*.json
