@@ -1,7 +1,8 @@
 # This GitHub Workflow will deploy code and infrastructure changes to the provided AWS account
 #
 # Prerequisites:
-# - Manually deployed CodePipelineStack to AWS at least once
+# 1. Create AWS account and set up AWS CLI and local AWS credentials
+# 2. Follow set-up steps in DEVELOPMENT.md to deploy the CDK bootstrap stack and CodePipelineStack
 name: Deploy
 on:
   # Enable running workflow manually from GitHub Actions
@@ -34,8 +35,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
           aws-region: us-west-2
-      - name: Deploy CDK bootstrap stack
-        run: npx cdk bootstrap --require-approval never
       - name: Deploy CDK stacks
         run: |
           npx cdk deploy CodePipelineStack --require-approval never && \
