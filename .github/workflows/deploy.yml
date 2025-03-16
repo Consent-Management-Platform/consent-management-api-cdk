@@ -24,11 +24,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Build and test
-        uses: ./.github/workflows/test.yml
-      - name: Validate CDK outputs present
-        run: |
-          ls -l cdk.out/*.json
+      - name: Build and synthesize stacks
+        uses: ./.github/actions/synthesizeStacks
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-username: ${{ github.actor }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
