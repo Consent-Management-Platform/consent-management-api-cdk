@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Build and test
         uses: ./.github/workflows/test.yml
-        secrets: inherit
       - name: Validate CDK outputs present
         run: |
           ls -l cdk.out/*.json
