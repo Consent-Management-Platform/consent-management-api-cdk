@@ -4,6 +4,7 @@ import { join } from 'path';
 
 import { MOCK_ENV } from '../../fixtures/mock-env';
 import { MOCK_STAGE_CONFIG } from '../../fixtures/mock-stage-config';
+import { CodePipelineStack } from '../../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../../lib/stacks/ConsentDataStack';
 import { ConsentHistoryDataStack } from '../../lib/stacks/ConsentHistoryDataStack';
 import { ConsentHistoryProcessorStack } from '../../lib/stacks/ConsentHistoryProcessorStack';
@@ -13,6 +14,11 @@ import { ConsentManagementMonitoringStack } from '../../lib/stacks/ConsentManage
 describe('ConsentManagementMonitoringStack', () => {
   it('creates the expected CloudFormation template from CDK', () => {
     const app = new App();
+
+    const codePipelineStack = new CodePipelineStack(app, 'CodePipelineStack', {
+      env: MOCK_ENV,
+      stageConfig: MOCK_STAGE_CONFIG
+    });
     const consentDataStack = new ConsentDataStack(app, 'ConsentDataStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG
@@ -25,6 +31,7 @@ describe('ConsentManagementMonitoringStack', () => {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       apiCodePackageFilePath: join(__dirname, '../../../consent-management-api'),
+      codeDeployRole: codePipelineStack.codeDeployRole,
       consentTable: consentDataStack.consentTable
     });
     const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {

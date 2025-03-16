@@ -13,6 +13,8 @@ export interface CodePipelineStackProps extends StackProps {
  * Defines infrastructure supporting automated deployment pipelines.
  */
 export class CodePipelineStack extends Stack {
+  public readonly codeDeployRole: Role;
+
   constructor(scope: Construct, id: string, readonly props: CodePipelineStackProps) {
     super(scope, id, props);
 
@@ -43,7 +45,7 @@ export class CodePipelineStack extends Stack {
       *
       * This role is granted authority to assume AWS CDK roles.
       */
-    new Role(this, 'GitHubActionsRole', {
+    this.codeDeployRole = new Role(this, 'GitHubActionsRole', {
       assumedBy: gitHubPrincipal,
       description: 'Role assumed by GitHub Actions to deploy code/infra using aws cdk',
       roleName: 'github-ci-role',
