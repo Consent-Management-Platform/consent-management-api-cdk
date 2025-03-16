@@ -5,6 +5,8 @@ on:
   push:
   # Run automatically for all pull requests
   pull_request:
+  # Enable running as a subset of another GitHub Workflow
+  workflow_call:
   # Enable running workflow manually from GitHub Actions
   workflow_dispatch:
 
