@@ -7,10 +7,13 @@ name: Deploy
 on:
   # Enable running workflow manually from GitHub Actions
   workflow_dispatch:
-    # Require AWS credentials and region to be provided
+    # Require AWS account ID and region to be provided
     inputs:
       AWS_ACCOUNT_ID:
         description: AWS account to deploy to
+        required: true
+      AWS_REGION:
+        description: AWS region to deploy to
         required: true
 
 jobs:
@@ -29,13 +32,13 @@ jobs:
         uses: ./.github/actions/synthesizeStacks
         with:
           aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
-          aws-region: us-west-2
+          aws-region: ${{ github.event.inputs.AWS_REGION }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-username: ${{ github.actor }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
-          aws-region: us-west-2
+          aws-region: ${{ github.event.inputs.AWS_REGION }}
           role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
       - name: Deploy CDK stacks
         run: |
@@ -46,3 +49,6 @@ jobs:
             ConsentHistoryProcessorStack \
             ConsentManagementApiStack \
             ConsentManagementMonitoringStack
+        env:
+          CONSENT_DEV_ACCOUNT_ID: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
+          CONSENT_DEV_REGION: ${{ github.event.inputs.AWS_REGION }}
