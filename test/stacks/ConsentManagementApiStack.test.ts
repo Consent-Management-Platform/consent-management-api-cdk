@@ -4,6 +4,7 @@ import { join } from 'path';
 
 import { MOCK_ENV } from '../../fixtures/mock-env';
 import { MOCK_STAGE_CONFIG } from '../../fixtures/mock-stage-config';
+import { CodePipelineStack } from '../../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../../lib/stacks/ConsentDataStack';
 import { ConsentManagementApiStack } from '../../lib/stacks/ConsentManagementApiStack';
 
@@ -48,6 +49,11 @@ describe('ConsentManagementApiStack', () => {
 
   it('creates the expected CloudFormation template from CDK', () => {
     const app = new App();
+
+    const codePipelineStack = new CodePipelineStack(app, 'CodePipelineStack', {
+      env: MOCK_ENV,
+      stageConfig: MOCK_STAGE_CONFIG
+    });
     const dataStack = new ConsentDataStack(app, 'ConsentDataStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG
@@ -56,6 +62,7 @@ describe('ConsentManagementApiStack', () => {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       apiCodePackageFilePath: join(__dirname, '../../../consent-management-api'),
+      codeDeployRole: codePipelineStack.codeDeployRole,
       consentTable: dataStack.consentTable
     });
 

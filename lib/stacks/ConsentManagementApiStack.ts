@@ -1,7 +1,7 @@
 import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
-import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime, SnapStartConf } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
@@ -17,6 +17,7 @@ import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
 
 export interface ConsentManagementApiStackProps extends StackProps {
   apiCodePackageFilePath: string;
+  codeDeployRole: Role;
   consentTable: Table;
   stageConfig: StageConfig;
 }
@@ -33,6 +34,7 @@ export class ConsentManagementApiStack extends Stack {
 
     this.apiLambda = this.createApiLambdaFunction();
     this.restApi = this.createRestApiGateway(this.apiLambda);
+    this.grantCodeDeployRolePermissions(this.restApi);
   }
 
   private createApiLambdaFunction(): Function {
@@ -114,5 +116,14 @@ export class ConsentManagementApiStack extends Stack {
         resources: ['execute-api/*']
       })]
     });
+  }
+
+  private grantCodeDeployRolePermissions(restApi: SpecRestApi): void {
+    this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
+      sid: 'ConsentManagementApiInvokePermissions',
+      actions: ['execute-api:Invoke'],
+      effect: Effect.ALLOW,
+      resources: [restApi.arnForExecuteApi()],
+    }));
   }
 }

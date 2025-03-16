@@ -33,6 +33,7 @@ const consentHistoryDataStack: ConsentHistoryDataStack = new ConsentHistoryDataS
 const consentManagementApiStack: ConsentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
   ...commonStackProps,
   apiCodePackageFilePath: join(__dirname, '../../consent-management-api/build/distributions/consent-management-api.zip'),
+  codeDeployRole: codePipelineStack.codeDeployRole,
   consentTable: consentDataStack.consentTable
 });
 

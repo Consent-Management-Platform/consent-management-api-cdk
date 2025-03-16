@@ -2,7 +2,16 @@
 
 exports[`ConsentManagementApiStack creates the expected CloudFormation template from CDK 1`] = `
 {
-  "Outputs": {},
+  "Outputs": {
+    "ExportsOutputRefConsentManagementAPIGateway2FBFF2A28056B123": {
+      "Export": {
+        "Name": "ConsentManagementApiStack:ExportsOutputRefConsentManagementAPIGateway2FBFF2A28056B123",
+      },
+      "Value": {
+        "Ref": "ConsentManagementAPIGateway2FBFF2A2",
+      },
+    },
+  },
   "Parameters": {
     "BootstrapVersion": {
       "Default": "/cdk-bootstrap/hnb659fds/version",
