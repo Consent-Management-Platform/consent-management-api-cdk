@@ -20,8 +20,8 @@ runs:
     - name: Run Build Consent API action
       uses: ./consent-management-api/.github/actions/buildConsentApi/
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        github-username: ${{ github.actor }}
+        github-token: ${{ inputs.github-token }}
+        github-username: ${{ inputs.github-username }}
 
     # Set up Consent History Ingestor artifacts
     - name: Checkout Consent History Ingestor repository
@@ -32,8 +32,8 @@ runs:
     - name: Run Build Consent History Ingestor action
       uses: ./consent-history-ingestor/.github/actions/buildIngestor/
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        github-username: ${{ github.actor }}
+        github-token: ${{ inputs.github-token }}
+        github-username: ${{ inputs.github-username }}
 
     # Build CDK package and synthesize stacks
     - name: Checkout CDK package
