@@ -1,5 +1,6 @@
 // API CloudFormation exports
 export const CONSENT_MANAGEMENT_API_ENDPOINT_EXPORT_NAME = 'ConsentManagementApiEndpoint';
+export const CONSENT_MANAGEMENT_API_GATEWAY_ID_EXPORT_NAME = 'ConsentManagementApiGatewayId';
 
 // API Gateway properties
 export const CONSENT_MANAGEMENT_API_DOCS_URL = 'https://consent-management-platform.github.io/consent-management-api-models/v1/docs.html';

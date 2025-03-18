@@ -1,4 +1,4 @@
-import { Aws, Duration, Stack, StackProps } from 'aws-cdk-lib';
+import { Aws, CfnOutput, Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
@@ -8,6 +8,7 @@ import { Construct } from 'constructs';
 import {
   CONSENT_MANAGEMENT_API_DOCS_URL,
   CONSENT_MANAGEMENT_API_ENDPOINT_EXPORT_NAME,
+  CONSENT_MANAGEMENT_API_GATEWAY_ID_EXPORT_NAME,
   CONSENT_MANAGEMENT_API_THROTTLING_BURST_LIMIT,
   CONSENT_MANAGEMENT_API_THROTTLING_LIMIT
 } from '../constants/apis';
@@ -35,6 +36,8 @@ export class ConsentManagementApiStack extends Stack {
     this.apiLambda = this.createApiLambdaFunction();
     this.restApi = this.createRestApiGateway(this.apiLambda);
     this.grantCodeDeployRolePermissions(this.restApi);
+
+    this.createExports(this.restApi);
   }
 
   private createApiLambdaFunction(): Function {
@@ -119,6 +122,7 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private grantCodeDeployRolePermissions(restApi: SpecRestApi): void {
+    // Allow to invoke Consent Management API endpoints for API integ tests
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
       sid: 'ConsentManagementApiInvokePermissions',
       actions: ['execute-api:Invoke'],
@@ -126,11 +130,28 @@ export class ConsentManagementApiStack extends Stack {
       resources: [restApi.arnForExecuteApi()],
     }));
 
+    // Allow to generate API clients from API Gateway endpoint
+    // These encapsulate the logic for making authenticated queries, building requests, and parsing API responses
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
       sid: 'ConsentManagementApiGetSdkPermissions',
       actions: ['apigateway:GET'],
       effect: Effect.ALLOW,
       resources: [`arn:${Aws.PARTITION}:apigateway:${Aws.REGION}::/restapis/${restApi.restApiId}/stages/*/sdks/*`],
     }));
+
+    // Allow to list CDK exports to retrieve API Gateway ID
+    this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
+      sid: 'CloudFormationListExportsPermissions',
+      actions: ['cloudformation:ListExports'],
+      effect: Effect.ALLOW,
+      resources: ['*'], // CloudFormation exports are global, cannot filter permissions
+    }));
+  }
+
+  private createExports(restApi: SpecRestApi): void {
+    new CfnOutput(this, 'ConsentManagementApiGatewayIdExport', {
+      exportName: CONSENT_MANAGEMENT_API_GATEWAY_ID_EXPORT_NAME,
+      value: restApi.restApiId
+    });
   }
 }
