@@ -1,4 +1,4 @@
-import { Duration, Stack, StackProps } from 'aws-cdk-lib';
+import { Aws, Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
 import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
@@ -124,6 +124,13 @@ export class ConsentManagementApiStack extends Stack {
       actions: ['execute-api:Invoke'],
       effect: Effect.ALLOW,
       resources: [restApi.arnForExecuteApi()],
+    }));
+
+    this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
+      sid: 'ConsentManagementApiGetSdkPermissions',
+      actions: ['apigateway:GET'],
+      effect: Effect.ALLOW,
+      resources: [`arn:${Aws.PARTITION}:apigateway:${Aws.REGION}::/restapis/${restApi.restApiId}/stages/*/sdks/*`],
     }));
   }
 }
