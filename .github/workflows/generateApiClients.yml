@@ -23,10 +23,9 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    defaults:
-      run:
-        working-directory: consent-management-api-cdk
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -39,7 +38,7 @@ jobs:
             --region ${{ github.event.inputs.AWS_REGION }} \
             --query "Exports[?Name == 'ConsentManagementApiGatewayId'].Value" \
             | jq .[0])
-          echo "CONSENT_MANAGEMENT_API_GATEWAY_ID=$apiGatewayId" >> $GITHUB_ENV
+          echo "CONSENT_MANAGEMENT_API_GATEWAY_ID=${apiGatewayId}" >> "$GITHUB_OUTPUT"
       - name: Query Consent Management API Gateway for Java client SDK
         run: |
           aws apigateway get-sdk \
