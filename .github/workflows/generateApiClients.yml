@@ -61,24 +61,24 @@ jobs:
           unzip -q consent-management-api-java-client.zip -d consent-management-api-java-client
           ls consent-management-api-java-client
           ls -al consent-management-api-java-client/generated-code
-      - name: Checkout auto-generated Java client repository
-        uses: actions/checkout@v4
-        with:
-          repository: Consent-Management-Platform/consent-management-api-java-sdk
-          path: auto-generated-java-client
-      - name: Copy auto-generated Java client SDK code to the repository
-        run: |
-          cp -r consent-management-api-java-client/generated-code/* auto-generated-java-client
-          ls -al auto-generated-java-client
+      # - name: Checkout auto-generated Java client repository
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: Consent-Management-Platform/consent-management-api-java-sdk
+      #     path: auto-generated-java-client
+      # - name: Copy auto-generated Java client SDK code to the repository
+      #   run: |
+      #     cp -r consent-management-api-java-client/generated-code/* auto-generated-java-client
+      #     ls -al auto-generated-java-client
       - name: Commit and push auto-generated Java client SDK code
         run: |
-          cd auto-generated-java-client
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git config --global --unset credential.helper
+          git clone https://${{ github.actor }}:${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git auto-generated-java-client
+          cp -r consent-management-api-java-client/generated-code/* auto-generated-java-client
+          ls -al auto-generated-java-client
+          cd auto-generated-java-client
           git add .
           git commit -m "Update auto-generated Java client SDK for Consent Management API"
-          git push https://${{ github.actor }}:${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
+          git push
           cd ..
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
