@@ -72,7 +72,7 @@ jobs:
           cd auto-generated-java-client
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global http.extraheader "AUTHORIZATION: Bearer ${GITHUB_TOKEN}"
+          git config --unset-all http.https://github.com/.extraheader
           git add .
           git commit -m "Update auto-generated Java client SDK for Consent Management API"
           git push
