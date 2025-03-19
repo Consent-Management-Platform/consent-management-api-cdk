@@ -75,8 +75,7 @@ jobs:
           cd auto-generated-java-client
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git config --global credential.helper store
           git add .
           git commit -m "Update auto-generated Java client SDK for Consent Management API"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
+          git push https://${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
           cd ..
