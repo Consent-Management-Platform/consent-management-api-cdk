@@ -73,7 +73,7 @@ jobs:
           ls -al auto-generated-java-client
           cd auto-generated-java-client
           git add .
-          if git diff --quiet; then
+          if git diff origin --quiet; then
             echo "No changes to commit"
             exit 0
           fi
