@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: generateApiClient
       # - name: Configure AWS credentials
       #   uses: aws-actions/configure-aws-credentials@master
       #   with:
@@ -55,6 +57,7 @@ jobs:
       #     path: consent-management-api-java-client.zip
       - name: Unzip Java client SDK
         run: |
+          ls consent-management-api-java-client.zip
           unzip -q consent-management-api-java-client.zip -d consent-management-api-java-client
           ls consent-management-api-java-client
           ls -al consent-management-api-java-client/generated-code
