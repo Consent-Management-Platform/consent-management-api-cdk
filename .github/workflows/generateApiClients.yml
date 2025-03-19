@@ -53,3 +53,17 @@ jobs:
         with:
           name: consent-management-api-java-client
           path: consent-management-api-java-client.zip
+      - name: Unzip Java client SDK
+        run: |
+          unzip -q consent-management-api-java-client.zip -d consent-management-api-java-client
+          ls consent-management-api-java-client
+          ls -al consent-management-api-java-client/generated-code
+      - name: Checkout auto-generated Java client repository
+        uses: actions/checkout@v4
+        with:
+          repository: Consent-Management-Platform/consent-management-api-java-sdk
+          path: auto-generated-java-client
+      - name: Copy auto-generated Java client SDK code to the repository
+        run: |
+          cp -r consent-management-api-java-client/generated-code/* auto-generated-java-client
+          ls -al auto-generated-java-client
