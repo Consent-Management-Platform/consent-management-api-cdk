@@ -78,7 +78,7 @@ jobs:
           git config --global --unset credential.helper
           git add .
           git commit -m "Update auto-generated Java client SDK for Consent Management API"
-          git push https://${{ github.actor }}${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
+          git push https://${{ github.actor }}:${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
           cd ..
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
