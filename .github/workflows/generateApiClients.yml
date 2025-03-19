@@ -21,7 +21,7 @@ jobs:
   generate-api-clients:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - name: Checkout code
@@ -78,5 +78,5 @@ jobs:
           git config --global credential.helper store
           git add .
           git commit -m "Update auto-generated Java client SDK for Consent Management API"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git
           cd ..
