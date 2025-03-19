@@ -73,6 +73,6 @@ jobs:
           ls -al auto-generated-java-client
           cd auto-generated-java-client
           git add .
-          git commit -m "Update auto-generated Java client SDK for Consent Management API"
-          git push
+          git diff --quiet || git commit -m "Update auto-generated Java client SDK for Consent Management API"
+          git diff --quiet || git push
           cd ..
