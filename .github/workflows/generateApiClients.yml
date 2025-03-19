@@ -24,7 +24,7 @@ jobs:
   generate-api-clients:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       id-token: write
     steps:
       - name: Checkout code
