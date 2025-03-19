@@ -2,6 +2,9 @@
 #
 # Prerequisites:
 # 1. Have deployed the CDK stacks for the API services
+# 2. Have created a GitHub Personal Access Token with write access to the Java client SDK repository,
+#      and saved that token as repository secret named CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN at
+#      https://github.com/Consent-Management-Platform/consent-management-api-cdk/settings/secrets/actions
 name: Generate API Clients
 on:
   # Enable running workflow manually from GitHub Actions
@@ -26,6 +29,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: generateApiClient
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -53,3 +58,24 @@ jobs:
         with:
           name: consent-management-api-java-client
           path: consent-management-api-java-client.zip
+      - name: Unzip Java client SDK
+        run: |
+          ls consent-management-api-java-client.zip
+          unzip -q consent-management-api-java-client.zip -d consent-management-api-java-client
+          ls consent-management-api-java-client
+          ls -al consent-management-api-java-client/generated-code
+      - name: Commit and push auto-generated Java client SDK code
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git clone https://${{ github.actor }}:${{ secrets.CONSENT_MGMT_JAVA_SDK_WRITE_TOKEN }}@github.com/Consent-Management-Platform/consent-management-api-java-sdk.git auto-generated-java-client
+          cp -r consent-management-api-java-client/generated-code/* auto-generated-java-client
+          ls -al auto-generated-java-client
+          cd auto-generated-java-client
+          git add .
+          if git diff origin --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update auto-generated Java client SDK for Consent Management API"
+          git push
