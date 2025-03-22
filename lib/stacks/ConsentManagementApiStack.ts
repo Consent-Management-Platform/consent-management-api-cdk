@@ -129,6 +129,13 @@ export class ConsentManagementApiStack extends Stack {
       effect: Effect.ALLOW,
       resources: [restApi.arnForExecuteApi()],
     }));
+    // Allow to invoke API endpoints via API Gateway TestInvokeApi for AWS CLI based integ tests
+    this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
+      sid: 'ConsentManagementApiTestInvokeMethodPermissions',
+      actions: ['apigateway:POST'],
+      effect: Effect.ALLOW,
+      resources: [`arn:aws:apigateway:us-west-2::/restapis/${restApi.restApiId}/resources/*/*/*`],
+    }));
 
     // Allow to generate API clients from API Gateway endpoint
     // These encapsulate the logic for making authenticated queries, building requests, and parsing API responses
