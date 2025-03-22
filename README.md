@@ -2,7 +2,6 @@
 
 [![Build](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/test.yml)
 [![Deploy](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml)
-[![Generate API Clients](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/generateApiClients.yml/badge.svg?branch=main)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/generateApiClients.yml)
 
 This package defines the AWS infrastructure for the Consent Management API, using the AWS Cloud Development Kit (CDK).
 
@@ -22,6 +21,10 @@ The Consent History Ingestor will write consent history items to a Consent Histo
 
 ## Technologies
 [AWS Cloud Development Kit (AWS CDK)](https://docs.aws.amazon.com/cdk/) is used to define AWS infrastructure in code and provision it through [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
+
+[GitHub Actions](https://docs.github.com/en/actions) are used to automatically run test builds after code changes, synthesize CloudFormation stack templates, and deploy code and infrastructure changes to AWS.
+
+[Gradle](https://docs.gradle.org) is used to build the project and manage package dependencies.
 
 ## License
 The code in this project is released under the [GPL-3.0 License](LICENSE).
