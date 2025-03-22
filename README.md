@@ -2,6 +2,7 @@
 
 [![Build](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/test.yml)
 [![Deploy](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/deploy.yml)
+[![API Integ Tests](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/integTest.yml/badge.svg)](https://github.com/Consent-Management-Platform/consent-management-api-cdk/actions/workflows/integTest.yml)
 
 This package defines the AWS infrastructure for the Consent Management API, using the AWS Cloud Development Kit (CDK).
 

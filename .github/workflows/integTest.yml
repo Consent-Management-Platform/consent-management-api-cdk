@@ -5,7 +5,7 @@
 # Prerequisites:
 # 1. Deploy CDK stacks to the provided AWS account.
 # 2. Set up AWS CLI and local AWS credentials.
-name: Run API Integ Tests
+name: API Integ Tests
 on:
   # Enable running workflow manually from GitHub Actions
   workflow_dispatch:
