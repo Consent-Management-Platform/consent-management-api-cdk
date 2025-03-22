@@ -64,6 +64,11 @@ jobs:
           unzip -q consent-management-api-java-client.zip -d consent-management-api-java-client
           ls consent-management-api-java-client
           ls -al consent-management-api-java-client/generated-code
+      - name: Validate Java client SDK builds
+        run: |
+          cd consent-management-api-java-client
+          ./gradlew build
+          cd ..
       - name: Commit and push auto-generated Java client SDK code
         run: |
           git config --global user.name 'github-actions[bot]'
