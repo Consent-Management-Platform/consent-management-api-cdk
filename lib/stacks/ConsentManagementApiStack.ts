@@ -132,7 +132,10 @@ export class ConsentManagementApiStack extends Stack {
     // Allow to invoke API endpoints via API Gateway TestInvokeApi for AWS CLI based integ tests
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
       sid: 'ConsentManagementApiTestInvokeMethodPermissions',
-      actions: ['apigateway:POST'],
+      actions: [
+        'apigateway:GET',
+        'apigateway:POST'
+      ],
       effect: Effect.ALLOW,
       resources: [`arn:aws:apigateway:us-west-2::/restapis/${restApi.restApiId}/resources/*/*/*`],
     }));
