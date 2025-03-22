@@ -1,7 +1,7 @@
 import { Aws, CfnOutput, Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { ApiDefinition, Deployment, EndpointType, MethodLoggingLevel, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
-import { AccountRootPrincipal, Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
+import { AccountRootPrincipal, ArnPrincipal, Effect, PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime, SnapStartConf } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
@@ -108,16 +108,39 @@ export class ConsentManagementApiStack extends Stack {
    * Ref: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html
    */
   private createApiGatewayAccessPolicy(): PolicyDocument {
+    const githubCiRolePrincipal = new ArnPrincipal(`arn:aws:iam::${Aws.ACCOUNT_ID}:role/github-ci-role`);
+
     return new PolicyDocument({
-      statements: [new PolicyStatement({
-        sid: 'ConsentManagementApiGatewaySameAccountFullInvokeAccess',
-        actions: ['execute-api:Invoke'],
-        effect: Effect.ALLOW,
-        // Grant services within the same account API access
-        principals: [new AccountRootPrincipal()],
-        // Grants invoke permissions to all APIs within this API Gateway
-        resources: ['execute-api/*']
-      })]
+      statements: [
+        new PolicyStatement({
+          sid: 'ConsentManagementApiGatewayFullInvokeAccess',
+          actions: ['execute-api:Invoke'],
+          effect: Effect.ALLOW,
+          principals: [
+            // Grant services within the same account API access
+            new AccountRootPrincipal(),
+            // Grant the CD/CI role API access
+            githubCiRolePrincipal,
+          ],
+          // Grants invoke permissions to all APIs within this API Gateway
+          resources: ['execute-api/*']
+        }),
+        new PolicyStatement({
+          sid: 'ConsentManagementApiGatewayApiAccess',
+          actions: [
+            'apigateway:GET',
+            'apigateway:POST'
+          ],
+          effect: Effect.ALLOW,
+          principals: [
+            githubCiRolePrincipal,
+          ],
+          resources: [
+            `arn:${Aws.PARTITION}:apigateway:${Aws.REGION}::/restapis/*/resources`,
+            `arn:${Aws.PARTITION}:apigateway:${Aws.REGION}::/restapis/*/resources/*/*/*`,
+          ]
+        })
+      ]
     });
   }
 
@@ -137,7 +160,10 @@ export class ConsentManagementApiStack extends Stack {
         'apigateway:POST'
       ],
       effect: Effect.ALLOW,
-      resources: [`arn:aws:apigateway:us-west-2::/restapis/${restApi.restApiId}/resources/*/*/*`],
+      resources: [
+        `arn:aws:apigateway:us-west-2::/restapis/${restApi.restApiId}/resources`,
+        `arn:aws:apigateway:us-west-2::/restapis/${restApi.restApiId}/resources/*/*/*`
+      ],
     }));
 
     // Allow to generate API clients from API Gateway endpoint
