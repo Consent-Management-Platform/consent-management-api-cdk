@@ -1,0 +1,62 @@
+name: Run Consent Management Integ Tests
+description: Run AWS CLI based integration tests against the Consent Management API
+
+inputs:
+  aws-account-id:
+    description: AWS account to deploy to
+    required: true
+  aws-region:
+    description: AWS region to deploy to
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@master
+      with:
+        aws-region: ${{ inputs.aws-region }}
+        role-to-assume: arn:aws:iam::${{ inputs.aws-account-id }}:role/github-ci-role
+    - name: Retrieve API Gateway ID for the Consent Management API
+      id: get-consent-management-api-gateway-id
+      run: |
+        apiGatewayId=$(aws cloudformation list-exports \
+          --region ${{ inputs.aws-region }} \
+          --query "Exports[?Name == 'ConsentManagementApiGatewayId'].Value" \
+          | jq .[0])
+        echo "CONSENT_MANAGEMENT_API_GATEWAY_ID=${apiGatewayId}" >> "$GITHUB_OUTPUT"
+      shell: bash
+    - name: Get API Gateway resource IDs
+      id: get-consent-management-api-resource-ids
+      run: |
+        apiGatewayResources=$(aws apigateway get-resources \
+          --region ${{ inputs.aws-region }} \
+          --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }})
+        listServiceUserConsentsResourceId=$(echo $apiGatewayResources | jq '.items.[] | select(.path == "/v1/consent-management/services/{serviceId}/users/{userId}/consents") | .id')
+        echo "LIST_API_RESOURCE_ID=${listServiceUserConsentsResourceId}" >> "$GITHUB_OUTPUT"
+      shell: bash
+    - name: Invoke ListServiceUserConsents API
+      run: |
+        listApiResponse=$(aws apigateway test-invoke-method \
+          --region ${{ inputs.aws-region }} \
+          --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
+          --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.LIST_API_RESOURCE_ID }} \
+          --http-method GET \
+          --path-with-query-string "v1/consent-management/services/TestServiceId/users/TestUserId/consents")
+        if echo $listApiResponse | jq -e '.status == 200' > /dev/null; then
+          echo "ListServiceUserConsents API invocation succeeded"
+        else
+          echo "ListServiceUserConsents API invocation failed"
+          echo $listApiResponse
+          exit 1
+        fi
+        listApiResponseBody=$(echo $listApiResponse | jq '.body')
+        returnedConsents=$(echo $listApiResponseBody | sed 's/\\"/"/g' | sed 's/^"//;s/"$//' | jq .data)
+        if echo $returnedConsents | jq 'type == "array"' > /dev/null; then
+          echo "Validation passed: successfully returned an array of consents"
+        else
+          echo "Validation failed: did not return an array of consents"
+          echo "API response body: $listApiResponseBody"
+          exit 1
+        fi
+      shell: bash
