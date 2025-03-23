@@ -21,26 +21,30 @@ runs:
       id: get-consent-management-api-gateway-id
       run: |
         apiGatewayId=$(aws cloudformation list-exports \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --query "Exports[?Name == 'ConsentManagementApiGatewayId'].Value" \
           | jq .[0])
         echo "CONSENT_MANAGEMENT_API_GATEWAY_ID=${apiGatewayId}" >> "$GITHUB_OUTPUT"
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
     - name: Get API Gateway resource IDs
       id: get-consent-management-api-resource-ids
       run: |
         apiGatewayResources=$(aws apigateway get-resources \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }})
         listServiceUserConsentsResourceId=$(echo ${apiGatewayResources} | jq '.items.[] | select(.path == "/v1/consent-management/services/{serviceId}/users/{userId}/consents") | .id')
         echo "CONSENTS_API_RESOURCE_ID=${listServiceUserConsentsResourceId}" >> "$GITHUB_OUTPUT"
         serviceUserConsentResourceId=$(echo ${apiGatewayResources} | jq '.items.[] | select(.path == "/v1/consent-management/services/{serviceId}/users/{userId}/consents/{consentId}") | .id')
         echo "CONSENT_API_RESOURCE_ID=${serviceUserConsentResourceId}" >> "$GITHUB_OUTPUT"
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
     - name: Test ListServiceUserConsents API
       run: |
         listApiResponse=$(aws apigateway test-invoke-method \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
           --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENTS_API_RESOURCE_ID }} \
           --http-method GET \
@@ -60,12 +64,14 @@ runs:
           echo "ListServiceUserConsents API response body: ${listApiResponseBody}"
           exit 1
         fi
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
     - name: Test CreateServiceUserConsent API
       id: create-service-user-consent
       run: |
         createConsentApiResponse=$(aws apigateway test-invoke-method \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
           --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENTS_API_RESOURCE_ID }} \
           --http-method POST \
@@ -87,11 +93,13 @@ runs:
           exit 1
         fi
         echo "CREATED_CONSENT_ID=${returnedConsentId}" >> "$GITHUB_OUTPUT"
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
     - name: Test GetServiceUserConsent API
       run: |
         getConsentApiResponse=$(aws apigateway test-invoke-method \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
           --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENT_API_RESOURCE_ID }} \
           --http-method GET \
@@ -135,11 +143,13 @@ runs:
           exit 1
         fi
         echo "GetServiceUserConsent API validation passed: successfully returned the expected consent"
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
     - name: Test UpdateServiceUserConsent API
       run: |
         updateConsentApiResponse=$(aws apigateway test-invoke-method \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
           --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENT_API_RESOURCE_ID }} \
           --http-method POST \
@@ -152,7 +162,7 @@ runs:
           exit 1
         fi
         getConsentApiResponse=$(aws apigateway test-invoke-method \
-          --region ${{ inputs.aws-region }} \
+          --region "$AWS_REGION" \
           --rest-api-id ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }} \
           --resource-id ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENT_API_RESOURCE_ID }} \
           --http-method GET \
@@ -191,4 +201,6 @@ runs:
           exit 1
         fi
         echo "GetServiceUserConsent API validation after update passed: successfully returned the expected consent"
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
       shell: bash
