@@ -2,12 +2,13 @@
   "name": "consent-management-api-cdk",
   "version": "0.1.0",
   "bin": {
-    "consent-management-api-cdk": "bin/consent-management-api-cdk.js"
+    "consent-management-api-cdk": "bin/buildCdkStacks.js"
   },
   "scripts": {
     "build": "tsc",
     "cdk": "cdk",
     "clean": "rm -rf dist cdk.out node_modules",
+    "prebuild": "bash ./bin/updateConsentManagementOpenApiSpec.sh",
     "test": "npm run build && jest",
     "update-snapshots": "npm run build && jest -u",
     "watch": "tsc -w"
