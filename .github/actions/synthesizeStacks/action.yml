@@ -23,6 +23,18 @@ runs:
         github-token: ${{ inputs.github-token }}
         github-username: ${{ inputs.github-username }}
 
+    # Set up Consent History API artifacts
+    - name: Checkout Consent History API repository
+      uses: actions/checkout@v4
+      with:
+        repository: 'Consent-Management-Platform/consent-history-api'
+        path: 'consent-history-api'
+    - name: Run Build Consent History API action
+      uses: ./consent-history-api/.github/actions/buildApi/
+      with:
+        github-token: ${{ inputs.github-token }}
+        github-username: ${{ inputs.github-username }}
+
     # Set up Consent History Ingestor artifacts
     - name: Checkout Consent History Ingestor repository
       uses: actions/checkout@v4
@@ -58,6 +70,8 @@ runs:
       run: |
         ls -l ../consent-management-api/build/distributions
         ls -l ../consent-management-api/build/distributions/consent-management-api.zip
+        ls -l ../consent-history-api/build/distributions
+        ls -l ../consent-history-api/build/distributions/consent-history-api.zip
         ls -l ../consent-history-ingestor/build/distributions
         ls -l ../consent-history-ingestor/build/distributions/consent-history-ingestor.zip
       shell: bash

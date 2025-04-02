@@ -45,6 +45,7 @@ jobs:
             ConsentDataStack \
             ConsentHistoryDataStack \
             ConsentHistoryProcessorStack \
+            ConsentHistoryApiStack \
             ConsentManagementApiStack \
             ConsentManagementMonitoringStack
         env:

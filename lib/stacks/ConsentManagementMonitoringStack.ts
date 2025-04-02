@@ -4,6 +4,7 @@ import { BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Function } from 'aws-cdk-lib/aws-lambda';
 import { DefaultDashboardFactory, MonitoringFacade } from 'cdk-monitoring-constructs';
 import { Construct } from 'constructs';
+import { join } from 'path';
 
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
@@ -54,7 +55,8 @@ export class ConsentManagementMonitoringStack extends Stack {
   private createRestApiGatewayMonitoring() {
     this.monitoring.addLargeHeader('Consent Management API Gateway Metrics');
 
-    const apiDefinition = constructApiDefinition(this.props.env!, this.props.consentManagementApiLambda.functionArn);
+    const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
+    const apiDefinition = constructApiDefinition(this.props.env!, this.props.consentManagementApiLambda.functionArn, openApiSpecFilePath);
     const apiPaths = apiDefinition.paths;
     Object.keys(apiPaths).forEach((apiPathKey) => {
       Object.keys(apiPaths[apiPathKey]).forEach((httpMethodKey: string) => {

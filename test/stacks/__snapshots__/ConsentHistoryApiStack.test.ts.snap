@@ -1,0 +1,643 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConsentHistoryApiStack creates the expected CloudFormation template from CDK 1`] = `
+{
+  "Outputs": {
+    "ConsentHistoryApiGatewayIdExport": {
+      "Export": {
+        "Name": "ConsentHistoryApiGatewayId",
+      },
+      "Value": {
+        "Ref": "ConsentHistoryAPIGateway7E4863E3",
+      },
+    },
+    "ExportsOutputRefConsentHistoryAPIGateway7E4863E3D4251513": {
+      "Export": {
+        "Name": "ConsentHistoryApiStack:ExportsOutputRefConsentHistoryAPIGateway7E4863E3D4251513",
+      },
+      "Value": {
+        "Ref": "ConsentHistoryAPIGateway7E4863E3",
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ConsentHistoryAPIGateway7E4863E3": {
+      "Properties": {
+        "Body": {
+          "components": {
+            "schemas": {
+              "Consent": {
+                "description": "Record of user consent.",
+                "properties": {
+                  "consentData": {
+                    "$ref": "#/components/schemas/ConsentData",
+                  },
+                  "consentId": {
+                    "description": "Unique identifier for a Consent.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                  "consentType": {
+                    "description": "Consent type.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                  "consentVersion": {
+                    "type": "integer",
+                  },
+                  "expiryTime": {
+                    "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "serviceId": {
+                    "description": "Unique identifier for a service.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/ConsentStatus",
+                  },
+                  "userId": {
+                    "description": "Unique identifier for a user.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                },
+                "required": [
+                  "consentId",
+                  "consentVersion",
+                  "serviceId",
+                  "status",
+                  "userId",
+                ],
+                "type": "object",
+              },
+              "ConsentChangeEvent": {
+                "description": "A user consent change event.",
+                "properties": {
+                  "consentId": {
+                    "description": "Unique identifier for a Consent.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                  "eventId": {
+                    "description": "Unique identifier for a consent change event.",
+                    "type": "string",
+                  },
+                  "eventTime": {
+                    "description": "Consent event timestamp, using the ISO 8601 format.",
+                    "format": "date-time",
+                    "type": "string",
+                  },
+                  "eventType": {
+                    "$ref": "#/components/schemas/ConsentEventType",
+                  },
+                  "newImage": {
+                    "$ref": "#/components/schemas/Consent",
+                  },
+                  "oldImage": {
+                    "$ref": "#/components/schemas/Consent",
+                  },
+                },
+                "required": [
+                  "consentId",
+                  "eventId",
+                  "eventTime",
+                  "eventType",
+                ],
+                "type": "object",
+              },
+              "ConsentData": {
+                "additionalProperties": {
+                  "maxLength": 256,
+                  "minLength": 1,
+                  "type": "string",
+                },
+                "description": "Consent data represented by string key-value pairs. Keys must be between 1-64 characters long, values must be between 1-256 characters long, and up to 32 key-value pairs may be provided.",
+                "maxProperties": 32,
+                "type": "object",
+              },
+              "ConsentEventType": {
+                "description": "Type of consent change event.",
+                "enum": [
+                  "INSERT",
+                  "MODIFY",
+                  "REMOVE",
+                ],
+                "type": "string",
+              },
+              "ConsentStatus": {
+                "description": "Current status of a Consent.",
+                "enum": [
+                  "ACTIVE",
+                  "EXPIRED",
+                  "REVOKED",
+                ],
+                "type": "string",
+              },
+              "GetHistoryForServiceUserConsentResponseContent": {
+                "properties": {
+                  "data": {
+                    "description": "List of user consent change events.",
+                    "items": {
+                      "$ref": "#/components/schemas/ConsentChangeEvent",
+                    },
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "InternalServiceExceptionResponseContent": {
+                "description": "This exception is thrown on an unhandled service error.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+              "NotFoundExceptionResponseContent": {
+                "description": "This exception is thrown when the requested entity is not found.",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                  },
+                },
+                "type": "object",
+              },
+            },
+          },
+          "info": {
+            "title": "Consent History API",
+            "version": "2025-03-23",
+          },
+          "openapi": "3.0.2",
+          "paths": {
+            "/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}": {
+              "get": {
+                "description": "Retrieve history for a given service user consent.",
+                "operationId": "GetHistoryForServiceUserConsent",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a Consent.",
+                    "in": "path",
+                    "name": "consentId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a Consent.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "responses": {
+                  "200": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/GetHistoryForServiceUserConsentResponseContent",
+                        },
+                      },
+                    },
+                    "description": "GetHistoryForServiceUserConsent 200 response",
+                  },
+                  "404": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/NotFoundExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "NotFoundException 404 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentHistoryApiLambda03FB76FC",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+            },
+          },
+          "x-amazon-apigateway-request-validator": "full",
+          "x-amazon-apigateway-request-validators": {
+            "full": {
+              "validateRequestBody": true,
+              "validateRequestParameters": true,
+            },
+          },
+        },
+        "EndpointConfiguration": {
+          "Types": [
+            "EDGE",
+          ],
+        },
+        "Name": "ConsentHistoryApi",
+        "Policy": {
+          "Statement": [
+            {
+              "Action": "execute-api:Invoke",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": [
+                  {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":iam::123456789012:root",
+                      ],
+                    ],
+                  },
+                  {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:iam::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":role/github-ci-role",
+                      ],
+                    ],
+                  },
+                ],
+              },
+              "Resource": "execute-api/*",
+              "Sid": "ConsentHistoryApiGatewayFullInvokeAccess",
+            },
+            {
+              "Action": [
+                "apigateway:GET",
+                "apigateway:POST",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:iam::",
+                      {
+                        "Ref": "AWS::AccountId",
+                      },
+                      ":role/github-ci-role",
+                    ],
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region",
+                      },
+                      "::/restapis/*/resources",
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region",
+                      },
+                      "::/restapis/*/resources/*/*/*",
+                    ],
+                  ],
+                },
+              ],
+              "Sid": "ConsentHistoryApiGatewayApiAccess",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "ConsentHistoryAPIGatewayAccount26AE8621": {
+      "DeletionPolicy": "Retain",
+      "DependsOn": [
+        "ConsentHistoryAPIGateway7E4863E3",
+      ],
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "ConsentHistoryAPIGatewayCloudWatchRoleE83540C9",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentHistoryAPIGatewayCloudWatchRoleE83540C9": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentHistoryAPIGatewayDeployment": {
+      "Properties": {
+        "Description": "Consent History API, see documentation at https://consent-management-platform.github.io/consent-history-api-models/v1/docs.html",
+        "RestApiId": {
+          "Ref": "ConsentHistoryAPIGateway7E4863E3",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "ConsentHistoryAPIGatewayDeploymentStageprod": {
+      "DependsOn": [
+        "ConsentHistoryAPIGatewayAccount26AE8621",
+      ],
+      "Properties": {
+        "MethodSettings": [
+          {
+            "DataTraceEnabled": false,
+            "HttpMethod": "*",
+            "LoggingLevel": "INFO",
+            "MetricsEnabled": true,
+            "ResourcePath": "/*",
+            "ThrottlingBurstLimit": 5,
+            "ThrottlingRateLimit": 3,
+          },
+        ],
+        "RestApiId": {
+          "Ref": "ConsentHistoryAPIGateway7E4863E3",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "ConsentHistoryApiLambda03FB76FC": {
+      "DependsOn": [
+        "ConsentHistoryApiLambdaServiceRoleDefaultPolicy5F5E8C68",
+        "ConsentHistoryApiLambdaServiceRoleA0D24C3A",
+      ],
+      "Properties": {
+        "Description": "Consent History API Lambda",
+        "Handler": "com.consentframework.consenthistory.api.ConsentHistoryApiService::handleRequest",
+        "LoggingConfig": {
+          "LogGroup": {
+            "Ref": "ConsentHistoryApiLambdaLogGroup4D13728C",
+          },
+        },
+        "MemorySize": 1536,
+        "Role": {
+          "Fn::GetAtt": [
+            "ConsentHistoryApiLambdaServiceRoleA0D24C3A",
+            "Arn",
+          ],
+        },
+        "Runtime": "java21",
+        "SnapStart": {
+          "ApplyOn": "PublishedVersions",
+        },
+        "Timeout": 60,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ConsentHistoryApiLambdaInvoke": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ConsentHistoryApiLambda03FB76FC",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:us-east-2:123456789012:",
+              {
+                "Ref": "ConsentHistoryAPIGateway7E4863E3",
+              },
+              "/*/*/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "ConsentHistoryApiLambdaLogGroup4D13728C": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "LogGroupName": "ConsentHistoryApiLambda-ApplicationLogs",
+        "RetentionInDays": 545,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentHistoryApiLambdaServiceRoleA0D24C3A": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ConsentHistoryApiLambdaServiceRoleDefaultPolicy5F5E8C68": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "cloudwatch:PutMetricData",
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CloudWatchMetricsPermissions",
+            },
+            {
+              "Action": [
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputFnGetAttServiceUserConsentHistoryDynamoDBTable552A6381Arn5A6BE492",
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputFnGetAttServiceUserConsentHistoryDynamoDBTable552A6381Arn5A6BE492",
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+              "Sid": "ConsentHistoryDdbQueryPermissions",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ConsentHistoryApiLambdaServiceRoleDefaultPolicy5F5E8C68",
+        "Roles": [
+          {
+            "Ref": "ConsentHistoryApiLambdaServiceRoleA0D24C3A",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

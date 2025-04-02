@@ -5,6 +5,7 @@ import { join } from 'path';
 import { StageName } from '../lib/constants/stages';
 import { CodePipelineStack } from '../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
+import { ConsentHistoryApiStack } from '../lib/stacks/ConsentHistoryApiStack';
 import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
 import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
@@ -45,6 +46,13 @@ const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHi
   consentHistoryTable: consentHistoryDataStack.consentHistoryTable
 });
 
+const consentHistoryApiStack: ConsentHistoryApiStack = new ConsentHistoryApiStack(app, 'ConsentHistoryApiStack', {
+  ...commonStackProps,
+  apiCodePackageFilePath: join(__dirname, '../../consent-history-api/build/distributions/consent-history-api.zip'),
+  codeDeployRole: codePipelineStack.codeDeployRole,
+  consentHistoryTable: consentHistoryDataStack.consentHistoryTable
+});
+
 // Create monitoring stacks
 const consentBackendMonitoringStack: ConsentManagementMonitoringStack = new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
@@ -62,6 +70,7 @@ const stacks = [
   consentHistoryDataStack,
   consentManagementApiStack,
   consentHistoryProcessorStack,
+  consentHistoryApiStack,
   consentBackendMonitoringStack
 ];
 stacks.forEach(stack => {

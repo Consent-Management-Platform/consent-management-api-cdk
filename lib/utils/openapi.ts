@@ -1,9 +1,7 @@
 import { Environment } from 'aws-cdk-lib';
 import { readFileSync } from 'fs';
-import { join } from 'path';
 
-export function constructApiDefinition(stackEnvironment: Environment, apiLambdaArn: string) {
-  const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
+export function constructApiDefinition(stackEnvironment: Environment, apiLambdaArn: string, openApiSpecFilePath: string) {
   const apiDefinition = JSON.parse(readFileSync(openApiSpecFilePath, 'utf8'));
 
   // Replace placeholders in API Gateway integration settings

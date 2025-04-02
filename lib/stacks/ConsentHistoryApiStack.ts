@@ -7,31 +7,31 @@ import { Construct } from 'constructs';
 import { join } from 'path';
 
 import {
-  CONSENT_MANAGEMENT_API_DOCS_URL,
-  CONSENT_MANAGEMENT_API_ENDPOINT_EXPORT_NAME,
-  CONSENT_MANAGEMENT_API_GATEWAY_ID_EXPORT_NAME,
-  CONSENT_MANAGEMENT_API_THROTTLING_BURST_LIMIT,
-  CONSENT_MANAGEMENT_API_THROTTLING_LIMIT
+  CONSENT_HISTORY_API_DOCS_URL,
+  CONSENT_HISTORY_API_ENDPOINT_EXPORT_NAME,
+  CONSENT_HISTORY_API_GATEWAY_ID_EXPORT_NAME,
+  CONSENT_HISTORY_API_THROTTLING_BURST_LIMIT,
+  CONSENT_HISTORY_API_THROTTLING_LIMIT
 } from '../constants/apis';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
 import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
 
-export interface ConsentManagementApiStackProps extends StackProps {
+export interface ConsentHistoryApiStackProps extends StackProps {
   apiCodePackageFilePath: string;
   codeDeployRole: Role;
-  consentTable: Table;
+  consentHistoryTable: Table;
   stageConfig: StageConfig;
 }
 
 /**
- * Defines Consent Management API gateway and compute infrastructure.
+ * Defines Consent History API gateway and compute infrastructure.
  */
-export class ConsentManagementApiStack extends Stack {
+export class ConsentHistoryApiStack extends Stack {
   public readonly apiLambda: Function;
   public readonly restApi: SpecRestApi;
 
-  constructor(scope: Construct, id: string, readonly props: ConsentManagementApiStackProps) {
+  constructor(scope: Construct, id: string, readonly props: ConsentHistoryApiStackProps) {
     super(scope, id, props);
 
     this.apiLambda = this.createApiLambdaFunction();
@@ -42,28 +42,27 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createApiLambdaFunction(): Function {
-    const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentManagementApiLambda', {
+    const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentHistoryApiLambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
-      description: 'Consent Management API Lambda',
-      handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
+      description: 'Consent History API Lambda',
+      handler: 'com.consentframework.consenthistory.api.ConsentHistoryApiService::handleRequest',
       memorySize: 1536,
       runtime: Runtime.JAVA_21,
       snapStart: SnapStartConf.ON_PUBLISHED_VERSIONS,
       timeout: Duration.minutes(1)
     });
 
-    // Grant permissions to query DynamoDB consent data
+    // Grant permissions to query DynamoDB consent history data
     lambdaFunction.addToRolePolicy(new PolicyStatement({
-      sid: 'ConsentDynamoDBQueryPermissions',
+      sid: 'ConsentHistoryDdbQueryPermissions',
       actions: [
         'dynamodb:ConditionCheckItem',
         'dynamodb:GetItem',
-        'dynamodb:PutItem',
         'dynamodb:Query'
       ],
       resources: [
-        this.props.consentTable.tableArn,
-        `${this.props.consentTable.tableArn}/index/*`
+        this.props.consentHistoryTable.tableArn,
+        `${this.props.consentHistoryTable.tableArn}/index/*`
       ]
     }));
 
@@ -71,29 +70,29 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createRestApiGateway(apiLambda: Function): SpecRestApi {
-    const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
+    const openApiSpecFilePath = join(__dirname, '../../resources/ConsentHistoryApi.openapi.json');
     const apiDefinition: object = constructApiDefinition(this.props.env!, apiLambda.functionArn, openApiSpecFilePath);
     const apiAccessPolicy = this.createApiGatewayAccessPolicy();
 
-    const api: SpecRestApi = new SpecRestApi(this, 'Consent Management API Gateway', {
+    const api: SpecRestApi = new SpecRestApi(this, 'Consent History API Gateway', {
       apiDefinition: ApiDefinition.fromInline(apiDefinition),
       cloudWatchRole: true,
       deployOptions: {
         metricsEnabled: true,
         loggingLevel: MethodLoggingLevel.INFO,
         stageName: this.props.stageConfig.stage,
-        throttlingBurstLimit: CONSENT_MANAGEMENT_API_THROTTLING_BURST_LIMIT,
-        throttlingRateLimit: CONSENT_MANAGEMENT_API_THROTTLING_LIMIT
+        throttlingBurstLimit: CONSENT_HISTORY_API_THROTTLING_BURST_LIMIT,
+        throttlingRateLimit: CONSENT_HISTORY_API_THROTTLING_LIMIT
       },
-      description: `Consent Management API, see documentation at ${CONSENT_MANAGEMENT_API_DOCS_URL}`,
-      endpointExportName: CONSENT_MANAGEMENT_API_ENDPOINT_EXPORT_NAME,
+      description: `Consent History API, see documentation at ${CONSENT_HISTORY_API_DOCS_URL}`,
+      endpointExportName: CONSENT_HISTORY_API_ENDPOINT_EXPORT_NAME,
       endpointTypes: [EndpointType.EDGE],
       policy: apiAccessPolicy,
-      restApiName: 'ConsentManagementApi'
+      restApiName: 'ConsentHistoryApi'
     });
 
     // Trigger API Gateway deployment when there are OpenAPI spec updates to apply the changes
-    const apiDeployment = new Deployment(this, 'ConsentManagementApiDeployment', { api });
+    const apiDeployment = new Deployment(this, 'ConsentHistoryApiDeployment', { api });
     apiDeployment.addToLogicalId(apiDefinition);
 
     apiLambda.grantInvoke(new ServicePrincipal('apigateway.amazonaws.com').withConditions({
@@ -115,7 +114,7 @@ export class ConsentManagementApiStack extends Stack {
     return new PolicyDocument({
       statements: [
         new PolicyStatement({
-          sid: 'ConsentManagementApiGatewayFullInvokeAccess',
+          sid: 'ConsentHistoryApiGatewayFullInvokeAccess',
           actions: ['execute-api:Invoke'],
           effect: Effect.ALLOW,
           principals: [
@@ -128,7 +127,7 @@ export class ConsentManagementApiStack extends Stack {
           resources: ['execute-api/*']
         }),
         new PolicyStatement({
-          sid: 'ConsentManagementApiGatewayApiAccess',
+          sid: 'ConsentHistoryApiGatewayApiAccess',
           actions: [
             'apigateway:GET',
             'apigateway:POST'
@@ -147,16 +146,16 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private grantCodeDeployRolePermissions(restApi: SpecRestApi): void {
-    // Allow to invoke Consent Management API endpoints for API integ tests
+    // Allow to invoke Consent History API endpoints for API integ tests
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
-      sid: 'ConsentManagementApiInvokePermissions',
+      sid: 'ConsentHistoryApiInvokePermissions',
       actions: ['execute-api:Invoke'],
       effect: Effect.ALLOW,
       resources: [restApi.arnForExecuteApi()],
     }));
     // Allow to invoke API endpoints via API Gateway TestInvokeApi for AWS CLI based integ tests
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
-      sid: 'ConsentManagementApiTestInvokeMethodPermissions',
+      sid: 'ConsentHistoryApiTestInvokeMethodPermissions',
       actions: [
         'apigateway:GET',
         'apigateway:POST'
@@ -171,7 +170,7 @@ export class ConsentManagementApiStack extends Stack {
     // Allow to generate API clients from API Gateway endpoint
     // These encapsulate the logic for making authenticated queries, building requests, and parsing API responses
     this.props.codeDeployRole.addToPrincipalPolicy(new PolicyStatement({
-      sid: 'ConsentManagementApiGetSdkPermissions',
+      sid: 'ConsentHistoryApiGetSdkPermissions',
       actions: ['apigateway:GET'],
       effect: Effect.ALLOW,
       resources: [`arn:${Aws.PARTITION}:apigateway:${Aws.REGION}::/restapis/${restApi.restApiId}/stages/*/sdks/*`],
@@ -187,8 +186,8 @@ export class ConsentManagementApiStack extends Stack {
   }
 
   private createExports(restApi: SpecRestApi): void {
-    new CfnOutput(this, 'ConsentManagementApiGatewayIdExport', {
-      exportName: CONSENT_MANAGEMENT_API_GATEWAY_ID_EXPORT_NAME,
+    new CfnOutput(this, 'ConsentHistoryApiGatewayIdExport', {
+      exportName: CONSENT_HISTORY_API_GATEWAY_ID_EXPORT_NAME,
       value: restApi.restApiId
     });
   }

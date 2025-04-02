@@ -27,14 +27,17 @@ Run `aws configure` and configure the AWS CLI with your dev account user's acces
 ### First-time npm project set-up and deployment
 
 Prerequisite set-up of service code packages:
-* In the parent directory that contains the consent-management-api-cdk, check out https://github.com/Consent-Management-Platform/consent-management-api
-* From within the consent-management-api directory, run `./gradlew build` to build the API project.
+* In the parent directory that contains the consent-management-api-cdk, run `git clone git@github.com:Consent-Management-Platform/consent-management-api.git`.
+* Run `cd consent-management-api directory && ./gradlew build` to build the API project.
 * Validate that build/distributions/consent-management-api.zip has been created.
-* In the parent directory that contains the consent-management-api-cdk, check out https://github.com/Consent-Management-Platform/consent-history-ingestor
-* From within the consent-history-ingestor directory, run `./gradlew build` to build the project.
+* In the parent directory that contains the consent-management-api-cdk, run `git clone git@github.com:Consent-Management-Platform/consent-history-ingestor.git`.
+* Run `cd consent-history-ingestor && ./gradlew build` to build the project.
 * Validate that build/distributions/consent-history-ingestor.zip has been created.
+* In the parent directory that contains the consent-management-api-cdk, run `git clone git clone git@github.com:Consent-Management-Platform/consent-history-api.git`.
+* Run `cd consent-history-api && ./gradlew build` to build the project.
+* Validate that build/distributions/consent-history-api.zip has been created.
 
-Note: The above steps are to enable the CDK stacks to locate the service code to upload to S3.  Pending investigation into long-term way to automatically build and consume API service code to remove this manual workaround.
+Note: The above steps are to enable the CDK stacks to locate the service code to upload to S3.  Pending investigation into a way to automatically consume service code artifacts to remove this manual workaround.
 
 Steps to build and deploy CDK stacks:
 
@@ -49,6 +52,7 @@ Steps to build and deploy CDK stacks:
   * `npx cdk deploy ConsentHistoryDataStack`
   * `npx cdk deploy ConsentHistoryProcessorStack`
   * `npx cdk deploy ConsentManagementApiStack`
+  * `npx cdk deploy ConsentHistoryApiStack`
   * `npx cdk deploy ConsentManagementMonitoringStack`
 
 ### Updating stack snapshots
