@@ -1,0 +1,240 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Consent History API",
+        "version": "2025-03-23"
+    },
+    "paths": {
+        "/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}": {
+            "get": {
+                "description": "Retrieve history for a given service user consent.",
+                "operationId": "GetHistoryForServiceUserConsent",
+                "parameters": [
+                    {
+                        "name": "consentId",
+                        "in": "path",
+                        "description": "Unique identifier for a Consent.",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
+                            "description": "Unique identifier for a Consent."
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "serviceId",
+                        "in": "path",
+                        "description": "Unique identifier for a service.",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
+                            "description": "Unique identifier for a service."
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Unique identifier for a user.",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[\\w\\-\\.]{3,128}$",
+                            "description": "Unique identifier for a user."
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "GetHistoryForServiceUserConsent 200 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetHistoryForServiceUserConsentResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NotFoundException 404 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundExceptionResponseContent"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "InternalServiceException 500 response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServiceExceptionResponseContent"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "httpMethod": "POST",
+                    "type": "aws_proxy",
+                    "uri": {
+                        "Fn::Sub": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Consent": {
+                "type": "object",
+                "description": "Record of user consent.",
+                "properties": {
+                    "consentId": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Unique identifier for a Consent."
+                    },
+                    "consentVersion": {
+                        "type": "integer"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Unique identifier for a user."
+                    },
+                    "serviceId": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Unique identifier for a service."
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/ConsentStatus"
+                    },
+                    "consentType": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Consent type."
+                    },
+                    "consentData": {
+                        "$ref": "#/components/schemas/ConsentData"
+                    },
+                    "expiryTime": {
+                        "type": "string",
+                        "description": "Time when the Consent automatically expires, using the ISO 8601 format.",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "consentId",
+                    "consentVersion",
+                    "serviceId",
+                    "status",
+                    "userId"
+                ]
+            },
+            "ConsentChangeEvent": {
+                "type": "object",
+                "description": "A user consent change event.",
+                "properties": {
+                    "consentId": {
+                        "type": "string",
+                        "pattern": "^[\\w\\-\\.]{3,128}$",
+                        "description": "Unique identifier for a Consent."
+                    },
+                    "eventId": {
+                        "type": "string",
+                        "description": "Unique identifier for a consent change event."
+                    },
+                    "eventTime": {
+                        "type": "string",
+                        "description": "Consent event timestamp, using the ISO 8601 format.",
+                        "format": "date-time"
+                    },
+                    "eventType": {
+                        "$ref": "#/components/schemas/ConsentEventType"
+                    },
+                    "oldImage": {
+                        "$ref": "#/components/schemas/Consent"
+                    },
+                    "newImage": {
+                        "$ref": "#/components/schemas/Consent"
+                    }
+                },
+                "required": [
+                    "consentId",
+                    "eventId",
+                    "eventTime",
+                    "eventType"
+                ]
+            },
+            "ConsentData": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "string",
+                    "maxLength": 256,
+                    "minLength": 1
+                },
+                "maxProperties": 32,
+                "description": "Consent data represented by string key-value pairs. Keys must be between 1-64 characters long, values must be between 1-256 characters long, and up to 32 key-value pairs may be provided."
+            },
+            "ConsentEventType": {
+                "type": "string",
+                "description": "Type of consent change event.",
+                "enum": [
+                    "INSERT",
+                    "MODIFY",
+                    "REMOVE"
+                ]
+            },
+            "ConsentStatus": {
+                "type": "string",
+                "description": "Current status of a Consent.",
+                "enum": [
+                    "ACTIVE",
+                    "EXPIRED",
+                    "REVOKED"
+                ]
+            },
+            "GetHistoryForServiceUserConsentResponseContent": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ConsentChangeEvent"
+                        },
+                        "description": "List of user consent change events."
+                    }
+                }
+            },
+            "InternalServiceExceptionResponseContent": {
+                "type": "object",
+                "description": "This exception is thrown on an unhandled service error.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "NotFoundExceptionResponseContent": {
+                "type": "object",
+                "description": "This exception is thrown when the requested entity is not found.",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "x-amazon-apigateway-request-validator": "full",
+    "x-amazon-apigateway-request-validators": {
+        "full": {
+            "validateRequestParameters": true,
+            "validateRequestBody": true
+        }
+    }
+}

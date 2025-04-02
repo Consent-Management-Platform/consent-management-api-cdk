@@ -8,7 +8,7 @@
     "build": "tsc",
     "cdk": "cdk",
     "clean": "rm -rf dist cdk.out node_modules",
-    "prebuild": "bash ./bin/updateConsentManagementOpenApiSpec.sh",
+    "prebuild": "bash ./bin/updateConsentManagementOpenApiSpec.sh && bash ./bin/updateConsentHistoryOpenApiSpec.sh",
     "test": "npm run build && jest",
     "update-snapshots": "npm run build && jest -u",
     "watch": "tsc -w"
