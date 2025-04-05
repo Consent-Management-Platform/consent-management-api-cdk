@@ -18,7 +18,11 @@ Consent writes will be automatically synced via DynamoDB Streams to an Consent H
 
 The Consent History Ingestor will write consent history items to a Consent History DynamoDB table, with application logs and metrics emitted to CloudWatch.
 
-![Consent History Ingestion design diagram](https://github.com/Consent-Management-Platform/consent-management-design/blob/main/consent-management-api/diagrams/ConsentHistoryDesignDiagrams-DynamoDB%20Stream%20Option.drawio.png)
+![Consent History Ingestion design diagram](https://github.com/Consent-Management-Platform/consent-management-design/blob/main/consent-history-ingestor/diagrams/ConsentHistoryIngestorDesignDiagrams-DynamoDB%20Stream%20Option.drawio.png)
+
+The Consent History API will have the same architecture as the Consent Management API, with customer traffic routed through a Web Application Firewall to an API Gateway backed by a Lambda function that makes read-only queries against the Consent History DynamoDB table.
+
+![Consent History API design diagram](https://github.com/Consent-Management-Platform/consent-management-design/blob/main/consent-history-api/diagrams/ConsentHistoryApiDesignDiagram.png)
 
 ## Technologies
 [AWS Cloud Development Kit (AWS CDK)](https://docs.aws.amazon.com/cdk/) is used to define AWS infrastructure in code and provision it through [AWS CloudFormation](https://aws.amazon.com/cloudformation/).
