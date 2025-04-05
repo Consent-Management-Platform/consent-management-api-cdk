@@ -6,6 +6,7 @@ import { MOCK_ENV } from '../../fixtures/mock-env';
 import { MOCK_STAGE_CONFIG } from '../../fixtures/mock-stage-config';
 import { CodePipelineStack } from '../../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../../lib/stacks/ConsentDataStack';
+import { ConsentHistoryApiStack } from '../../lib/stacks/ConsentHistoryApiStack';
 import { ConsentHistoryDataStack } from '../../lib/stacks/ConsentHistoryDataStack';
 import { ConsentHistoryProcessorStack } from '../../lib/stacks/ConsentHistoryProcessorStack';
 import { ConsentManagementApiStack } from '../../lib/stacks/ConsentManagementApiStack';
@@ -27,12 +28,19 @@ describe('ConsentManagementMonitoringStack', () => {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG
     });
-    const apiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
+    const consentManagementApiStack = new ConsentManagementApiStack(app, 'ConsentManagementApiStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       apiCodePackageFilePath: join(__dirname, '../../../consent-management-api'),
       codeDeployRole: codePipelineStack.codeDeployRole,
       consentTable: consentDataStack.consentTable
+    });
+    const consentHistoryApiStack = new ConsentHistoryApiStack(app, 'ConsentHistoryApiStack', {
+      env: MOCK_ENV,
+      stageConfig: MOCK_STAGE_CONFIG,
+      apiCodePackageFilePath: join(__dirname, '../../../consent-history-api'),
+      codeDeployRole: codePipelineStack.codeDeployRole,
+      consentHistoryTable: consentHistoryDataStack.consentHistoryTable
     });
     const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
       env: MOCK_ENV,
@@ -44,11 +52,13 @@ describe('ConsentManagementMonitoringStack', () => {
     const monitoringStack = new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
-      consentManagementApiLambda: apiStack.apiLambda,
+      consentManagementApiLambda: consentManagementApiStack.apiLambda,
+      consentHistoryApiLambda: consentHistoryApiStack.apiLambda,
       consentHistoryProcessorLambda: consentHistoryProcessorStack.consentHistoryProcessorLambda,
       consentTable: consentDataStack.consentTable,
       consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
-      restApi: apiStack.restApi
+      consentManagementRestApi: consentManagementApiStack.restApi,
+      consentHistoryRestApi: consentHistoryApiStack.restApi
     });
 
     const templateJson = Template.fromStack(monitoringStack).toJSON();

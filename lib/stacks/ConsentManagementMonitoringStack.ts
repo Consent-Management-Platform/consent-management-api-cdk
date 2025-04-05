@@ -11,15 +11,17 @@ import { constructApiDefinition } from '../utils/openapi';
 
 export interface ConsentManagementMonitoringStackProps extends StackProps {
   consentManagementApiLambda: Function;
+  consentHistoryApiLambda: Function;
   consentHistoryProcessorLambda: Function;
   consentTable: Table;
   consentHistoryTable: Table;
-  restApi: SpecRestApi;
+  consentManagementRestApi: SpecRestApi;
+  consentHistoryRestApi: SpecRestApi;
   stageConfig: StageConfig;
 }
 
 /**
- * Set up monitoring alarms and dashboards for the Consent Management API service.
+ * Set up monitoring alarms and dashboards for the Consent Management service.
  *
  * See https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Best_Practice_Recommended_Alarms_AWS_Services.html
  * for AWS alarm recommendations.
@@ -34,8 +36,10 @@ export class ConsentManagementMonitoringStack extends Stack {
     super(scope, id, props);
 
     this.monitoring = this.createMonitoringFacade();
-    this.createRestApiGatewayMonitoring();
+    this.createConsentManagementApiGatewayMonitoring();
+    this.createConsentHistoryApiGatewayMonitoring();
     this.createLambdaFunctionMonitoring(this.props.consentManagementApiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
+    this.createLambdaFunctionMonitoring(this.props.consentHistoryApiLambda, 'Consent History API Lambda Metrics', 'ConsentHistoryApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryProcessorLambda, 'Consent History Processor Lambda Metrics', 'ConsentHistoryProcessorLambda');
     this.createDynamoDBMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
     this.createDynamoDBMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
@@ -52,16 +56,29 @@ export class ConsentManagementMonitoringStack extends Stack {
     });
   }
 
-  private createRestApiGatewayMonitoring() {
-    this.monitoring.addLargeHeader('Consent Management API Gateway Metrics');
-
+  private createConsentManagementApiGatewayMonitoring() {
     const openApiSpecFilePath = join(__dirname, '../../resources/ConsentManagementApi.openapi.json');
-    const apiDefinition = constructApiDefinition(this.props.env!, this.props.consentManagementApiLambda.functionArn, openApiSpecFilePath);
+
+    this.createRestApiGatewayMonitoring('Consent Management API', openApiSpecFilePath,
+        this.props.consentManagementApiLambda, this.props.consentManagementRestApi);
+  }
+
+  private createConsentHistoryApiGatewayMonitoring() {
+    const openApiSpecFilePath = join(__dirname, '../../resources/ConsentHistoryApi.openapi.json');
+
+    this.createRestApiGatewayMonitoring('Consent History API', openApiSpecFilePath,
+        this.props.consentHistoryApiLambda, this.props.consentHistoryRestApi);
+  }
+
+  private createRestApiGatewayMonitoring(apiName: string, openApiSpecFilePath: string, apiLambdaFunction: Function, restApi: SpecRestApi) {
+    this.monitoring.addLargeHeader(`${apiName} Gateway Metrics`);
+
+    const apiDefinition = constructApiDefinition(this.props.env!, apiLambdaFunction.functionArn, openApiSpecFilePath);
     const apiPaths = apiDefinition.paths;
     Object.keys(apiPaths).forEach((apiPathKey) => {
       Object.keys(apiPaths[apiPathKey]).forEach((httpMethodKey: string) => {
         this.monitoring.monitorApiGateway({
-          api: this.props.restApi,
+          api: restApi,
           apiMethod: httpMethodKey.toUpperCase(),
           apiResource: apiPathKey,
           apiStage: this.props.stageConfig.stage,

@@ -57,10 +57,12 @@ const consentHistoryApiStack: ConsentHistoryApiStack = new ConsentHistoryApiStac
 const consentBackendMonitoringStack: ConsentManagementMonitoringStack = new ConsentManagementMonitoringStack(app, 'ConsentManagementMonitoringStack', {
   ...commonStackProps,
   consentManagementApiLambda: consentManagementApiStack.apiLambda,
+  consentHistoryApiLambda: consentHistoryApiStack.apiLambda,
   consentHistoryProcessorLambda: consentHistoryProcessorStack.consentHistoryProcessorLambda,
   consentTable: consentDataStack.consentTable,
   consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
-  restApi: consentManagementApiStack.restApi
+  consentManagementRestApi: consentManagementApiStack.restApi,
+  consentHistoryRestApi: consentHistoryApiStack.restApi
 });
 
 // Tag all stack resources
