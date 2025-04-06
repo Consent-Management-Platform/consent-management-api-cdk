@@ -288,10 +288,24 @@ runs:
           echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
           exit 1
         fi
-        if [ "$(echo ${returnedHistoryRecords} | jq -r '.[0].consentId')" != "TestServiceId|TestUserId|${CREATED_CONSENT_ID}" ]; then
-          echo "GetHistoryForServiceUserConsent API validation failed: did not return history record with expected consentId ${CREATED_CONSENT_ID}"
+        expectedConsentId="TestServiceId|TestUserId|${CREATED_CONSENT_ID}"
+        firstHistoryRecordConsentId=$(echo ${returnedHistoryRecords} | jq -r '.[0].consentId')
+        if [ "${firstHistoryRecordConsentId}" != "${expectedConsentId}" ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: expected history record consentId to be ${expectedConsentId} but was ${firstHistoryRecordConsentId}"
           echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
           exit 1
         fi
-        echo "GetHistoryForServiceUserConsent API validation passed: successfully returned array of history records for the created consent"
+        firstHistoryRecordEventType=$(echo ${returnedHistoryRecords} | jq -r '.[0].eventType')
+        if [ "${firstHistoryRecordEventType}" != "INSERT" ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: expected first history record to have eventType \"INSERT\" but was ${firstHistoryRecordEventType}"
+          echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
+          exit 1
+        fi
+        secondHistoryRecordEventType=$(echo ${returnedHistoryRecords} | jq -r '.[1].eventType')
+        if [ "${secondHistoryRecordEventType}" != "MODIFY" ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: expected second history record to have eventType \"MODIFY\" but was ${secondHistoryRecordEventType}"
+          echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
+          exit 1
+        fi
+        echo "GetHistoryForServiceUserConsent API validation passed: successfully returned expected history records for the created consent"
       shell: bash

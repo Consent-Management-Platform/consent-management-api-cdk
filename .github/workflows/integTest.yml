@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run Consent Management API integ tests
+      - name: Run Consent Framework integ tests
         uses: ./.github/actions/integTests
         with:
           aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
