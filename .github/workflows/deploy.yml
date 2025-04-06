@@ -51,7 +51,7 @@ jobs:
         env:
           CONSENT_DEV_ACCOUNT_ID: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
           CONSENT_DEV_REGION: ${{ github.event.inputs.AWS_REGION }}
-      - name: Run Consent Management API integ tests
+      - name: Run integ tests
         uses: ./.github/actions/integTests
         with:
           aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
