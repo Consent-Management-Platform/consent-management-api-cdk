@@ -1,5 +1,5 @@
-name: Run Consent Management Integ Tests
-description: Run AWS CLI based integration tests against the Consent Management API
+name: Run Consent Framework Integ Tests
+description: Run AWS CLI based integration tests against Consent Framework APIs
 
 inputs:
   aws-account-id:
@@ -30,7 +30,7 @@ runs:
         echo "CONSENT_MANAGEMENT_API_GATEWAY_ID=${apiGatewayId}" >> "$GITHUB_OUTPUT"
       shell: bash
 
-    - name: Get API Gateway resource IDs
+    - name: Get API Gateway resource IDs for the Consent Management API
       id: get-consent-management-api-resource-ids
       env:
         API_GATEWAY_ID: ${{ steps.get-consent-management-api-gateway-id.outputs.CONSENT_MANAGEMENT_API_GATEWAY_ID }}
@@ -229,4 +229,69 @@ runs:
           exit 1
         fi
         echo "ListServiceUserConsents API validation passed: successfully returned array of consents including the created consent"
+      shell: bash
+
+    - name: Retrieve API Gateway ID for the Consent History API
+      id: get-consent-history-api-gateway-id
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
+      run: |
+        apiGatewayId=$(aws cloudformation list-exports \
+          --region "$AWS_REGION" \
+          --query "Exports[?Name == 'ConsentHistoryApiGatewayId'].Value" \
+          | jq .[0] --raw-output)
+        echo "CONSENT_HISTORY_API_GATEWAY_ID=${apiGatewayId}" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - name: Get API Gateway resource IDs for the Consent History API
+      id: get-consent-history-api-resource-ids
+      env:
+        API_GATEWAY_ID: ${{ steps.get-consent-history-api-gateway-id.outputs.CONSENT_HISTORY_API_GATEWAY_ID }}
+        AWS_REGION: ${{ inputs.aws-region }}
+      run: |
+        apiGatewayResources=$(aws apigateway get-resources \
+          --region "$AWS_REGION" \
+          --rest-api-id "$API_GATEWAY_ID")
+        getHistoryForConsentResourceId=$(echo ${apiGatewayResources} | \
+          jq '.items.[] | select(.path == "/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}") | .id' --raw-output)
+        echo "HISTORY_FOR_CONSENT_API_RESOURCE_ID=${getHistoryForConsentResourceId}" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - name: Test GetHistoryForConsent API
+      env:
+        API_GATEWAY_ID: ${{ steps.get-consent-history-api-gateway-id.outputs.CONSENT_HISTORY_API_GATEWAY_ID }}
+        AWS_REGION: ${{ inputs.aws-region }}
+        HISTORY_FOR_CONSENT_API_RESOURCE_ID: ${{ steps.get-consent-history-api-resource-ids.outputs.HISTORY_FOR_CONSENT_API_RESOURCE_ID }}
+        CREATED_CONSENT_ID: ${{ steps.create-service-user-consent.outputs.CREATED_CONSENT_ID }}
+      run: |
+        getHistoryApiResponse=$(aws apigateway test-invoke-method \
+          --region "$AWS_REGION" \
+          --rest-api-id "$API_GATEWAY_ID" \
+          --resource-id "$HISTORY_FOR_CONSENT_API_RESOURCE_ID" \
+          --http-method GET \
+          --path-with-query-string "v1/consent-history/services/TestServiceId/users/TestUserId/consents/${CREATED_CONSENT_ID}")
+        if [ "$(echo ${getHistoryApiResponse} | jq -e '.status == 200')" == "true" ]; then
+          echo "GetHistoryForConsent API invocation succeeded"
+        else
+          echo "GetHistoryForConsent API invocation failed, response: ${getHistoryApiResponse}"
+          exit 1
+        fi
+        getConsentHistoryApiResponseBody=$(echo ${getHistoryApiResponse} | jq '.body')
+        returnedHistoryRecords=$(echo ${getConsentHistoryApiResponseBody} | sed 's/\\"/"/g' | sed 's/^"//;s/"$//' | jq .data)
+        if [ "$(echo "${returnedHistoryRecords}" | jq 'type == "array"')" != "true" ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: did not return an array of consents"
+          echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
+          exit 1
+        fi
+        if [ "$(echo "${returnedHistoryRecords}" | jq 'length')" -lt 1 ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: did not return any history records"
+          echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
+          exit 1
+        fi
+        if [ "$(echo ${returnedHistoryRecords} | jq -r '.[0].consentId')" != "TestServiceId|TestUserId|${CREATED_CONSENT_ID}" ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: did not return history record with expected consentId ${CREATED_CONSENT_ID}"
+          echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
+          exit 1
+        fi
+        echo "GetHistoryForServiceUserConsent API validation passed: successfully returned array of history records for the created consent"
       shell: bash
