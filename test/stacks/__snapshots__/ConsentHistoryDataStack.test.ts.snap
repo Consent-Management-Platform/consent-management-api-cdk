@@ -22,9 +22,31 @@ exports[`ConsentHistoryDataStack creates the expected CloudFormation template fr
             "AttributeName": "eventId",
             "AttributeType": "S",
           },
+          {
+            "AttributeName": "serviceUserId",
+            "AttributeType": "S",
+          },
         ],
         "BillingMode": "PAY_PER_REQUEST",
         "DeletionProtectionEnabled": true,
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "ConsentHistoryByServiceUser",
+            "KeySchema": [
+              {
+                "AttributeName": "serviceUserId",
+                "KeyType": "HASH",
+              },
+              {
+                "AttributeName": "eventId",
+                "KeyType": "RANGE",
+              },
+            ],
+            "Projection": {
+              "ProjectionType": "ALL",
+            },
+          },
+        ],
         "KeySchema": [
           {
             "AttributeName": "id",

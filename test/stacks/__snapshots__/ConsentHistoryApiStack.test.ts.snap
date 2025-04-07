@@ -134,6 +134,27 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
                 ],
                 "type": "string",
               },
+              "ConsentHistory": {
+                "description": "A specific consent's ID and associated consent change events.",
+                "properties": {
+                  "consentId": {
+                    "description": "Unique identifier for a Consent.",
+                    "pattern": "^[\\w\\-\\.]{3,128}$",
+                    "type": "string",
+                  },
+                  "history": {
+                    "description": "List of user consent change events.",
+                    "items": {
+                      "$ref": "#/components/schemas/ConsentChangeEvent",
+                    },
+                    "type": "array",
+                  },
+                },
+                "required": [
+                  "consentId",
+                ],
+                "type": "object",
+              },
               "ConsentStatus": {
                 "description": "Current status of a Consent.",
                 "enum": [
@@ -149,6 +170,18 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
                     "description": "List of user consent change events.",
                     "items": {
                       "$ref": "#/components/schemas/ConsentChangeEvent",
+                    },
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+              "GetHistoryForServiceUserResponseContent": {
+                "properties": {
+                  "data": {
+                    "description": "List of consent histories.",
+                    "items": {
+                      "$ref": "#/components/schemas/ConsentHistory",
                     },
                     "type": "array",
                   },
@@ -177,10 +210,91 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
           },
           "info": {
             "title": "Consent History API",
-            "version": "2025-03-23",
+            "version": "2025-04-06",
           },
           "openapi": "3.0.2",
           "paths": {
+            "/v1/consent-history/services/{serviceId}/users/{userId}/consents": {
+              "get": {
+                "description": "Retrieve history for a given service user.",
+                "operationId": "GetHistoryForServiceUser",
+                "parameters": [
+                  {
+                    "description": "Unique identifier for a service.",
+                    "in": "path",
+                    "name": "serviceId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a service.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
+                      "type": "string",
+                    },
+                  },
+                  {
+                    "description": "Unique identifier for a user.",
+                    "in": "path",
+                    "name": "userId",
+                    "required": true,
+                    "schema": {
+                      "description": "Unique identifier for a user.",
+                      "pattern": "^[\\w\\-\\.]{3,128}$",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "responses": {
+                  "200": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/GetHistoryForServiceUserResponseContent",
+                        },
+                      },
+                    },
+                    "description": "GetHistoryForServiceUser 200 response",
+                  },
+                  "404": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/NotFoundExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "NotFoundException 404 response",
+                  },
+                  "500": {
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/InternalServiceExceptionResponseContent",
+                        },
+                      },
+                    },
+                    "description": "InternalServiceException 500 response",
+                  },
+                },
+                "x-amazon-apigateway-integration": {
+                  "httpMethod": "POST",
+                  "type": "aws_proxy",
+                  "uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "ConsentHistoryApiLambda03FB76FC",
+                            "Arn",
+                          ],
+                        },
+                        "/invocations",
+                      ],
+                    ],
+                  },
+                },
+              },
+            },
             "/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}": {
               "get": {
                 "description": "Retrieve history for a given service user consent.",

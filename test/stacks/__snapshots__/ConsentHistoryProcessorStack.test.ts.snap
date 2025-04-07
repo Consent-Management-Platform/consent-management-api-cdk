@@ -142,7 +142,15 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
                   "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputFnGetAttServiceUserConsentHistoryDynamoDBTable552A6381Arn5A6BE492",
                 },
                 {
-                  "Ref": "AWS::NoValue",
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputFnGetAttServiceUserConsentHistoryDynamoDBTable552A6381Arn5A6BE492",
+                      },
+                      "/index/*",
+                    ],
+                  ],
                 },
               ],
             },
