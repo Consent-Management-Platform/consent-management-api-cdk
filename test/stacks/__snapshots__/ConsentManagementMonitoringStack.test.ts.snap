@@ -511,6 +511,28 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":64,"properties":{"view":"timeSeries","title":"ConsentHistoryByServiceUser Read-Throttled-Events Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentHistoryByServiceUserReadThrottledEventsWarning9AD7B59D",
+                  "Arn",
+                ],
+              },
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":64,"properties":{"view":"timeSeries","title":"ConsentHistoryByServiceUser Write-Throttled-Events Warning","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","annotations":{"alarms":["",
+              {
+                "Fn::GetAtt": [
+                  "ConsentManagementMonitoringConsentManagementMonitoringConsentHistoryByServiceUserWriteThrottledEventsWarning70AE85EE",
+                  "Arn",
+                ],
+              },
               ""]},"yAxis":{}}}]}",
             ],
           ],
@@ -1165,7 +1187,55 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
               },
-              "",{"stat":"Sum","visible":false,"id":"systemErrorBatchWriteItem"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}}]}",
+              "",{"stat":"Sum","visible":false,"id":"systemErrorBatchWriteItem"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":120,"properties":{"markdown":"### Dynamo Table Global Secondary Index **[ConsentHistoryByServiceUser](https://us-east-2.console.aws.amazon.com/dynamodb/home?region=us-east-2#tables:selected=",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              ")**"}},{"type":"metric","width":8,"height":5,"x":0,"y":121,"properties":{"view":"timeSeries","title":"Read Capacity","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Consumed","expression":"consumed_rcu_sum/PERIOD(consumed_rcu_sum)"}],["AWS/DynamoDB","ConsumedReadCapacityUnits","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"stat":"Sum","visible":false,"id":"consumed_rcu_sum"}],["AWS/DynamoDB","ProvisionedReadCapacityUnits","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"label":"Provisioned","stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":8,"y":121,"properties":{"view":"timeSeries","title":"Write Capacity","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Consumed","expression":"consumed_wcu_sum/PERIOD(consumed_wcu_sum)"}],["AWS/DynamoDB","ConsumedWriteCapacityUnits","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"stat":"Sum","visible":false,"id":"consumed_wcu_sum"}],["AWS/DynamoDB","ProvisionedWriteCapacityUnits","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"label":"Provisioned","stat":"Sum"}],["AWS/DynamoDB","OnlineIndexConsumedWriteCapacity","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"label":"Consumed by index","stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"metric","width":8,"height":5,"x":16,"y":121,"properties":{"view":"timeSeries","title":"Throttles","region":"",
+              {
+                "Ref": "AWS::Region",
+              },
+              "","metrics":[[{"label":"Read","expression":"FILL(readThrottles,0)"}],["AWS/DynamoDB","ReadThrottleEvents","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"stat":"Sum","visible":false,"id":"readThrottles"}],[{"label":"Write","expression":"FILL(writeThrottles,0)"}],["AWS/DynamoDB","WriteThrottleEvents","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"stat":"Sum","visible":false,"id":"writeThrottles"}],[{"label":"Index","expression":"FILL(indexThrottles,0)"}],["AWS/DynamoDB","OnlineIndexThrottleEvents","GlobalSecondaryIndexName","ConsentHistoryByServiceUser","TableName","",
+              {
+                "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+              },
+              "",{"stat":"Sum","visible":false,"id":"indexThrottles"}]],"annotations":{"horizontal":[{"label":"Read > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Write > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}}]}",
             ],
           ],
         },
@@ -1722,6 +1792,94 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
         ],
         "Threshold": 100,
         "TreatMissingData": "missing",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentHistoryByServiceUserReadThrottledEventsWarning9AD7B59D": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Read throttled events above threshold.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentHistoryByServiceUser-Read-Throttled-Events-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(readThrottles,0)",
+            "Id": "expr_1",
+            "Label": "Read",
+          },
+          {
+            "Id": "readThrottles",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "GlobalSecondaryIndexName",
+                    "Value": "ConsentHistoryByServiceUser",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+                    },
+                  },
+                ],
+                "MetricName": "ReadThrottleEvents",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "ConsentManagementMonitoringConsentManagementMonitoringConsentHistoryByServiceUserWriteThrottledEventsWarning70AE85EE": {
+      "Properties": {
+        "ActionsEnabled": true,
+        "AlarmDescription": "Write throttled events above threshold.",
+        "AlarmName": "ConsentManagementMonitoring-ConsentHistoryByServiceUser-Write-Throttled-Events-Warning",
+        "ComparisonOperator": "GreaterThanThreshold",
+        "DatapointsToAlarm": 3,
+        "EvaluationPeriods": 3,
+        "Metrics": [
+          {
+            "Expression": "FILL(writeThrottles,0)",
+            "Id": "expr_1",
+            "Label": "Write",
+          },
+          {
+            "Id": "writeThrottles",
+            "MetricStat": {
+              "Metric": {
+                "Dimensions": [
+                  {
+                    "Name": "GlobalSecondaryIndexName",
+                    "Value": "ConsentHistoryByServiceUser",
+                  },
+                  {
+                    "Name": "TableName",
+                    "Value": {
+                      "Fn::ImportValue": "ConsentHistoryDataStack:ExportsOutputRefServiceUserConsentHistoryDynamoDBTable552A6381B31C842F",
+                    },
+                  },
+                ],
+                "MetricName": "WriteThrottleEvents",
+                "Namespace": "AWS/DynamoDB",
+              },
+              "Period": 300,
+              "Stat": "Sum",
+            },
+            "ReturnData": false,
+          },
+        ],
+        "Threshold": 0,
+        "TreatMissingData": "notBreaching",
       },
       "Type": "AWS::CloudWatch::Alarm",
     },

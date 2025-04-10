@@ -6,6 +6,7 @@ import { DefaultDashboardFactory, MonitoringFacade } from 'cdk-monitoring-constr
 import { Construct } from 'constructs';
 import { join } from 'path';
 
+import { CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME } from '../constants/dynamodb';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
 
@@ -41,8 +42,9 @@ export class ConsentManagementMonitoringStack extends Stack {
     this.createLambdaFunctionMonitoring(this.props.consentManagementApiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryApiLambda, 'Consent History API Lambda Metrics', 'ConsentHistoryApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryProcessorLambda, 'Consent History Processor Lambda Metrics', 'ConsentHistoryProcessorLambda');
-    this.createDynamoDBMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
-    this.createDynamoDBMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
+    this.createDynamoDbMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
+    this.createDynamoDbMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
+    this.createDynamoDbGsiMonitoring(this.props.consentHistoryTable, CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME);
   }
 
   private createMonitoringFacade(): MonitoringFacade {
@@ -143,7 +145,7 @@ export class ConsentManagementMonitoringStack extends Stack {
     });
   }
 
-  private createDynamoDBMonitoring(table: Table, headerContent: string) {
+  private createDynamoDbMonitoring(table: Table, headerContent: string) {
     this.monitoring.addLargeHeader(headerContent);
     this.monitoring.monitorDynamoTable({
       table,
@@ -170,6 +172,25 @@ export class ConsentManagementMonitoringStack extends Stack {
           maxLatency: ConsentManagementMonitoringStack.THIRTY_MILLIS
         }
       },
+      addReadThrottledEventsCountAlarm: {
+        Warning: {
+          maxThrottledEventsThreshold: 0
+        }
+      },
+      addWriteThrottledEventsCountAlarm: {
+        Warning: {
+          maxThrottledEventsThreshold: 0
+        }
+      }
+    });
+  }
+
+  private createDynamoDbGsiMonitoring(table: Table, gsiName: string) {
+    this.monitoring.monitorDynamoTableGlobalSecondaryIndex({
+      table,
+      globalSecondaryIndexName: gsiName,
+      addToDetailDashboard: true,
+      addToSummaryDashboard: false,
       addReadThrottledEventsCountAlarm: {
         Warning: {
           maxThrottledEventsThreshold: 0
