@@ -255,6 +255,9 @@ runs:
         getHistoryForConsentResourceId=$(echo ${apiGatewayResources} | \
           jq '.items.[] | select(.path == "/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}") | .id' --raw-output)
         echo "HISTORY_FOR_CONSENT_API_RESOURCE_ID=${getHistoryForConsentResourceId}" >> "$GITHUB_OUTPUT"
+        getHistoryForServiceUserResourceId=$(echo ${apiGatewayResources} | \
+          jq '.items.[] | select(.path == "/v1/consent-history/services/{serviceId}/users/{userId}/consents") | .id' --raw-output)
+        echo "HISTORY_FOR_SERVICE_USER_API_RESOURCE_ID=${getHistoryForServiceUserResourceId}" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Test GetHistoryForConsent API
@@ -283,8 +286,9 @@ runs:
           echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
           exit 1
         fi
-        if [ "$(echo "${returnedHistoryRecords}" | jq 'length')" -lt 1 ]; then
-          echo "GetHistoryForServiceUserConsent API validation failed: did not return any history records"
+        numReturnedHistoryRecords=$(echo "${returnedHistoryRecords}" | jq 'length')
+        if [ "${numReturnedHistoryRecords}" -ne 2 ]; then
+          echo "GetHistoryForServiceUserConsent API validation failed: expected 2 history records but found ${numReturnedHistoryRecords}"
           echo "GetHistoryForServiceUserConsent API response body: ${getConsentHistoryApiResponseBody}"
           exit 1
         fi
@@ -308,4 +312,56 @@ runs:
           exit 1
         fi
         echo "GetHistoryForServiceUserConsent API validation passed: successfully returned expected history records for the created consent"
+      shell: bash
+
+    - name: Test GetHistoryForServiceUser API
+      env:
+        API_GATEWAY_ID: ${{ steps.get-consent-history-api-gateway-id.outputs.CONSENT_HISTORY_API_GATEWAY_ID }}
+        AWS_REGION: ${{ inputs.aws-region }}
+        HISTORY_FOR_SERVICE_USER_API_RESOURCE_ID: ${{ steps.get-consent-history-api-resource-ids.outputs.HISTORY_FOR_SERVICE_USER_API_RESOURCE_ID }}
+        CREATED_CONSENT_ID: ${{ steps.create-service-user-consent.outputs.CREATED_CONSENT_ID }}
+      run: |
+        getHistoryApiResponse=$(aws apigateway test-invoke-method \
+          --region "$AWS_REGION" \
+          --rest-api-id "$API_GATEWAY_ID" \
+          --resource-id "$HISTORY_FOR_SERVICE_USER_API_RESOURCE_ID" \
+          --http-method GET \
+          --path-with-query-string "v1/consent-history/services/TestServiceId/users/TestUserId/consents")
+        if [ "$(echo ${getHistoryApiResponse} | jq -e '.status == 200')" == "true" ]; then
+          echo "GetHistoryForServiceUser API invocation succeeded"
+        else
+          echo "GetHistoryForServiceUser API invocation failed, response: ${getHistoryApiResponse}"
+          exit 1
+        fi
+        getHistoryApiResponseBody=$(echo ${getHistoryApiResponse} | jq '.body')
+        returnedHistories=$(echo ${getHistoryApiResponseBody} | sed 's/\\"/"/g' | sed 's/^"//;s/"$//' | jq .data)
+        if [ "$(echo "${returnedHistories}" | jq 'type == "array"')" != "true" ]; then
+          echo "GetHistoryForServiceUser API validation failed: did not return an array of consents"
+          echo "GetHistoryForServiceUser API response body: ${getHistoryApiResponseBody}"
+          exit 1
+        fi
+        if [ "$(echo "${returnedHistories}" | jq 'length')" -lt 1 ]; then
+          echo "GetHistoryForServiceUser API validation failed: did not return any history records"
+          echo "GetHistoryForServiceUser API response body: ${getHistoryApiResponseBody}"
+          exit 1
+        fi
+        firstConsentPartitionKey=$(echo ${returnedHistories} | jq -r '.[0].consentId')
+        if [[ ! "${firstConsentPartitionKey}" =~ ^TestServiceId\|TestUserId\|.* ]]; then
+          echo "Expected first consent history to have consentId matching \"TestServiceId|TestUserId|.*\" but was ${firstConsentPartitionKey}"
+          echo "GetHistoryForServiceUser API response body: ${getHistoryApiResponseBody}"
+          exit 1
+        fi
+        firstConsentHistory=$(echo ${returnedHistories} | jq -r '.[0].history')
+        if [ "$(echo "${returnedHistories}" | jq 'length')" -lt 1 ]; then
+          echo "GetHistoryForServiceUser API validation failed: first consent's history did not include any records"
+          echo "GetHistoryForServiceUser API response body: ${getHistoryApiResponseBody}"
+          exit 1
+        fi
+        firstHistoryRecordEventType=$(echo ${firstConsentHistory} | jq -r '.[0].eventType')
+        if [ "${firstHistoryRecordEventType}" != "INSERT" ]; then
+          echo "GetHistoryForServiceUser API validation failed: expected first history record to have eventType \"INSERT\" but was ${firstHistoryRecordEventType}"
+          echo "GetHistoryForServiceUser API response body: ${getHistoryApiResponseBody}"
+          exit 1
+        fi
+        echo "GetHistoryForServiceUser API validation passed: successfully returned consent histories"
       shell: bash
