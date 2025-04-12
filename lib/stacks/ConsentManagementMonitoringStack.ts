@@ -6,7 +6,11 @@ import { DefaultDashboardFactory, MonitoringFacade } from 'cdk-monitoring-constr
 import { Construct } from 'constructs';
 import { join } from 'path';
 
-import { CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME } from '../constants/dynamodb';
+import {
+  ACTIVE_CONSENTS_WITH_EXPIRY_TIME_GSI_NAME,
+  CONSENTS_BY_SERVICE_USER_GSI_NAME,
+  CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME
+} from '../constants/dynamodb';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
 
@@ -43,6 +47,8 @@ export class ConsentManagementMonitoringStack extends Stack {
     this.createLambdaFunctionMonitoring(this.props.consentHistoryApiLambda, 'Consent History API Lambda Metrics', 'ConsentHistoryApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryProcessorLambda, 'Consent History Processor Lambda Metrics', 'ConsentHistoryProcessorLambda');
     this.createDynamoDbMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
+    this.createDynamoDbGsiMonitoring(this.props.consentTable, CONSENTS_BY_SERVICE_USER_GSI_NAME);
+    this.createDynamoDbGsiMonitoring(this.props.consentTable, ACTIVE_CONSENTS_WITH_EXPIRY_TIME_GSI_NAME);
     this.createDynamoDbMonitoring(this.props.consentHistoryTable, 'Consent History DynamoDB Metrics');
     this.createDynamoDbGsiMonitoring(this.props.consentHistoryTable, CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME);
   }

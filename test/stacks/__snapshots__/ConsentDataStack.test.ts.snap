@@ -26,6 +26,14 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
             "AttributeName": "serviceId",
             "AttributeType": "S",
           },
+          {
+            "AttributeName": "activeId",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "expiryTime",
+            "AttributeType": "N",
+          },
         ],
         "BillingMode": "PAY_PER_REQUEST",
         "DeletionProtectionEnabled": true,
@@ -44,6 +52,22 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
             ],
             "Projection": {
               "ProjectionType": "ALL",
+            },
+          },
+          {
+            "IndexName": "ActiveConsentsWithExpiryTime",
+            "KeySchema": [
+              {
+                "AttributeName": "activeId",
+                "KeyType": "HASH",
+              },
+              {
+                "AttributeName": "expiryTime",
+                "KeyType": "RANGE",
+              },
+            ],
+            "Projection": {
+              "ProjectionType": "KEYS_ONLY",
             },
           },
         ],
