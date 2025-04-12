@@ -79,7 +79,7 @@ export class ConsentDataStack extends Stack {
       },
       sortKey: {
         name: 'expiryTime',
-        type: AttributeType.NUMBER
+        type: AttributeType.STRING
       },
       projectionType: ProjectionType.KEYS_ONLY
     });

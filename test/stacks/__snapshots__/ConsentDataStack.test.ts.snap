@@ -32,7 +32,7 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
           },
           {
             "AttributeName": "expiryTime",
-            "AttributeType": "N",
+            "AttributeType": "S",
           },
         ],
         "BillingMode": "PAY_PER_REQUEST",
