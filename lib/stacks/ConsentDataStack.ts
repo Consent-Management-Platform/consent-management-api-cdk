@@ -74,7 +74,7 @@ export class ConsentDataStack extends Stack {
     consentTable.addGlobalSecondaryIndex({
       indexName: ACTIVE_CONSENTS_WITH_EXPIRY_TIME_GSI_NAME,
       partitionKey: {
-        name: 'activeId',
+        name: 'autoExpireId',
         type: AttributeType.STRING
       },
       sortKey: {
