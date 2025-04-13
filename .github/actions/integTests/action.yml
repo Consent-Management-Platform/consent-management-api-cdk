@@ -141,13 +141,14 @@ runs:
         CONSENT_API_RESOURCE_ID: ${{ steps.get-consent-management-api-resource-ids.outputs.CONSENT_API_RESOURCE_ID }}
         CREATED_CONSENT_ID: ${{ steps.create-service-user-consent.outputs.CREATED_CONSENT_ID }}
       run: |
+        expiryTime=$(date -u -d "+7 days" +"%Y-%m-%dT%H:%M:%SZ")
         updateConsentApiResponse=$(aws apigateway test-invoke-method \
           --region "$AWS_REGION" \
           --rest-api-id "$API_GATEWAY_ID" \
           --resource-id "$CONSENT_API_RESOURCE_ID" \
           --http-method POST \
           --path-with-query-string "v1/consent-management/services/TestServiceId/users/TestUserId/consents/${CREATED_CONSENT_ID}" \
-          --body "{\"status\":\"ACTIVE\",\"consentVersion\":2,\"consentData\":{\"testKey1\":\"testValue1_v2\",\"testKey3\":\"testValue3\"}}")
+          --body "{\"status\":\"ACTIVE\",\"expiryTime\":\"${expiryTime}\",\"consentVersion\":2,\"consentData\":{\"testKey1\":\"testValue1_v2\",\"testKey3\":\"testValue3\"}}")
         if [ "$(echo "${updateConsentApiResponse}" | jq -e '.status == 200')" == "true" ]; then
           echo "UpdateServiceUserConsent API invocation succeeded"
         else
