@@ -81,7 +81,9 @@ export class ConsentDataStack extends Stack {
         name: 'expiryTime',
         type: AttributeType.STRING
       },
-      projectionType: ProjectionType.KEYS_ONLY
+      projectionType: ProjectionType.INCLUDE,
+      // Required by API callers for conditional updates
+      nonKeyAttributes: ['consentVersion']
     });
   }
 }
