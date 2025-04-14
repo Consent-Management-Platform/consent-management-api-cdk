@@ -3,14 +3,15 @@ import { App, Tags } from 'aws-cdk-lib';
 import { join } from 'path';
 
 import { StageName } from '../lib/constants/stages';
+import { CONSENT_MANAGEMENT_BACKEND_SERVICE_TAG_VALUE, SERVICE_TAG_NAME, STACK_TAG_NAME } from '../lib/constants/tags';
 import { CodePipelineStack } from '../lib/stacks/CodePipelineStack';
 import { ConsentDataStack } from '../lib/stacks/ConsentDataStack';
+import { ConsentExpiryProcessorStack } from '../lib/stacks/ConsentExpiryProcessorStack';
 import { ConsentHistoryApiStack } from '../lib/stacks/ConsentHistoryApiStack';
 import { ConsentHistoryDataStack } from '../lib/stacks/ConsentHistoryDataStack';
+import { ConsentHistoryProcessorStack } from '../lib/stacks/ConsentHistoryProcessorStack';
 import { ConsentManagementApiStack } from '../lib/stacks/ConsentManagementApiStack';
 import { ConsentManagementMonitoringStack } from '../lib/stacks/ConsentManagementMonitoringStack';
-import { ConsentHistoryProcessorStack } from '../lib/stacks/ConsentHistoryProcessorStack';
-import { CONSENT_MANAGEMENT_BACKEND_SERVICE_TAG_VALUE, SERVICE_TAG_NAME, STACK_TAG_NAME } from '../lib/constants/tags';
 
 const app = new App();
 const commonStackProps = {
@@ -37,6 +38,13 @@ const consentManagementApiStack: ConsentManagementApiStack = new ConsentManageme
   codeDeployRole: codePipelineStack.codeDeployRole,
   consentTable: consentDataStack.consentTable
 });
+
+// Create consent expiry processor stack
+const consentExpiryProcessorStack: ConsentExpiryProcessorStack = new ConsentExpiryProcessorStack(app, 'ConsentExpiryProcessorStack', {
+  ...commonStackProps,
+  codePackageFilePath: join(__dirname, '../../consent-expiry-processor/build/distributions/consent-expiry-processor.zip'),
+  consentTable: consentDataStack.consentTable
+})
 
 // Create consent history processor stack
 const consentHistoryProcessorStack: ConsentHistoryProcessorStack = new ConsentHistoryProcessorStack(app, 'ConsentHistoryProcessorStack', {
@@ -71,6 +79,7 @@ const stacks = [
   consentDataStack,
   consentHistoryDataStack,
   consentManagementApiStack,
+  consentExpiryProcessorStack,
   consentHistoryProcessorStack,
   consentHistoryApiStack,
   consentBackendMonitoringStack

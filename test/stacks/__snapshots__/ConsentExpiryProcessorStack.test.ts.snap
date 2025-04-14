@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConsentManagementApiStack creates the expected CloudFormation template from CDK 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "ConsentExpiryProcessorLambda92B40BBE": {
+      "DependsOn": [
+        "ConsentExpiryProcessorLambdaServiceRoleDefaultPolicy225EA141",
+        "ConsentExpiryProcessorLambdaServiceRole855DC305",
+      ],
+      "Properties": {
+        "Description": "Consent Expiry Processor Lambda",
+        "Handler": "com.consentframework.consentexpiryprocessor.ConsentExpiryProcessor::handleRequest",
+        "LoggingConfig": {
+          "LogGroup": {
+            "Ref": "ConsentExpiryProcessorLambdaLogGroup20172482",
+          },
+        },
+        "MemorySize": 1536,
+        "Role": {
+          "Fn::GetAtt": [
+            "ConsentExpiryProcessorLambdaServiceRole855DC305",
+            "Arn",
+          ],
+        },
+        "Runtime": "java21",
+        "SnapStart": {
+          "ApplyOn": "PublishedVersions",
+        },
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ConsentExpiryProcessorLambdaLogGroup20172482": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "LogGroupName": "ConsentExpiryProcessorLambda-ApplicationLogs",
+        "RetentionInDays": 545,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "ConsentExpiryProcessorLambdaServiceRole855DC305": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ConsentExpiryProcessorLambdaServiceRoleDefaultPolicy225EA141": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "cloudwatch:PutMetricData",
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CloudWatchMetricsPermissions",
+            },
+            {
+              "Action": [
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878Arn692CDB71",
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878Arn692CDB71",
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+              "Sid": "ConsentDynamoDBQueryPermissions",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ConsentExpiryProcessorLambdaServiceRoleDefaultPolicy225EA141",
+        "Roles": [
+          {
+            "Ref": "ConsentExpiryProcessorLambdaServiceRole855DC305",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

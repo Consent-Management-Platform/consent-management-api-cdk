@@ -47,6 +47,7 @@ jobs:
             ConsentHistoryProcessorStack \
             ConsentHistoryApiStack \
             ConsentManagementApiStack \
+            ConsentExpiryProcessorStack \
             ConsentManagementMonitoringStack
         env:
           CONSENT_DEV_ACCOUNT_ID: ${{ github.event.inputs.AWS_ACCOUNT_ID }}

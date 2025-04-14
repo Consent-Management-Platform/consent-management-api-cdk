@@ -23,6 +23,18 @@ runs:
         github-token: ${{ inputs.github-token }}
         github-username: ${{ inputs.github-username }}
 
+    # Set up Consent Expiry Processor artifacts
+    - name: Checkout Consent Expiry Processor repository
+      uses: actions/checkout@v4
+      with:
+        repository: 'Consent-Management-Platform/consent-expiry-processor'
+        path: 'consent-expiry-processor'
+    - name: Run Build Consent Expiry Processor action
+      uses: ./consent-expiry-processor/.github/actions/buildAndTest/
+      with:
+        github-token: ${{ inputs.github-token }}
+        github-username: ${{ inputs.github-username }}
+
     # Set up Consent History API artifacts
     - name: Checkout Consent History API repository
       uses: actions/checkout@v4
