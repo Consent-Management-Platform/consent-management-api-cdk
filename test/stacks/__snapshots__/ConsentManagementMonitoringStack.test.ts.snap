@@ -467,25 +467,25 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":60,"properties":{"view":"timeSeries","title":"ActiveConsentsWithExpiryTime Read-Throttled-Events Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":0,"y":60,"properties":{"view":"timeSeries","title":"ActiveConsentsByExpiryHour Read-Throttled-Events Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
               "","annotations":{"alarms":["",
               {
                 "Fn::GetAtt": [
-                  "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsWithExpiryTimeReadThrottledEventsWarning1788BE8A",
+                  "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsByExpiryHourReadThrottledEventsWarningF46F24C7",
                   "Arn",
                 ],
               },
-              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":60,"properties":{"view":"timeSeries","title":"ActiveConsentsWithExpiryTime Write-Throttled-Events Warning","region":"",
+              ""]},"yAxis":{}}},{"type":"metric","width":6,"height":4,"x":6,"y":60,"properties":{"view":"timeSeries","title":"ActiveConsentsByExpiryHour Write-Throttled-Events Warning","region":"",
               {
                 "Ref": "AWS::Region",
               },
               "","annotations":{"alarms":["",
               {
                 "Fn::GetAtt": [
-                  "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsWithExpiryTimeWriteThrottledEventsWarningEF2C0139",
+                  "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsByExpiryHourWriteThrottledEventsWarningAB505082",
                   "Arn",
                 ],
               },
@@ -1199,7 +1199,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"indexThrottles"}]],"annotations":{"horizontal":[{"label":"Read > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Write > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":118,"properties":{"markdown":"### Dynamo Table Global Secondary Index **[ActiveConsentsWithExpiryTime](https://us-east-2.console.aws.amazon.com/dynamodb/home?region=us-east-2#tables:selected=",
+              "",{"stat":"Sum","visible":false,"id":"indexThrottles"}]],"annotations":{"horizontal":[{"label":"Read > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"},{"label":"Write > 0 for 3 datapoints within 15 minutes","value":0,"yAxis":"left"}]},"yAxis":{"left":{"min":0,"label":"Count","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":118,"properties":{"markdown":"### Dynamo Table Global Secondary Index **[ActiveConsentsByExpiryHour](https://us-east-2.console.aws.amazon.com/dynamodb/home?region=us-east-2#tables:selected=",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
@@ -1207,11 +1207,11 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Ref": "AWS::Region",
               },
-              "","metrics":[[{"label":"Consumed","expression":"consumed_rcu_sum/PERIOD(consumed_rcu_sum)"}],["AWS/DynamoDB","ConsumedReadCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "","metrics":[[{"label":"Consumed","expression":"consumed_rcu_sum/PERIOD(consumed_rcu_sum)"}],["AWS/DynamoDB","ConsumedReadCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"consumed_rcu_sum"}],["AWS/DynamoDB","ProvisionedReadCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "",{"stat":"Sum","visible":false,"id":"consumed_rcu_sum"}],["AWS/DynamoDB","ProvisionedReadCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
@@ -1219,15 +1219,15 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Ref": "AWS::Region",
               },
-              "","metrics":[[{"label":"Consumed","expression":"consumed_wcu_sum/PERIOD(consumed_wcu_sum)"}],["AWS/DynamoDB","ConsumedWriteCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "","metrics":[[{"label":"Consumed","expression":"consumed_wcu_sum/PERIOD(consumed_wcu_sum)"}],["AWS/DynamoDB","ConsumedWriteCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"consumed_wcu_sum"}],["AWS/DynamoDB","ProvisionedWriteCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "",{"stat":"Sum","visible":false,"id":"consumed_wcu_sum"}],["AWS/DynamoDB","ProvisionedWriteCapacityUnits","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"label":"Provisioned","stat":"Sum"}],["AWS/DynamoDB","OnlineIndexConsumedWriteCapacity","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "",{"label":"Provisioned","stat":"Sum"}],["AWS/DynamoDB","OnlineIndexConsumedWriteCapacity","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
@@ -1235,15 +1235,15 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Ref": "AWS::Region",
               },
-              "","metrics":[[{"label":"Read","expression":"FILL(readThrottles,0)"}],["AWS/DynamoDB","ReadThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "","metrics":[[{"label":"Read","expression":"FILL(readThrottles,0)"}],["AWS/DynamoDB","ReadThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"readThrottles"}],[{"label":"Write","expression":"FILL(writeThrottles,0)"}],["AWS/DynamoDB","WriteThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "",{"stat":"Sum","visible":false,"id":"readThrottles"}],[{"label":"Write","expression":"FILL(writeThrottles,0)"}],["AWS/DynamoDB","WriteThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
-              "",{"stat":"Sum","visible":false,"id":"writeThrottles"}],[{"label":"Index","expression":"FILL(indexThrottles,0)"}],["AWS/DynamoDB","OnlineIndexThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsWithExpiryTime","TableName","",
+              "",{"stat":"Sum","visible":false,"id":"writeThrottles"}],[{"label":"Index","expression":"FILL(indexThrottles,0)"}],["AWS/DynamoDB","OnlineIndexThrottleEvents","GlobalSecondaryIndexName","ActiveConsentsByExpiryHour","TableName","",
               {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputRefServiceUserConsentDynamoDBTable7EDF08782C8736CE",
               },
@@ -1469,11 +1469,11 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
       },
       "Type": "AWS::CloudWatch::Dashboard",
     },
-    "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsWithExpiryTimeReadThrottledEventsWarning1788BE8A": {
+    "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsByExpiryHourReadThrottledEventsWarningF46F24C7": {
       "Properties": {
         "ActionsEnabled": true,
         "AlarmDescription": "Read throttled events above threshold.",
-        "AlarmName": "ConsentManagementMonitoring-ActiveConsentsWithExpiryTime-Read-Throttled-Events-Warning",
+        "AlarmName": "ConsentManagementMonitoring-ActiveConsentsByExpiryHour-Read-Throttled-Events-Warning",
         "ComparisonOperator": "GreaterThanThreshold",
         "DatapointsToAlarm": 3,
         "EvaluationPeriods": 3,
@@ -1490,7 +1490,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                 "Dimensions": [
                   {
                     "Name": "GlobalSecondaryIndexName",
-                    "Value": "ActiveConsentsWithExpiryTime",
+                    "Value": "ActiveConsentsByExpiryHour",
                   },
                   {
                     "Name": "TableName",
@@ -1513,11 +1513,11 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
       },
       "Type": "AWS::CloudWatch::Alarm",
     },
-    "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsWithExpiryTimeWriteThrottledEventsWarningEF2C0139": {
+    "ConsentManagementMonitoringConsentManagementMonitoringActiveConsentsByExpiryHourWriteThrottledEventsWarningAB505082": {
       "Properties": {
         "ActionsEnabled": true,
         "AlarmDescription": "Write throttled events above threshold.",
-        "AlarmName": "ConsentManagementMonitoring-ActiveConsentsWithExpiryTime-Write-Throttled-Events-Warning",
+        "AlarmName": "ConsentManagementMonitoring-ActiveConsentsByExpiryHour-Write-Throttled-Events-Warning",
         "ComparisonOperator": "GreaterThanThreshold",
         "DatapointsToAlarm": 3,
         "EvaluationPeriods": 3,
@@ -1534,7 +1534,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
                 "Dimensions": [
                   {
                     "Name": "GlobalSecondaryIndexName",
-                    "Value": "ActiveConsentsWithExpiryTime",
+                    "Value": "ActiveConsentsByExpiryHour",
                   },
                   {
                     "Name": "TableName",

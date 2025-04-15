@@ -2,7 +2,7 @@ import { Stack, StackProps } from 'aws-cdk-lib';
 import { AttributeType, ProjectionType, StreamViewType, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Construct } from 'constructs';
 
-import { ACTIVE_CONSENTS_WITH_EXPIRY_TIME_GSI_NAME, CONSENTS_BY_SERVICE_USER_GSI_NAME } from '../constants/dynamodb';
+import { ACTIVE_CONSENTS_BY_EXPIRY_HOUR_GSI_NAME, CONSENTS_BY_SERVICE_USER_GSI_NAME } from '../constants/dynamodb';
 import { CustomDynamoDbTable } from '../constructs/CustomDynamoDbTable';
 import { StageConfig } from '../interfaces/stage-config';
 
@@ -72,13 +72,18 @@ export class ConsentDataStack extends Stack {
    */
   private createActiveConsentsWithExpiryTimeGsi(consentTable: Table) {
     consentTable.addGlobalSecondaryIndex({
-      indexName: ACTIVE_CONSENTS_WITH_EXPIRY_TIME_GSI_NAME,
+      indexName: ACTIVE_CONSENTS_BY_EXPIRY_HOUR_GSI_NAME,
+      // Enables querying by any expiry hour time bucket to
+      // get all active consents expiring that hour.
       partitionKey: {
-        name: 'autoExpireId',
+        name: 'expiryHour',
         type: AttributeType.STRING
       },
+      // Automatically sorts all query results by expiry time,
+      // while appending partition key to expiryTime to ensure
+      // every GSI partition key + sort key pair is unique.
       sortKey: {
-        name: 'expiryTime',
+        name: 'expiryTimeId',
         type: AttributeType.STRING
       },
       projectionType: ProjectionType.INCLUDE,

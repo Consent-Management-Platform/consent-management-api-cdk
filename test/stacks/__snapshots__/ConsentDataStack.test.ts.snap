@@ -27,11 +27,11 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
             "AttributeType": "S",
           },
           {
-            "AttributeName": "autoExpireId",
+            "AttributeName": "expiryHour",
             "AttributeType": "S",
           },
           {
-            "AttributeName": "expiryTime",
+            "AttributeName": "expiryTimeId",
             "AttributeType": "S",
           },
         ],
@@ -55,14 +55,14 @@ exports[`ConsentDataStack creates the expected CloudFormation template from CDK 
             },
           },
           {
-            "IndexName": "ActiveConsentsWithExpiryTime",
+            "IndexName": "ActiveConsentsByExpiryHour",
             "KeySchema": [
               {
-                "AttributeName": "autoExpireId",
+                "AttributeName": "expiryHour",
                 "KeyType": "HASH",
               },
               {
-                "AttributeName": "expiryTime",
+                "AttributeName": "expiryTimeId",
                 "KeyType": "RANGE",
               },
             ],
