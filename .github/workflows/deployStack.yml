@@ -1,0 +1,55 @@
+# This GitHub Workflow will deploy a specific CDK stack to the provided AWS account
+#
+# Prerequisites:
+# 1. Create AWS account and set up AWS CLI and local AWS credentials
+# 2. Follow set-up steps in DEVELOPMENT.md to deploy the CDK bootstrap stack and CodePipelineStack
+name: Deploy
+on:
+  # Enable running workflow manually from GitHub Actions
+  workflow_dispatch:
+    # Require AWS account ID and region to be provided
+    inputs:
+      AWS_ACCOUNT_ID:
+        description: AWS account to deploy to
+        required: true
+      AWS_REGION:
+        description: AWS region to deploy to
+        required: true
+      CDK_STACK_NAME:
+        description: Name of the CDK stack to deploy
+        required: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: consent-management-api-cdk
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build and synthesize stacks
+        uses: ./.github/actions/synthesizeStacks
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-username: ${{ github.actor }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-region: ${{ github.event.inputs.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ github.event.inputs.AWS_ACCOUNT_ID }}:role/github-ci-role
+      - name: Deploy CDK stacks
+        run: |
+          npx cdk deploy --require-approval never ${{ github.event.inputs.CDK_STACK_NAME }}
+        env:
+          CONSENT_DEV_ACCOUNT_ID: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
+          CONSENT_DEV_REGION: ${{ github.event.inputs.AWS_REGION }}
+          CDK_STACK_NAME: ${{ github.event.inputs.CDK_STACK_NAME }}
+      - name: Run integ tests
+        uses: ./.github/actions/integTests
+        with:
+          aws-account-id: ${{ github.event.inputs.AWS_ACCOUNT_ID }}
+          aws-region: ${{ github.event.inputs.AWS_REGION }}
