@@ -126,6 +126,43 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       },
       "Type": "AWS::IAM::Policy",
     },
+    "ConsentExpiryProcessorScheduleA21FD2F2": {
+      "Properties": {
+        "ScheduleExpression": "cron(51 * * * ? *)",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "ConsentExpiryProcessorLambda92B40BBE",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "ConsentExpiryProcessorScheduleAllowEventRuleConsentExpiryProcessorStackConsentExpiryProcessorLambdaCA675D45D3EEC549": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ConsentExpiryProcessorLambda92B40BBE",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "ConsentExpiryProcessorScheduleA21FD2F2",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
   },
   "Rules": {
     "CheckBootstrapVersion": {

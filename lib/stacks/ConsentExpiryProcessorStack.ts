@@ -6,6 +6,8 @@ import { Construct } from 'constructs';
 
 import { StageConfig } from '../interfaces/stage-config';
 import { CustomLambdaFunction } from '../constructs/CustomLambdaFunction';
+import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
+import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
 
 export interface ConsentExpiryProcessorStackProps extends StackProps {
   codePackageFilePath: string;
@@ -23,6 +25,7 @@ export class ConsentExpiryProcessorStack extends Stack {
     super(scope, id, props);
 
     this.apiLambda = this.createApiLambdaFunction();
+    this.createLambdaSchedule(this.apiLambda);
   }
 
   private createApiLambdaFunction(): Function {
@@ -52,5 +55,17 @@ export class ConsentExpiryProcessorStack extends Stack {
     }));
 
     return lambdaFunction;
+  }
+
+  // Schedule the Lambda function to run hourly
+  private createLambdaSchedule(apiLambda: Function) {
+    // Choose a random minute and distribute with any other scheduled jobs to avoid load spikes
+    const scheduleRule = new Rule(this, 'ConsentExpiryProcessorSchedule', {
+      schedule: Schedule.cron({
+        minute: '51'
+      })
+    });
+
+    scheduleRule.addTarget(new LambdaFunction(apiLambda));
   }
 }
