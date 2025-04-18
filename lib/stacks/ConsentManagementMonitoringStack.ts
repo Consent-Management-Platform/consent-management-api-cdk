@@ -132,12 +132,11 @@ export class ConsentManagementMonitoringStack extends Stack {
       addToSummaryDashboard: false,
       addToAlarmDashboard: true,
       alarmFriendlyName: 'ConsentExpiryProcessor',
-      description: 'Consent Expiry Processor has not completed successfully in the last 2 hours',
       metricGroups:
       [{
         title: 'Consent Expiry Processor Job Runs',
         metrics: [{
-          alarmFriendlyName: 'NoRecentSuccess',
+          alarmFriendlyName: 'NoRecentCompletion',
           addAlarm: {
             Warning: {
               threshold: 1,
@@ -151,11 +150,11 @@ export class ConsentManagementMonitoringStack extends Stack {
           metric: new Metric({
             namespace: "ConsentExpiryProcessor",
             metricName: "ConsentExpiryJobFailure",
-            statistic: "Sum",
+            period: Duration.hours(1),
+            statistic: "SampleCount",
+            label: "ConsentExpiryJobCompletion",
             unit: Unit.COUNT,
-            color: Color.RED
           }),
-
         }]
       }]
     });
