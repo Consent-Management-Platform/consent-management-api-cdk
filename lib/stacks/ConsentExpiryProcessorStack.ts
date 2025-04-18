@@ -19,16 +19,16 @@ export interface ConsentExpiryProcessorStackProps extends StackProps {
  * Defines infrastructure for automatically updating consents to EXPIRED when they have passed their expiry time.
  */
 export class ConsentExpiryProcessorStack extends Stack {
-  public readonly apiLambda: Function;
+  public readonly expiryProcessorLambda: Function;
 
   constructor(scope: Construct, id: string, readonly props: ConsentExpiryProcessorStackProps) {
     super(scope, id, props);
 
-    this.apiLambda = this.createApiLambdaFunction();
-    this.createLambdaSchedule(this.apiLambda);
+    this.expiryProcessorLambda = this.createExpiryProcessorLambdaFunction();
+    this.createLambdaSchedule(this.expiryProcessorLambda);
   }
 
-  private createApiLambdaFunction(): Function {
+  private createExpiryProcessorLambdaFunction(): Function {
     const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentExpiryProcessorLambda', {
       code: Code.fromAsset(this.props.codePackageFilePath),
       description: 'Consent Expiry Processor Lambda',

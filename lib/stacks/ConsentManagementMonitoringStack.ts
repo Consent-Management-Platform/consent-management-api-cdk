@@ -13,11 +13,18 @@ import {
 } from '../constants/dynamodb';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
+import { Color, ComparisonOperator, Metric, TreatMissingData, Unit } from 'aws-cdk-lib/aws-cloudwatch';
+
+interface LambdaAlarmConfig {
+  maxRunningTasks?: number;
+  maxP90Duration?: Duration;
+}
 
 export interface ConsentManagementMonitoringStackProps extends StackProps {
   consentManagementApiLambda: Function;
   consentHistoryApiLambda: Function;
   consentHistoryProcessorLambda: Function;
+  consentExpiryProcessorLambda: Function;
   consentTable: Table;
   consentHistoryTable: Table;
   consentManagementRestApi: SpecRestApi;
@@ -46,6 +53,7 @@ export class ConsentManagementMonitoringStack extends Stack {
     this.createLambdaFunctionMonitoring(this.props.consentManagementApiLambda, 'Consent Management API Lambda Metrics', 'ConsentManagementApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryApiLambda, 'Consent History API Lambda Metrics', 'ConsentHistoryApiLambda');
     this.createLambdaFunctionMonitoring(this.props.consentHistoryProcessorLambda, 'Consent History Processor Lambda Metrics', 'ConsentHistoryProcessorLambda');
+    this.createConsentExpiryProcessorLambdaMonitoring();
     this.createDynamoDbMonitoring(this.props.consentTable, 'Consent Management DynamoDB Metrics');
     this.createDynamoDbGsiMonitoring(this.props.consentTable, CONSENTS_BY_SERVICE_USER_GSI_NAME);
     this.createDynamoDbGsiMonitoring(this.props.consentTable, ACTIVE_CONSENTS_BY_EXPIRY_HOUR_GSI_NAME);
@@ -111,7 +119,49 @@ export class ConsentManagementMonitoringStack extends Stack {
     });
   }
 
-  private createLambdaFunctionMonitoring(lambdaFunction: Function, headerContent: string, alarmPrefix: string) {
+  private createConsentExpiryProcessorLambdaMonitoring() {
+    this.createLambdaFunctionMonitoring(this.props.consentExpiryProcessorLambda, 'Consent Expiry Processor Lambda Metrics', 'ConsentExpiryProcessorLambda', {
+      // Should run at most a single instance of the consent expiry processor
+      maxRunningTasks: 1,
+      // Alarm when consent expiry job approaches 15-minute max Lambda runtime
+      maxP90Duration: Duration.minutes(13)
+    });
+    // Alarm when no successful run in the last 2 hours.
+    this.monitoring.monitorCustom({
+      addToDetailDashboard: true,
+      addToSummaryDashboard: false,
+      addToAlarmDashboard: true,
+      alarmFriendlyName: 'ConsentExpiryProcessor',
+      description: 'Consent Expiry Processor has not completed successfully in the last 2 hours',
+      metricGroups:
+      [{
+        title: 'Consent Expiry Processor Job Runs',
+        metrics: [{
+          alarmFriendlyName: 'NoRecentSuccess',
+          addAlarm: {
+            Warning: {
+              threshold: 1,
+              comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
+              datapointsToAlarm: 2,
+              evaluationPeriods: 2,
+              period: Duration.hours(1),
+              treatMissingDataOverride: TreatMissingData.BREACHING
+            }
+          },
+          metric: new Metric({
+            namespace: "ConsentExpiryProcessor",
+            metricName: "ConsentExpiryJobFailure",
+            statistic: "Sum",
+            unit: Unit.COUNT,
+            color: Color.RED
+          }),
+
+        }]
+      }]
+    });
+  }
+
+  private createLambdaFunctionMonitoring(lambdaFunction: Function, headerContent: string, alarmPrefix: string, lambdaAlarmConfig?: LambdaAlarmConfig) {
     this.monitoring.addLargeHeader(headerContent);
     this.monitoring.monitorLambdaFunction({
       lambdaFunction,
@@ -125,7 +175,7 @@ export class ConsentManagementMonitoringStack extends Stack {
           // Lambda begins throttling requests at 1k concurrent executions,
           // so we want to notify ourselves if we start approaching that threshold
           // so that we can request a quota increase through AWS Support.
-          maxRunningTasks: 800
+          maxRunningTasks: lambdaAlarmConfig?.maxRunningTasks || 800
         }
       },
       addEnhancedMonitoringAvgMemoryUtilizationAlarm: {
@@ -140,7 +190,7 @@ export class ConsentManagementMonitoringStack extends Stack {
       },
       addLatencyP90Alarm: {
         Warning: {
-          maxLatency: ConsentManagementMonitoringStack.FIFTY_MILLIS
+          maxLatency: lambdaAlarmConfig?.maxP90Duration || ConsentManagementMonitoringStack.FIFTY_MILLIS
         }
       },
       addThrottlesCountAlarm: {

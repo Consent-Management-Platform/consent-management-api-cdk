@@ -67,6 +67,7 @@ const consentBackendMonitoringStack: ConsentManagementMonitoringStack = new Cons
   consentManagementApiLambda: consentManagementApiStack.apiLambda,
   consentHistoryApiLambda: consentHistoryApiStack.apiLambda,
   consentHistoryProcessorLambda: consentHistoryProcessorStack.consentHistoryProcessorLambda,
+  consentExpiryProcessorLambda: consentExpiryProcessorStack.expiryProcessorLambda,
   consentTable: consentDataStack.consentTable,
   consentHistoryTable: consentHistoryDataStack.consentHistoryTable,
   consentManagementRestApi: consentManagementApiStack.restApi,

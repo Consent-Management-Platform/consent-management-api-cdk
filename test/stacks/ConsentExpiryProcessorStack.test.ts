@@ -33,14 +33,14 @@ describe('ConsentManagementApiStack', () => {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG
     });
-    const apiStack = new ConsentExpiryProcessorStack(app, 'ConsentExpiryProcessorStack', {
+    const expiryProcessorStack = new ConsentExpiryProcessorStack(app, 'ConsentExpiryProcessorStack', {
       env: MOCK_ENV,
       stageConfig: MOCK_STAGE_CONFIG,
       codePackageFilePath: join(__dirname, '../../../consent-expiry-processor'),
       consentTable: dataStack.consentTable
     });
 
-    const templateJson = Template.fromStack(apiStack).toJSON();
+    const templateJson = Template.fromStack(expiryProcessorStack).toJSON();
     cleanDynamicResources(templateJson);
 
     expect(templateJson).toMatchSnapshot();
