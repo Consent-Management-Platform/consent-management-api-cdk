@@ -53,6 +53,14 @@ export class ConsentExpiryProcessorStack extends Stack {
         `${this.props.consentTable.tableArn}/index/*`
       ]
     }));
+    // Grant permissions to emit custom CloudWatch metrics
+    lambdaFunction.addToRolePolicy(new PolicyStatement({
+      sid: 'CloudWatchMetricsPermissions',
+      actions: [
+        'cloudwatch:PutMetricData'
+      ],
+      resources: ['*']
+    }));
 
     return lambdaFunction;
   }
