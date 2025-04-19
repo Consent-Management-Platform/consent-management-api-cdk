@@ -9,11 +9,16 @@ import { join } from 'path';
 import {
   ACTIVE_CONSENTS_BY_EXPIRY_HOUR_GSI_NAME,
   CONSENTS_BY_SERVICE_USER_GSI_NAME,
-  CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME
+  CONSENT_HISTORY_BY_SERVICE_USER_GSI_NAME,
 } from '../constants/dynamodb';
+import {
+  CONSENT_EXPIRY_JOB_EXPIRED_CONSENT_METRIC_NAME,
+  CONSENT_EXPIRY_JOB_FAILURE_METRIC_NAME,
+  CONSENT_EXPIRY_PROCESSOR_METRIC_NAMESPACE,
+} from '../constants/metrics';
 import { StageConfig } from '../interfaces/stage-config';
 import { constructApiDefinition } from '../utils/openapi';
-import { Color, ComparisonOperator, Metric, TreatMissingData, Unit } from 'aws-cdk-lib/aws-cloudwatch';
+import { ComparisonOperator, Metric, Stats, TreatMissingData, Unit } from 'aws-cdk-lib/aws-cloudwatch';
 
 interface LambdaAlarmConfig {
   maxRunningTasks?: number;
@@ -126,36 +131,56 @@ export class ConsentManagementMonitoringStack extends Stack {
       // Alarm when consent expiry job approaches 15-minute max Lambda runtime
       maxP90Duration: Duration.minutes(13)
     });
-    // Alarm when no successful run in the last 2 hours.
     this.monitoring.monitorCustom({
       addToDetailDashboard: true,
       addToSummaryDashboard: false,
       addToAlarmDashboard: true,
       alarmFriendlyName: 'ConsentExpiryProcessor',
-      metricGroups:
-      [{
-        title: 'Consent Expiry Processor Job Runs',
-        metrics: [{
-          alarmFriendlyName: 'NoRecentCompletion',
-          addAlarm: {
-            Warning: {
-              threshold: 1,
-              comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
-              datapointsToAlarm: 2,
-              evaluationPeriods: 2,
+      metricGroups: [
+        {
+          title: 'Consent Expiry Processor Job Runs',
+          metrics: [{
+            // Alarm when no successful run in the last 2 hours.
+            alarmFriendlyName: 'NoRecentCompletion',
+            addAlarm: {
+              Warning: {
+                threshold: 1,
+                comparisonOperator: ComparisonOperator.LESS_THAN_THRESHOLD,
+                datapointsToAlarm: 2,
+                evaluationPeriods: 2,
+                period: Duration.hours(1),
+                treatMissingDataOverride: TreatMissingData.BREACHING
+              }
+            },
+            metric: new Metric({
+              namespace: CONSENT_EXPIRY_PROCESSOR_METRIC_NAMESPACE,
+              metricName: CONSENT_EXPIRY_JOB_FAILURE_METRIC_NAME,
               period: Duration.hours(1),
-              treatMissingDataOverride: TreatMissingData.BREACHING
-            }
-          },
-          metric: new Metric({
-            namespace: "ConsentExpiryProcessor",
-            metricName: "ConsentExpiryJobFailure",
+              statistic: Stats.SAMPLE_COUNT,
+              label: 'ConsentExpiryJobCompletion',
+              unit: Unit.COUNT,
+            }),
+          }]
+        }
+      ]
+    });
+    this.monitoring.monitorCustom({
+      addToDetailDashboard: true,
+      addToSummaryDashboard: true,
+      addToAlarmDashboard: false,
+      alarmFriendlyName: 'ConsentsExpired',
+      metricGroups: [{
+        title: 'Consent Expiries',
+        metrics: [
+          new Metric({
+            namespace: CONSENT_EXPIRY_PROCESSOR_METRIC_NAMESPACE,
+            metricName: CONSENT_EXPIRY_JOB_EXPIRED_CONSENT_METRIC_NAME,
             period: Duration.hours(1),
-            statistic: "SampleCount",
-            label: "ConsentExpiryJobCompletion",
+            statistic: Stats.SUM,
+            label: 'Successful Expiries',
             unit: Unit.COUNT,
-          }),
-        }]
+          })
+        ]
       }]
     });
   }
