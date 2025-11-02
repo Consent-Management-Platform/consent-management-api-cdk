@@ -32,6 +32,7 @@ export class ConsentExpiryProcessorStack extends Stack {
     const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentExpiryProcessorLambda', {
       code: Code.fromAsset(this.props.codePackageFilePath),
       description: 'Consent Expiry Processor Lambda',
+      functionName: `ConsentExpiryProcessorLambda-${this.props.stageConfig.stage}`,
       handler: 'com.consentframework.consentexpiryprocessor.ConsentExpiryProcessor::handleRequest',
       memorySize: 1536,
       runtime: Runtime.JAVA_21,

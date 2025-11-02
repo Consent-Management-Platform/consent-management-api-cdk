@@ -20,6 +20,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           "arm64",
         ],
         "Description": "Consent Expiry Processor Lambda",
+        "FunctionName": "ConsentExpiryProcessorLambda-prod",
         "Handler": "com.consentframework.consentexpiryprocessor.ConsentExpiryProcessor::handleRequest",
         "LoggingConfig": {
           "LogGroup": {

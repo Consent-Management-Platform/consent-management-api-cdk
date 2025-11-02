@@ -34,6 +34,7 @@ export class ConsentHistoryProcessorStack extends Stack {
         CONSENT_HISTORY_TABLE_NAME: this.props.consentHistoryTable.tableName,
         STAGE: this.props.stageConfig.stage
       },
+      functionName: `ConsentHistoryProcessorLambda-${this.props.stageConfig.stage}`,
       handler: 'com.consentframework.consenthistory.consentingestor.ConsentStreamIngestor::handleRequest',
       memorySize: 1024,
       runtime: Runtime.JAVA_21,

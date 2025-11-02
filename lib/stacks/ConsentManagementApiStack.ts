@@ -45,6 +45,7 @@ export class ConsentManagementApiStack extends Stack {
     const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentManagementApiLambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
       description: 'Consent Management API Lambda',
+      functionName: `ConsentManagementApiLambda-${this.props.stageConfig.stage}`,
       handler: 'com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest',
       memorySize: 1536,
       runtime: Runtime.JAVA_21,

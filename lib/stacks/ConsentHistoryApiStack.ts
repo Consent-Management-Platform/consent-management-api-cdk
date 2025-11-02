@@ -45,6 +45,7 @@ export class ConsentHistoryApiStack extends Stack {
     const lambdaFunction: Function = new CustomLambdaFunction(this, 'ConsentHistoryApiLambda', {
       code: Code.fromAsset(this.props.apiCodePackageFilePath),
       description: 'Consent History API Lambda',
+      functionName: `ConsentHistoryApiLambda-${this.props.stageConfig.stage}`,
       handler: 'com.consentframework.consenthistory.api.ConsentHistoryApiService::handleRequest',
       memorySize: 1536,
       runtime: Runtime.JAVA_21,
