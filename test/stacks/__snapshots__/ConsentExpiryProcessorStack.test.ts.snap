@@ -16,6 +16,9 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "ConsentExpiryProcessorLambdaServiceRole855DC305",
       ],
       "Properties": {
+        "Architectures": [
+          "arm64",
+        ],
         "Description": "Consent Expiry Processor Lambda",
         "Handler": "com.consentframework.consentexpiryprocessor.ConsentExpiryProcessor::handleRequest",
         "LoggingConfig": {

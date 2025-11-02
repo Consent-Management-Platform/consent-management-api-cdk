@@ -550,6 +550,9 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
       "UpdateReplacePolicy": "Retain",
     },
     "ConsentHistoryAPIGatewayDeployment": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "Description": "Consent History API, see documentation at https://consent-management-platform.github.io/consent-history-api-models/v1/docs.html",
         "RestApiId": {
@@ -587,6 +590,9 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
         "ConsentHistoryApiLambdaServiceRoleA0D24C3A",
       ],
       "Properties": {
+        "Architectures": [
+          "arm64",
+        ],
         "Description": "Consent History API Lambda",
         "Handler": "com.consentframework.consenthistory.api.ConsentHistoryApiService::handleRequest",
         "LoggingConfig": {

@@ -16,6 +16,9 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
         "ConsentHistoryProcessorLambdaServiceRoleE9DE128F",
       ],
       "Properties": {
+        "Architectures": [
+          "arm64",
+        ],
         "Description": "Consent History Processor Lambda",
         "Environment": {
           "Variables": {

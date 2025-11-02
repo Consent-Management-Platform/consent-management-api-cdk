@@ -798,6 +798,9 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
       "UpdateReplacePolicy": "Retain",
     },
     "ConsentManagementAPIGatewayDeployment": {
+      "Metadata": {
+        "aws:cdk:do-not-refactor": true,
+      },
       "Properties": {
         "Description": "Consent Management API, see documentation at https://consent-management-platform.github.io/consent-management-api-models/v1/docs.html",
         "RestApiId": {
@@ -835,6 +838,9 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
         "ConsentManagementApiLambdaServiceRoleC8D94606",
       ],
       "Properties": {
+        "Architectures": [
+          "arm64",
+        ],
         "Description": "Consent Management API Lambda",
         "Handler": "com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest",
         "LoggingConfig": {
