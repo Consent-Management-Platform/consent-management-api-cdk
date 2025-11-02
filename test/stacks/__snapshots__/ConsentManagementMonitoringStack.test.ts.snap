@@ -753,7 +753,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Ref": "AWS::Region",
               },
-              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentHistoryApi","Method","GET","Resource","/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentHistoryApi","Method","GET","Resource","/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":38,"properties":{"markdown":"# Consent Management API Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":39,"properties":{"markdown":"### Lambda Function **[ConsentManagementApiLambda-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
+              "","metrics":[["AWS/ApiGateway","4XXError","ApiName","ConsentHistoryApi","Method","GET","Resource","/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"4XX Error (avg)"}],["AWS/ApiGateway","5XXError","ApiName","ConsentHistoryApi","Method","GET","Resource","/v1/consent-history/services/{serviceId}/users/{userId}/consents/{consentId}","Stage","prod",{"label":"5XX Fault (avg)"}]],"yAxis":{"left":{"min":0,"label":"Rate","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":38,"properties":{"markdown":"# Consent Management API Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":39,"properties":{"markdown":"### Lambda Function **[ConsentManagementApi-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
               {
                 "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementApiLambda46174FE9E85C6972",
               },
@@ -901,7 +901,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentManagementApiStack:ExportsOutputRefConsentManagementApiLambda46174FE9E85C6972",
               },
-              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":60,"properties":{"markdown":"# Consent History API Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":61,"properties":{"markdown":"### Lambda Function **[ConsentHistoryApiLambda-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
+              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":60,"properties":{"markdown":"# Consent History API Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":61,"properties":{"markdown":"### Lambda Function **[ConsentHistoryApi-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
               {
                 "Fn::ImportValue": "ConsentHistoryApiStack:ExportsOutputRefConsentHistoryApiLambda03FB76FCE0CD73B7",
               },
@@ -1049,7 +1049,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentHistoryApiStack:ExportsOutputRefConsentHistoryApiLambda03FB76FCE0CD73B7",
               },
-              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":82,"properties":{"markdown":"# Consent History Processor Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":83,"properties":{"markdown":"### Lambda Function **[ConsentHistoryProcessorLambda-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
+              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":82,"properties":{"markdown":"# Consent History Processor Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":83,"properties":{"markdown":"### Lambda Function **[ConsentHistoryProcessor-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
               {
                 "Fn::ImportValue": "ConsentHistoryProcessorStack:ExportsOutputRefConsentHistoryProcessorLambdaB5C5B4EA343AF758",
               },
@@ -1197,7 +1197,7 @@ exports[`ConsentManagementMonitoringStack creates the expected CloudFormation te
               {
                 "Fn::ImportValue": "ConsentHistoryProcessorStack:ExportsOutputRefConsentHistoryProcessorLambdaB5C5B4EA343AF758",
               },
-              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":104,"properties":{"markdown":"# Consent Expiry Processor Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":105,"properties":{"markdown":"### Lambda Function **[ConsentExpiryProcessorLambda-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
+              "",{"label":"InitDuration.Sum","id":"init_duration","visible":false,"stat":"Sum"}]],"yAxis":{"left":{"min":0,"label":"MB*ms","showUnits":false}}}},{"type":"text","width":24,"height":1,"x":0,"y":104,"properties":{"markdown":"# Consent Expiry Processor Lambda Metrics"}},{"type":"text","width":24,"height":1,"x":0,"y":105,"properties":{"markdown":"### Lambda Function **[ConsentExpiryProcessor-prod](https://us-east-2.console.aws.amazon.com/lambda/home?region=us-east-2#/functions/",
               {
                 "Fn::ImportValue": "ConsentExpiryProcessorStack:ExportsOutputRefConsentExpiryProcessorLambda92B40BBEA26FFAF6",
               },

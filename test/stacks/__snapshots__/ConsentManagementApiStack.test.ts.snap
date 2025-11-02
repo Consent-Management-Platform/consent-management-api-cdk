@@ -842,7 +842,7 @@ exports[`ConsentManagementApiStack creates the expected CloudFormation template 
           "arm64",
         ],
         "Description": "Consent Management API Lambda",
-        "FunctionName": "ConsentManagementApiLambda-prod",
+        "FunctionName": "ConsentManagementApi-prod",
         "Handler": "com.consentframework.consentmanagement.api.ConsentManagementApiService::handleRequest",
         "LoggingConfig": {
           "LogGroup": {

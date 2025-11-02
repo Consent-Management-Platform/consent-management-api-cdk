@@ -594,7 +594,7 @@ exports[`ConsentHistoryApiStack creates the expected CloudFormation template fro
           "arm64",
         ],
         "Description": "Consent History API Lambda",
-        "FunctionName": "ConsentHistoryApiLambda-prod",
+        "FunctionName": "ConsentHistoryApi-prod",
         "Handler": "com.consentframework.consenthistory.api.ConsentHistoryApiService::handleRequest",
         "LoggingConfig": {
           "LogGroup": {

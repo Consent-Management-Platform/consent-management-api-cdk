@@ -28,7 +28,7 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
             "STAGE": "prod",
           },
         },
-        "FunctionName": "ConsentHistoryProcessorLambda-prod",
+        "FunctionName": "ConsentHistoryProcessor-prod",
         "Handler": "com.consentframework.consenthistory.consentingestor.ConsentStreamIngestor::handleRequest",
         "LoggingConfig": {
           "LogGroup": {
