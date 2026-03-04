@@ -50,7 +50,6 @@ export class ConsentHistoryProcessorStack extends Stack {
     });
 
     // Add consent table's DynamoDB Stream as an event source for the Lambda function
-    this.props.consentTable.grantStreamRead(lambdaFunction);
     lambdaFunction.addEventSource(new DynamoEventSource(this.props.consentTable, {
       startingPosition: StartingPosition.TRIM_HORIZON,
       onFailure: new SqsDlq(deadLetterQueue)

@@ -103,6 +103,20 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
               "Sid": "CloudWatchMetricsPermissions",
             },
             {
+              "Action": [
+                "sqs:SendMessage",
+                "sqs:GetQueueAttributes",
+                "sqs:GetQueueUrl",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ConsentHistoryProcessorLambdaDlqDC3A95FE",
+                  "Arn",
+                ],
+              },
+            },
+            {
               "Action": "dynamodb:ListStreams",
               "Effect": "Allow",
               "Resource": "*",
@@ -116,20 +130,6 @@ exports[`ConsentHistoryProcessorStack creates the expected CloudFormation templa
               "Effect": "Allow",
               "Resource": {
                 "Fn::ImportValue": "ConsentDataStack:ExportsOutputFnGetAttServiceUserConsentDynamoDBTable7EDF0878StreamArn3303655F",
-              },
-            },
-            {
-              "Action": [
-                "sqs:SendMessage",
-                "sqs:GetQueueAttributes",
-                "sqs:GetQueueUrl",
-              ],
-              "Effect": "Allow",
-              "Resource": {
-                "Fn::GetAtt": [
-                  "ConsentHistoryProcessorLambdaDlqDC3A95FE",
-                  "Arn",
-                ],
               },
             },
             {
