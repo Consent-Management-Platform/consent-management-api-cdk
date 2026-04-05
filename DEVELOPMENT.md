@@ -78,6 +78,7 @@ Then the following steps can be used to deploy any remote branch's CDK stacks to
 ## Useful commands
 
 * `npm install`     install local package dependencies
+* `npm update`      update package dependencies
 * `npm run build`   compile typescript to js
 * `npm run clean`   clear generated build artifacts such as cdk.out and node_modules
 * `npm run update-snapshots` compile to js and update template snapshots
