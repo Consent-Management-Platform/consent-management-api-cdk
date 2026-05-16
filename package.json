@@ -23,8 +23,8 @@
     "typescript": "~5.9.3"
   },
   "dependencies": {
-    "aws-cdk-lib": "~2.248",
-    "cdk-monitoring-constructs": "^9.22.2",
+    "aws-cdk-lib": "~2.254",
+    "cdk-monitoring-constructs": "^9.23",
     "constructs": "^10.6.0"
   },
   "overrides": {
