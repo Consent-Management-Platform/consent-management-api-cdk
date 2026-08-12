@@ -14,20 +14,20 @@
     "watch": "tsc -w"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
+    "@types/jest": "^30.0",
     "@types/node": "^22.7.9",
-    "aws-cdk": "^2.1117.0",
-    "jest": "^30.3.0",
-    "ts-jest": "^29.4.7",
+    "aws-cdk": "^2.1124.1",
+    "jest": "^30.4",
+    "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3"
   },
   "dependencies": {
-    "aws-cdk-lib": "~2.254",
-    "cdk-monitoring-constructs": "^9.23",
+    "aws-cdk-lib": "^2.264.0",
+    "cdk-monitoring-constructs": "^10.0.0",
     "constructs": "^10.6.0"
   },
   "overrides": {
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.3.1"
   }
 }
